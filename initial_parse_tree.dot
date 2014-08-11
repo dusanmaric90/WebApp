@@ -1,0 +1,30 @@
+digraph arpeggio_graph {
+34769440 [label="initial [0]"];
+34769440->34767856 [label="1"]
+
+34767856 [label="nclass [0]"];
+34767856->34760784 [label="1"]
+
+34760784 [label="CLASS 'class' [0]"];
+34767856->34840880 [label="2"]
+
+34840880 [label="class_name 'Zika' [6]"];
+34769440->34769584 [label="2"]
+
+34769584 [label="nclass [11]"];
+34769584->34840912 [label="1"]
+
+34840912 [label="CLASS 'class' [11]"];
+34769584->34840944 [label="2"]
+
+34840944 [label="class_name 'Pera' [17]"];
+34769584->34841040 [label="3"]
+
+34841040 [label=" ':' [22]"];
+34769584->34841136 [label="4"]
+
+34841136 [label="class_name 'Zika' [24]"];
+34769440->34762320 [label="3"]
+
+34762320 [label="EOF [29]"];
+}

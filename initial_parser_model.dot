@@ -1,0 +1,29 @@
+digraph arpeggio_graph {
+34713360 [label="initial(Sequence)"];
+34713360->34713328 [label="1"]
+
+34713328 [label="OneOrMore"];
+34713328->34713488 [label="1"]
+
+34713488 [label="nclass(Sequence)"];
+34713488->34713584 [label="1"]
+
+34713584 [label="CLASS=StrMatch(class)"];
+34713488->34758800 [label="2"]
+
+34758800 [label="class_name=RegExMatch([a-zA-Z_]([a-zA-Z_]|[0-9])*)"];
+34713488->34713456 [label="3"]
+
+34713456 [label="Optional"];
+34713456->34760592 [label="1"]
+
+34760592 [label="Sequence"];
+34760592->34760560 [label="1"]
+
+34760560 [label="StrMatch(:)"];
+34760592->34758800 [label="2"]
+
+34713360->34713520 [label="2"]
+
+34713520 [label="EOF"];
+}

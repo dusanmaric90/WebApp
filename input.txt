@@ -1,0 +1,5 @@
+class Zika
+	ime : String
+	prezime: String
+class Pera : Zika
+	adresa : String
