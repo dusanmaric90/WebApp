@@ -1,5 +1,14 @@
 class Zika
-	ime : String
-	prezime: String
+	[
+		name = ime
+		type = String
+	]
+	[
+		name = prezime
+		type = String
+	]
 class Pera : Zika
-	adresa : String
+	[
+		name = adresa
+		type = String
+	]

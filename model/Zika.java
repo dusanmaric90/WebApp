@@ -14,4 +14,38 @@ protected Integer id;
 
 
 
+
+<dt>type</dt>
+<dd>String</dd>
+
+
+<dt>name</dt>
+<dd>ime</dd>
+
+
+
+
+<dt>type</dt>
+<dd>String</dd>
+
+
+<dt>name</dt>
+<dd>prezime</dd>
+
+
+
+
+
+
+ protected String  ime;
+
+
+
+
+ protected String  prezime;
+
+
+
+
+
 }

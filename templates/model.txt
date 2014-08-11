@@ -13,5 +13,20 @@ public class {{nameClass}}{% if superClass  %}extends {{parentClass}}{% endif %}
 protected Integer id;
 {% endif %}
 
+{% for dictionary in attributes %}
+{% for key, value  in dictionary.iteritems() %}
+<dt>{{ key|e }}</dt>
+<dd>{{ value|e }}</dd>
+
+{% endfor %}
+{% endfor %}
+{% for dictionary in attributes %}
+
+
+ protected {{ dictionary["type"] }}  {{ dictionary["name"] }};
+
+{% endfor %}
+
+
 
 }
