@@ -14,18 +14,15 @@ protected Integer id;
 {% endif %}
 
 {% for dictionary in attributes %}
-{% for key, value  in dictionary.iteritems() %}
-<dt>{{ key|e }}</dt>
-<dd>{{ value|e }}</dd>
-
+{% if dictionary["transient"] is defined and dictionary["transient"] == "true" %}@Transient{% endif %}
+{% if dictionary["min"] is defined %}@Min({{dictionary["min"]}}){% endif %}
+{% if dictionary["max"] is defined %}@Max({{dictionary["max"]}}){% endif %}
+{% if (dictionary["unique"] is defined and dictionary["unique"] == "true") or (dictionary["required"] is defined and dictionary["required"] == "true") -%}
+@Column({% if dictionary["unique"] is defined and dictionary["unique"] == "true" %}unique = true{% endif %}{% if (dictionary["unique"] is defined and dictionary["unique"] == "true") and (dictionary["required"] is defined and dictionary["required"] == "true") %}, {% endif %}{% if dictionary["required"] is defined and dictionary["required"] == "true" %}nullable = false{% endif %})
+{%- endif %}
+protected {{ dictionary["type"] }}  {{ dictionary["name"] }};
 {% endfor %}
-{% endfor %}
-{% for dictionary in attributes %}
 
-
- protected {{ dictionary["type"] }}  {{ dictionary["name"] }};
-
-{% endfor %}
 
 
 

@@ -24,6 +24,11 @@ def ABSTRACT():        return "abstract"
 # Attribute Lexical rules
 def NAME():           return "name"
 def TYPE():           return "type"
+def UNIQUE():         return "unique"
+def REQUIRED():       return "required"
+def MIN():            return "min"
+def MAX():            return "max"
+def TRANSIENT():        return "transient"
 
 
 # PEG syntax rules
@@ -33,8 +38,8 @@ def nclass():           return CLASS, class_name,Optional(":", class_name), Zero
 def attributes():       return "[", OneOrMore(attribute), "]"
 def attribute():        return attribute_key, "=", attribute_value 
 def class_name():       return _(r"[a-zA-Z_]([a-zA-Z_]|[0-9])*")
-def attribute_value():  return _(r"[a-zA-Z_]([a-zA-Z_]|[0-9])*")
-def attribute_key():    return [NAME, TYPE]
+def attribute_value():  return _(r"([a-zA-Z_]|[0-9])*")
+def attribute_key():    return [NAME, TYPE, UNIQUE, REQUIRED, MIN, MAX, TRANSIENT]
 
 
 class Initial(SemanticAction):

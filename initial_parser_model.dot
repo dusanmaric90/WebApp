@@ -1,62 +1,77 @@
 digraph arpeggio_graph {
-34570896 [label="initial(Sequence)"];
-34570896->34570864 [label="1"]
+34337680 [label="initial(Sequence)"];
+34337680->34337648 [label="1"]
 
-34570864 [label="OneOrMore"];
-34570864->34571056 [label="1"]
+34337648 [label="OneOrMore"];
+34337648->34337840 [label="1"]
 
-34571056 [label="nclass(Sequence)"];
-34571056->34571152 [label="1"]
+34337840 [label="nclass(Sequence)"];
+34337840->34337936 [label="1"]
 
-34571152 [label="CLASS=StrMatch(class)"];
-34571056->34571280 [label="2"]
+34337936 [label="CLASS=StrMatch(class)"];
+34337840->34338064 [label="2"]
 
-34571280 [label="class_name=RegExMatch([a-zA-Z_]([a-zA-Z_]|[0-9])*)"];
-34571056->34570992 [label="3"]
+34338064 [label="class_name=RegExMatch([a-zA-Z_]([a-zA-Z_]|[0-9])*)"];
+34337840->34337776 [label="3"]
 
-34570992 [label="Optional"];
-34570992->34573072 [label="1"]
+34337776 [label="Optional"];
+34337776->34339856 [label="1"]
 
-34573072 [label="Sequence"];
-34573072->34573040 [label="1"]
+34339856 [label="Sequence"];
+34339856->34339824 [label="1"]
 
-34573040 [label="StrMatch(:)"];
-34573072->34571280 [label="2"]
+34339824 [label="StrMatch(:)"];
+34339856->34338064 [label="2"]
 
-34571056->34571024 [label="4"]
+34337840->34337808 [label="4"]
 
-34571024 [label="ZeroOrMore"];
-34571024->34573104 [label="1"]
+34337808 [label="ZeroOrMore"];
+34337808->34339888 [label="1"]
 
-34573104 [label="attributes(Sequence)"];
-34573104->34573232 [label="1"]
+34339888 [label="attributes(Sequence)"];
+34339888->34340016 [label="1"]
 
-34573232 [label="StrMatch([)"];
-34573104->34573136 [label="2"]
+34340016 [label="StrMatch([)"];
+34339888->34339920 [label="2"]
 
-34573136 [label="OneOrMore"];
-34573136->34573328 [label="1"]
+34339920 [label="OneOrMore"];
+34339920->34340112 [label="1"]
 
-34573328 [label="attribute(Sequence)"];
-34573328->34573456 [label="1"]
+34340112 [label="attribute(Sequence)"];
+34340112->34340240 [label="1"]
 
-34573456 [label="attribute_key(OrderedChoice)"];
-34573456->34573520 [label="1"]
+34340240 [label="attribute_key(OrderedChoice)"];
+34340240->34340304 [label="1"]
 
-34573520 [label="NAME=StrMatch(name)"];
-34573456->34573168 [label="2"]
+34340304 [label="NAME=StrMatch(name)"];
+34340240->34339952 [label="2"]
 
-34573168 [label="TYPE=StrMatch(type)"];
-34573328->34573392 [label="2"]
+34339952 [label="TYPE=StrMatch(type)"];
+34340240->34340048 [label="3"]
 
-34573392 [label="StrMatch(=)"];
-34573328->34573424 [label="3"]
+34340048 [label="UNIQUE=StrMatch(unique)"];
+34340240->34340400 [label="4"]
 
-34573424 [label="attribute_value=RegExMatch([a-zA-Z_]([a-zA-Z_]|[0-9])*)"];
-34573104->34573296 [label="3"]
+34340400 [label="REQUIRED=StrMatch(required)"];
+34340240->34340432 [label="5"]
 
-34573296 [label="StrMatch(])"];
-34570896->34573648 [label="2"]
+34340432 [label="MIN=StrMatch(min)"];
+34340240->34340464 [label="6"]
 
-34573648 [label="EOF"];
+34340464 [label="MAX=StrMatch(max)"];
+34340240->34340496 [label="7"]
+
+34340496 [label="TRANSIENT=StrMatch(transient)"];
+34340112->34340176 [label="2"]
+
+34340176 [label="StrMatch(=)"];
+34340112->34340208 [label="3"]
+
+34340208 [label="attribute_value=RegExMatch(([a-zA-Z_]|[0-9])*)"];
+34339888->34340080 [label="3"]
+
+34340080 [label="StrMatch(])"];
+34337680->34340592 [label="2"]
+
+34340592 [label="EOF"];
 }

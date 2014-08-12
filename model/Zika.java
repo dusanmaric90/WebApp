@@ -14,35 +14,17 @@ protected Integer id;
 
 
 
-
-<dt>type</dt>
-<dd>String</dd>
-
-
-<dt>name</dt>
-<dd>ime</dd>
+@Transient
+@Min(2)
+@Max(5)
+@Column(unique = true, nullable = false)
+protected String  ime;
 
 
 
 
-<dt>type</dt>
-<dd>String</dd>
-
-
-<dt>name</dt>
-<dd>prezime</dd>
-
-
-
-
-
-
- protected String  ime;
-
-
-
-
- protected String  prezime;
+@Column(unique = true)
+protected String  prezime;
 
 
 

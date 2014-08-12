@@ -11,19 +11,10 @@ public class Peraextends Zika {
 
 
 
-<dt>type</dt>
-<dd>String</dd>
-
-
-<dt>name</dt>
-<dd>adresa</dd>
 
 
 
-
-
-
- protected String  adresa;
+protected String  adresa;
 
 
 
