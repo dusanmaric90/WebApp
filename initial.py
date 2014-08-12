@@ -28,7 +28,8 @@ def UNIQUE():         return "unique"
 def REQUIRED():       return "required"
 def MIN():            return "min"
 def MAX():            return "max"
-def TRANSIENT():        return "transient"
+def TRANSIENT():      return "transient"
+def MANY_TO_ONE():    return "many_to_one"
 
 
 # PEG syntax rules
@@ -39,7 +40,7 @@ def attributes():       return "[", OneOrMore(attribute), "]"
 def attribute():        return attribute_key, "=", attribute_value 
 def class_name():       return _(r"[a-zA-Z_]([a-zA-Z_]|[0-9])*")
 def attribute_value():  return _(r"([a-zA-Z_]|[0-9])*")
-def attribute_key():    return [NAME, TYPE, UNIQUE, REQUIRED, MIN, MAX, TRANSIENT]
+def attribute_key():    return [NAME, TYPE, UNIQUE, REQUIRED, MIN, MAX, TRANSIENT, MANY_TO_ONE]
 
 
 class Initial(SemanticAction):

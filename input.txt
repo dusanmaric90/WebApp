@@ -13,8 +13,14 @@ class Zika
 		type = String
 		unique = true
 	]
+	
 class Pera : Zika
 	[
 		name = adresa
 		type = String
+	]
+	[
+		name = zika
+		type = Zika
+		many_to_one = true
 	]

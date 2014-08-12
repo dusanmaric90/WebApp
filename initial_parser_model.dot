@@ -1,77 +1,80 @@
 digraph arpeggio_graph {
-34337680 [label="initial(Sequence)"];
-34337680->34337648 [label="1"]
+33289200 [label="initial(Sequence)"];
+33289200->33289168 [label="1"]
 
-34337648 [label="OneOrMore"];
-34337648->34337840 [label="1"]
+33289168 [label="OneOrMore"];
+33289168->33289360 [label="1"]
 
-34337840 [label="nclass(Sequence)"];
-34337840->34337936 [label="1"]
+33289360 [label="nclass(Sequence)"];
+33289360->33289456 [label="1"]
 
-34337936 [label="CLASS=StrMatch(class)"];
-34337840->34338064 [label="2"]
+33289456 [label="CLASS=StrMatch(class)"];
+33289360->33289584 [label="2"]
 
-34338064 [label="class_name=RegExMatch([a-zA-Z_]([a-zA-Z_]|[0-9])*)"];
-34337840->34337776 [label="3"]
+33289584 [label="class_name=RegExMatch([a-zA-Z_]([a-zA-Z_]|[0-9])*)"];
+33289360->33289296 [label="3"]
 
-34337776 [label="Optional"];
-34337776->34339856 [label="1"]
+33289296 [label="Optional"];
+33289296->33291376 [label="1"]
 
-34339856 [label="Sequence"];
-34339856->34339824 [label="1"]
+33291376 [label="Sequence"];
+33291376->33291344 [label="1"]
 
-34339824 [label="StrMatch(:)"];
-34339856->34338064 [label="2"]
+33291344 [label="StrMatch(:)"];
+33291376->33289584 [label="2"]
 
-34337840->34337808 [label="4"]
+33289360->33289328 [label="4"]
 
-34337808 [label="ZeroOrMore"];
-34337808->34339888 [label="1"]
+33289328 [label="ZeroOrMore"];
+33289328->33291408 [label="1"]
 
-34339888 [label="attributes(Sequence)"];
-34339888->34340016 [label="1"]
+33291408 [label="attributes(Sequence)"];
+33291408->33291536 [label="1"]
 
-34340016 [label="StrMatch([)"];
-34339888->34339920 [label="2"]
+33291536 [label="StrMatch([)"];
+33291408->33291440 [label="2"]
 
-34339920 [label="OneOrMore"];
-34339920->34340112 [label="1"]
+33291440 [label="OneOrMore"];
+33291440->33291632 [label="1"]
 
-34340112 [label="attribute(Sequence)"];
-34340112->34340240 [label="1"]
+33291632 [label="attribute(Sequence)"];
+33291632->33291760 [label="1"]
 
-34340240 [label="attribute_key(OrderedChoice)"];
-34340240->34340304 [label="1"]
+33291760 [label="attribute_key(OrderedChoice)"];
+33291760->33291824 [label="1"]
 
-34340304 [label="NAME=StrMatch(name)"];
-34340240->34339952 [label="2"]
+33291824 [label="NAME=StrMatch(name)"];
+33291760->33291472 [label="2"]
 
-34339952 [label="TYPE=StrMatch(type)"];
-34340240->34340048 [label="3"]
+33291472 [label="TYPE=StrMatch(type)"];
+33291760->33291568 [label="3"]
 
-34340048 [label="UNIQUE=StrMatch(unique)"];
-34340240->34340400 [label="4"]
+33291568 [label="UNIQUE=StrMatch(unique)"];
+33291760->33291920 [label="4"]
 
-34340400 [label="REQUIRED=StrMatch(required)"];
-34340240->34340432 [label="5"]
+33291920 [label="REQUIRED=StrMatch(required)"];
+33291760->33291952 [label="5"]
 
-34340432 [label="MIN=StrMatch(min)"];
-34340240->34340464 [label="6"]
+33291952 [label="MIN=StrMatch(min)"];
+33291760->33291984 [label="6"]
 
-34340464 [label="MAX=StrMatch(max)"];
-34340240->34340496 [label="7"]
+33291984 [label="MAX=StrMatch(max)"];
+33291760->33292016 [label="7"]
 
-34340496 [label="TRANSIENT=StrMatch(transient)"];
-34340112->34340176 [label="2"]
+33292016 [label="TRANSIENT=StrMatch(transient)"];
+33291760->33292048 [label="8"]
 
-34340176 [label="StrMatch(=)"];
-34340112->34340208 [label="3"]
+33292048 [label="MANY_TO_ONE=StrMatch(many_to_one)"];
+33291632->33291696 [label="2"]
 
-34340208 [label="attribute_value=RegExMatch(([a-zA-Z_]|[0-9])*)"];
-34339888->34340080 [label="3"]
+33291696 [label="StrMatch(=)"];
+33291632->33291728 [label="3"]
 
-34340080 [label="StrMatch(])"];
-34337680->34340592 [label="2"]
+33291728 [label="attribute_value=RegExMatch(([a-zA-Z_]|[0-9])*)"];
+33291408->33291600 [label="3"]
 
-34340592 [label="EOF"];
+33291600 [label="StrMatch(])"];
+33289200->33292144 [label="2"]
+
+33292144 [label="EOF"];
 }
