@@ -11,11 +11,13 @@ public class Peraextends Zika {
 
 
 
+@Enumerated(EnumType.STRING)
 
 
 
-protected String  adresa;	
+protected Boja  adresa;	
 	
+
 
 
 
@@ -26,11 +28,11 @@ protected Zika  zika;
 
 
 
-public String getAdresa() {
+public Boja getAdresa() {
 	return adresa;
 }
 		
-public void setAdresa(String adresa) {
+public void setAdresa(Boja adresa) {
 	this.adresa = adresa;
 }		
 

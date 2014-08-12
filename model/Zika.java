@@ -15,11 +15,13 @@ protected Integer id;
 
 
 @Transient
+
 @Min(2)
 @Max(5)
 @Column(unique = true, nullable = false)
 protected String  ime;	
 	
+
 
 
 

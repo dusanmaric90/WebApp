@@ -17,10 +17,13 @@ class Zika
 class Pera : Zika
 	[
 		name = adresa
-		type = String
+		type = Boja
+		enum = true
 	]
 	[
 		name = zika
 		type = Zika
 		many_to_one = true
 	]
+enumeration Pol : Pera; Mika; Zika; 
+enumeration Boja : Zuta; Plava;
