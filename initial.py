@@ -161,31 +161,36 @@ class NClasses(SemanticAction):
     def first_pass(self, parser, node, children):
           print "NClasses!!!!!!"
           parentForeignKey = {}
-        
+          parrentAttribute ={}
           for listClass in children:
               parentForeignKey[listClass[0]] = []
-              
+              parrentAttribute[listClass[0]] = []
           
           for listClass in children: # class
               if listClass[1]:       # if specific class has extended some other class             
                   for listClassParent in children: # go to other classes 
                       if listClass[2] == listClassParent[0]: # if this is a parent class
                           for dictonary in listClassParent[3]: # go to attributes of class
-                               print "asdf"+str(dictonary)
+                               parrentAttribute[listClass[0]].append(dictonary)
                                if dictonary.get("many_to_one") == 'true':
                                    parentForeignKey[listClass[0]].append(dictonary['type'])
                                    print str(parentForeignKey)
                                    
           env = Environment(loader=FileSystemLoader('templates'))
-          tmpl = env.get_template('controller_prepare_add.txt')
+          tmpl_prepare_add = env.get_template('controller_prepare_add.txt')
+          tmpl_add = env.get_template('controller_add.txt')
           if not os.path.exists("controller"):
             os.makedirs("controller")
 
           for listClass in children:  
                 filename = "controller/"+listClass[0]+"ControllerPrepareAdd.java"
                 target = open(filename, 'w+')
-                target.write(tmpl.render( name = listClass[0], attributes = listClass[3], foreignKeysParent = parentForeignKey[listClass[0]] ))
-                target.close()   
+                target.write(tmpl_prepare_add.render( name = listClass[0], attributes = listClass[3], foreignKeysParent = parentForeignKey[listClass[0]] ))
+                target.close()
+                filename = "controller/"+listClass[0]+"ControllerAdd.java"
+                target = open(filename, 'w+')
+                target.write(tmpl_add.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]],foreignKeysParent = parentForeignKey[listClass[0]]))
+                target.close()
           
 class NClass(SemanticAction):
     """
