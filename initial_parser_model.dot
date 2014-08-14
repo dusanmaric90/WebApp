@@ -1,109 +1,165 @@
 digraph arpeggio_graph {
-34858672 [label="initial(Sequence)"];
-34858672->34858640 [label="1"]
+29899696 [label="initial(Sequence)"];
+29899696->29899664 [label="1"]
 
-34858640 [label="OneOrMore"];
-34858640->34858736 [label="1"]
+29899664 [label="OneOrMore"];
+29899664->29899760 [label="1"]
 
-34858736 [label="OrderedChoice"];
-34858736->34858896 [label="1"]
+29899760 [label="OrderedChoice"];
+29899760->29899920 [label="1"]
 
-34858896 [label="nclass(Sequence)"];
-34858896->34858992 [label="1"]
+29899920 [label="nclass(Sequence)"];
+29899920->29900016 [label="1"]
 
-34858992 [label="CLASS=StrMatch(class)"];
-34858896->34859120 [label="2"]
+29900016 [label="CLASS=StrMatch(class)"];
+29899920->29959344 [label="2"]
 
-34859120 [label="class_name=RegExMatch([a-zA-Z_]([a-zA-Z_]|[0-9])*)"];
-34858896->34858832 [label="3"]
+29959344 [label="class_name=RegExMatch([a-zA-Z_]([a-zA-Z_]|[0-9])*)"];
+29899920->29899856 [label="3"]
 
-34858832 [label="Optional"];
-34858832->34860912 [label="1"]
+29899856 [label="Optional"];
+29899856->29900048 [label="1"]
 
-34860912 [label="Sequence"];
-34860912->34860880 [label="1"]
+29900048 [label="Sequence"];
+29900048->29959280 [label="1"]
 
-34860880 [label="StrMatch(:)"];
-34860912->34859120 [label="2"]
+29959280 [label="StrMatch(:)"];
+29900048->29959344 [label="2"]
 
-34858896->34858864 [label="4"]
+29899920->29899888 [label="4"]
 
-34858864 [label="ZeroOrMore"];
-34858864->34861040 [label="1"]
+29899888 [label="ZeroOrMore"];
+29899888->29959408 [label="1"]
 
-34861040 [label="attributes(Sequence)"];
-34861040->34926640 [label="1"]
+29959408 [label="attributes(Sequence)"];
+29959408->29959472 [label="1"]
 
-34926640 [label="StrMatch([)"];
-34861040->34860976 [label="2"]
+29959472 [label="StrMatch([)"];
+29959408->29959312 [label="2"]
 
-34860976 [label="OneOrMore"];
-34860976->34926736 [label="1"]
+29959312 [label="OneOrMore"];
+29959312->29959568 [label="1"]
 
-34926736 [label="attribute(Sequence)"];
-34926736->34926832 [label="1"]
+29959568 [label="attribute(Sequence)"];
+29959568->29959696 [label="1"]
 
-34926832 [label="attribute_key(OrderedChoice)"];
-34926832->34926928 [label="1"]
+29959696 [label="attribute_key(OrderedChoice)"];
+29959696->29959760 [label="1"]
 
-34926928 [label="NAME=StrMatch(name)"];
-34926832->34927024 [label="2"]
+29959760 [label="NAME=StrMatch(name)"];
+29959696->29959504 [label="2"]
 
-34927024 [label="TYPE=StrMatch(type)"];
-34926832->34926896 [label="3"]
+29959504 [label="TYPE=StrMatch(type)"];
+29959696->29959376 [label="3"]
 
-34926896 [label="UNIQUE=StrMatch(unique)"];
-34926832->34927056 [label="4"]
+29959376 [label="UNIQUE=StrMatch(unique)"];
+29959696->29959856 [label="4"]
 
-34927056 [label="REQUIRED=StrMatch(required)"];
-34926832->34927088 [label="5"]
+29959856 [label="REQUIRED=StrMatch(required)"];
+29959696->29959888 [label="5"]
 
-34927088 [label="MIN=StrMatch(min)"];
-34926832->34927120 [label="6"]
+29959888 [label="MIN=StrMatch(min)"];
+29959696->29959920 [label="6"]
 
-34927120 [label="MAX=StrMatch(max)"];
-34926832->34927152 [label="7"]
+29959920 [label="MAX=StrMatch(max)"];
+29959696->29959952 [label="7"]
 
-34927152 [label="TRANSIENT=StrMatch(transient)"];
-34926832->34927184 [label="8"]
+29959952 [label="TRANSIENT=StrMatch(transient)"];
+29959696->29959984 [label="8"]
 
-34927184 [label="MANY_TO_ONE=StrMatch(many_to_one)"];
-34926832->34927216 [label="9"]
+29959984 [label="MANY_TO_ONE=StrMatch(many_to_one)"];
+29959696->29960016 [label="9"]
 
-34927216 [label="ENUM=StrMatch(enum)"];
-34926736->34861008 [label="2"]
+29960016 [label="ENUM=StrMatch(enum)"];
+29959568->29959632 [label="2"]
 
-34861008 [label="StrMatch(=)"];
-34926736->34926800 [label="3"]
+29959632 [label="StrMatch(=)"];
+29959568->29959664 [label="3"]
 
-34926800 [label="attribute_value=RegExMatch(([a-zA-Z_]|[0-9])*)"];
-34861040->34860944 [label="3"]
+29959664 [label="attribute_value=RegExMatch(([a-zA-Z_]|[0-9])*)"];
+29959408->29959536 [label="3"]
 
-34860944 [label="StrMatch(])"];
-34858736->34859024 [label="2"]
+29959536 [label="StrMatch(])"];
+29899760->29900144 [label="2"]
 
-34859024 [label="enumeration(Sequence)"];
-34859024->34926672 [label="1"]
+29900144 [label="enumeration(Sequence)"];
+29900144->29960048 [label="1"]
 
-34926672 [label="StrMatch(enumeration)"];
-34859024->34926768 [label="2"]
+29960048 [label="ENUMERATION=StrMatch(enumeration)"];
+29900144->29959600 [label="2"]
 
-34926768 [label="enumeration_value=RegExMatch(([a-zA-Z_]|[0-9])*)"];
-34859024->34926992 [label="3"]
+29959600 [label="enumeration_value=RegExMatch(([a-zA-Z_]|[0-9])*)"];
+29900144->29959440 [label="3"]
 
-34926992 [label="StrMatch(:)"];
-34859024->34858928 [label="4"]
+29959440 [label="StrMatch(:)"];
+29900144->29899952 [label="4"]
 
-34858928 [label="OneOrMore"];
-34858928->34926864 [label="1"]
+29899952 [label="OneOrMore"];
+29899952->29960080 [label="1"]
 
-34926864 [label="enumeration_element(Sequence)"];
-34926864->34926768 [label="1"]
+29960080 [label="enumeration_element(Sequence)"];
+29960080->29959600 [label="1"]
 
-34926864->34927344 [label="2"]
+29960080->29960176 [label="2"]
 
-34927344 [label="StrMatch(;)"];
-34858672->34858800 [label="2"]
+29960176 [label="StrMatch(;)"];
+29899760->29960112 [label="3"]
 
-34858800 [label="EOF"];
+29960112 [label="database_config(Sequence)"];
+29960112->29959792 [label="1"]
+
+29959792 [label="DATABASE=StrMatch(database)"];
+29960112->29960208 [label="2"]
+
+29960208 [label="database_value=RegExMatch(([a-zA-Z_.]|[0-9])*)"];
+29960112->29959728 [label="3"]
+
+29959728 [label="StrMatch(:)"];
+29960112->29960240 [label="4"]
+
+29960240 [label="DRIVER=StrMatch(driver)"];
+29960112->29960144 [label="5"]
+
+29960144 [label="StrMatch(=)"];
+29960112->29960208 [label="6"]
+
+29960112->29960368 [label="7"]
+
+29960368 [label="USERNAME=StrMatch(username)"];
+29960112->29960336 [label="8"]
+
+29960336 [label="StrMatch(=)"];
+29960112->29960208 [label="9"]
+
+29960112->29960464 [label="10"]
+
+29960464 [label="PASSWORD=StrMatch(password)"];
+29960112->29960432 [label="11"]
+
+29960432 [label="StrMatch(=)"];
+29960112->29960208 [label="12"]
+
+29960112->29960528 [label="13"]
+
+29960528 [label="URL=StrMatch(url)"];
+29960112->29960496 [label="14"]
+
+29960496 [label="StrMatch(=)"];
+29960112->29960304 [label="15"]
+
+29960304 [label="url_value=RegExMatch((ftp|file|jdbc:[a-z]+[0-9]*)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]*)"];
+29960112->29960272 [label="16"]
+
+29960272 [label="ZeroOrMore"];
+29960272->29960592 [label="1"]
+
+29960592 [label="database_table(Sequence)"];
+29960592->29960720 [label="1"]
+
+29960720 [label="TABLE=StrMatch(table)"];
+29960592->29959344 [label="2"]
+
+29899696->29899824 [label="2"]
+
+29899824 [label="EOF"];
 }

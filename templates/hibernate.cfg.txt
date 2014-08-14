@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory >
+		<property name="hibernate.connection.driver_class">{{driver}}</property>
+		<property name="hibernate.connection.url">{{url}}</property>
+		<property name="hibernate.connection.username">{{username}}</property>
+		<property name="hibernate.connection.password">{{password}}</property>
+	
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+		<property name="hibernate.current_session_context_class">thread</property>
+		<property name="hibernate.hbm2ddl.auto">create</property>
+		
+		<mapping package="model"/>
+		{% for table in database_tables %}
+		<mapping class="model.{{table}}"/>
+		{%- endfor %}
+	</session-factory>
+</hibernate-configuration>

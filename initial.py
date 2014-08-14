@@ -31,12 +31,20 @@ def MAX():            return "max"
 def TRANSIENT():      return "transient"
 def MANY_TO_ONE():    return "many_to_one"
 def ENUM():           return "enum"
+def ENUMERATION():    return "enumeration"
+def DATABASE():       return "database"
+def DRIVER():         return "driver"
+def USERNAME():       return "username"
+def PASSWORD():       return "password"
+def URL():            return "url"
+def TABLE():          return "table"
+
 
 
 
 # PEG syntax rules
 
-def initial():              return OneOrMore([nclass,enumeration]), EOF
+def initial():              return OneOrMore([nclass,enumeration,database_config]), EOF
 def nclass():               return CLASS, class_name,Optional(":", class_name), ZeroOrMore(attributes)
 def attributes():           return "[", OneOrMore(attribute), "]"
 def attribute():            return attribute_key, "=", attribute_value 
@@ -44,14 +52,53 @@ def class_name():           return _(r"[a-zA-Z_]([a-zA-Z_]|[0-9])*")
 def attribute_value():      return _(r"([a-zA-Z_]|[0-9])*")
 def enumeration_value():    return _(r"([a-zA-Z_]|[0-9])*")
 def attribute_key():        return [NAME, TYPE, UNIQUE, REQUIRED, MIN, MAX, TRANSIENT, MANY_TO_ONE, ENUM]
-def enumeration():          return "enumeration", enumeration_value, ":", OneOrMore(enumeration_element)
+def enumeration():          return ENUMERATION, enumeration_value, ":", OneOrMore(enumeration_element)
 def enumeration_element():  return enumeration_value, ";"
-
+def database_config():      return DATABASE, database_value, ":", DRIVER, "=", database_value, USERNAME, "=", database_value, PASSWORD, "=", database_value, URL, "=", url_value, ZeroOrMore(database_table)  
+def database_value():       return _(r"([a-zA-Z_.]|[0-9])*")
+def url_value():            return _(r"(ftp|file|jdbc:[a-z]+[0-9]*)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]*")
+def database_table():       return TABLE, class_name
 
 class Initial(SemanticAction):
   
     def first_pass(self, parser, node, children):
           print "initial!!!!!!"
+          
+class Database_config(SemanticAction):
+  
+    def first_pass(self, parser, node, children):
+          print "database_config!!!!!!"
+          print str(node[5]) +" "+ str(node[8])+" "+str(node[11])+" "+str(node[14])
+          env = Environment(loader=FileSystemLoader('templates'))
+          tmpl =  env.get_template('persistence.txt')
+          if not os.path.exists("META-INF"):
+            os.makedirs("META-INF")
+          filename = "META-INF/persistence.xml"
+          target = open(filename, 'w+')
+          target.write(tmpl.render( name = str(node[1]), driver = str(node[5]), username = str(node[8]), password = str(node[11]),url =str(node[14]), database_tables = children  ))
+          target.close()
+          tmpl =  env.get_template('hibernate.cfg.txt')
+          filename = "hibernate.cfg.xml"
+          target = open(filename, 'w+')
+          target.write(tmpl.render( driver = str(node[5]), username = str(node[8]), password = str(node[11]),url =str(node[14]), database_tables = children  ))
+          target.close()
+class Database_value(SemanticAction):
+  
+    def first_pass(self, parser, node, children):
+          print "database_value!!!!!!"
+        
+
+class Url_value(SemanticAction):
+  
+    def first_pass(self, parser, node, children):
+          print "url_value!!!!!!"
+          
+class Database_table(SemanticAction):
+  
+    def first_pass(self, parser, node, children):
+          print "database_table!!!!!!"
+          return str(node[1]) 
+
 class Enumeration_element(SemanticAction):
   
     def first_pass(self, parser, node, children):
@@ -157,6 +204,10 @@ attribute_value.sem = Attribute_value()
 enumeration_value.sem = Enumeration_value()
 enumeration.sem = Enumeration()
 enumeration_element.sem = Enumeration_element()
+database_config.sem = Database_config()
+database_value.sem = Database_value()
+url_value.sem = Url_value()
+database_table.sem = Database_table()
 
 def main(debug=False):
     # First we will make a parser - an instance of the calc parser model.
