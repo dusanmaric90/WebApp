@@ -14,7 +14,6 @@ protected Integer id;
 
 
 
-@Transient
 
 @Min(2)
 @Max(5)
@@ -25,9 +24,15 @@ protected String  ime;
 
 
 
-
 @Column(unique = true)
 protected String  prezime;	
+	
+
+
+
+
+
+protected Mika  mika;	
 	
 
 
@@ -47,6 +52,15 @@ public String getPrezime() {
 		
 public void setPrezime(String prezime) {
 	this.prezime = prezime;
+}		
+
+@ManyToOne
+public Mika getMika() {
+	return mika;
+}
+		
+public void setMika(Mika mika) {
+	this.mika = mika;
 }		
 
 

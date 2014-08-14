@@ -1,3 +1,10 @@
+
+class Mika
+	[
+		name = ime
+		type = String
+	]
+
 class Zika
 	[
 		name = ime
@@ -6,14 +13,17 @@ class Zika
 		required = true
 		min = 2
 		max = 5
-		transient = true
 	]
 	[
 		name = prezime
 		type = String
 		unique = true
 	]
-	
+	[	
+		name = mika
+		type = Mika
+		many_to_one = true
+	]	
 class Pera : Zika
 	[
 		name = adresa

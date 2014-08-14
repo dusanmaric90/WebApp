@@ -14,7 +14,6 @@ protected Integer id;
 {% endif %}
 
 {% for dictionary in attributes %}
-{% if dictionary["transient"] is defined and dictionary["transient"] == "true" %}@Transient{% endif %}
 {% if dictionary["enum"] is defined and dictionary["enum"] == "true" %}@Enumerated(EnumType.STRING){% endif %}
 {% if dictionary["min"] is defined %}@Min({{dictionary["min"]}}){% endif %}
 {% if dictionary["max"] is defined %}@Max({{dictionary["max"]}}){% endif %}

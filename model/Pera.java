@@ -10,14 +10,12 @@ public class Peraextends Zika {
 
 
 
-
 @Enumerated(EnumType.STRING)
 
 
 
 protected Boja  adresa;	
 	
-
 
 
 

@@ -28,7 +28,6 @@ def UNIQUE():         return "unique"
 def REQUIRED():       return "required"
 def MIN():            return "min"
 def MAX():            return "max"
-def TRANSIENT():      return "transient"
 def MANY_TO_ONE():    return "many_to_one"
 def ENUM():           return "enum"
 def ENUMERATION():    return "enumeration"
@@ -44,14 +43,15 @@ def TABLE():          return "table"
 
 # PEG syntax rules
 
-def initial():              return OneOrMore([nclass,enumeration,database_config]), EOF
+def initial():              return OneOrMore([nclasses,enumeration,database_config]), EOF
+def nclasses():             return OneOrMore(nclass)
 def nclass():               return CLASS, class_name,Optional(":", class_name), ZeroOrMore(attributes)
 def attributes():           return "[", OneOrMore(attribute), "]"
 def attribute():            return attribute_key, "=", attribute_value 
 def class_name():           return _(r"[a-zA-Z_]([a-zA-Z_]|[0-9])*")
 def attribute_value():      return _(r"([a-zA-Z_]|[0-9])*")
 def enumeration_value():    return _(r"([a-zA-Z_]|[0-9])*")
-def attribute_key():        return [NAME, TYPE, UNIQUE, REQUIRED, MIN, MAX, TRANSIENT, MANY_TO_ONE, ENUM]
+def attribute_key():        return [NAME, TYPE, UNIQUE, REQUIRED, MIN, MAX, MANY_TO_ONE, ENUM]
 def enumeration():          return ENUMERATION, enumeration_value, ":", OneOrMore(enumeration_element)
 def enumeration_element():  return enumeration_value, ";"
 def database_config():      return DATABASE, database_value, ":", DRIVER, "=", database_value, USERNAME, "=", database_value, PASSWORD, "=", database_value, URL, "=", url_value, ZeroOrMore(database_table)  
@@ -63,6 +63,7 @@ class Initial(SemanticAction):
   
     def first_pass(self, parser, node, children):
           print "initial!!!!!!"
+
           
 class Database_config(SemanticAction):
   
@@ -155,7 +156,37 @@ class Enumeration(SemanticAction):
           target = open(filename, 'w+')
           target.write(tmpl.render( enumeration_name = enumeration_name, enumeration_values = children  ))
           target.close()
-	    
+class NClasses(SemanticAction):
+  
+    def first_pass(self, parser, node, children):
+          print "NClasses!!!!!!"
+          parentForeignKey = {}
+        
+          for listClass in children:
+              parentForeignKey[listClass[0]] = []
+              
+          
+          for listClass in children: # class
+              if listClass[1]:       # if specific class has extended some other class             
+                  for listClassParent in children: # go to other classes 
+                      if listClass[2] == listClassParent[0]: # if this is a parent class
+                          for dictonary in listClassParent[3]: # go to attributes of class
+                               print "asdf"+str(dictonary)
+                               if dictonary.get("many_to_one") == 'true':
+                                   parentForeignKey[listClass[0]].append(dictonary['type'])
+                                   print str(parentForeignKey)
+                                   
+          env = Environment(loader=FileSystemLoader('templates'))
+          tmpl = env.get_template('controller_prepare_add.txt')
+          if not os.path.exists("controller"):
+            os.makedirs("controller")
+
+          for listClass in children:  
+                filename = "controller/"+listClass[0]+"ControllerPrepareAdd.java"
+                target = open(filename, 'w+')
+                target.write(tmpl.render( name = listClass[0], attributes = listClass[3], foreignKeysParent = parentForeignKey[listClass[0]] ))
+                target.close()   
+          
 class NClass(SemanticAction):
     """
     Create POJO class
@@ -199,10 +230,11 @@ class NClass(SemanticAction):
           target.write(tmpl.render( name = str(className)))
           target.close()
           
-          return 0
+          return [str(className),superClass,parentClass,children]
 
 # Connecting rules with semantic actions    
-initial.sem =  Initial()     
+initial.sem =  Initial()
+nclasses.sem = NClasses()
 class_name.sem = Class_name()
 nclass.sem = NClass()
 attributes.sem = Attributes()
