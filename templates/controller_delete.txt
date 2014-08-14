@@ -1,0 +1,50 @@
+package controller.delete;
+		
+		import java.io.IOException;
+		import javax.ejb.EJB;
+		import javax.servlet.ServletException;
+		import javax.servlet.http.HttpServlet;
+		import javax.servlet.http.HttpServletRequest;
+		import javax.servlet.http.HttpServletResponse;
+		import javax.servlet.RequestDispatcher;
+		import model.*;
+		import dao.*;
+		
+		public class {{name}}DeleteController extends HttpServlet {
+			
+			@EJB 
+			I{{name}}Dao {{name}}Dao;
+			
+			@Override
+			protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+				doPost(req,resp);
+			}
+			
+			@Override
+			protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+				Integer id{{name}} = null;
+				
+				if (req.getParameter("id") != null ) {
+					id{{name}} = Integer.parseInt(req.getParameter("id"));
+				}
+				
+				if(id{{name}} == null){
+					getServletContext().getRequestDispatcher("/{{name}}ControllerShow").forward(req, resp);	
+				}
+					
+				try{
+	       			{{name}} temp{{name}} = {{name}}Dao.findById(id{{name}});
+					{{name}}Dao.delete(temp{{name}});
+		       	} catch (Exception e){
+		       		String error = "Ne moze se obrisati entitet!";
+					req.setAttribute("error", error);
+					RequestDispatcher dispatcher = req.getRequestDispatcher("/{{name}}ControllerShow");
+					//getServletContext().getRequestDispatcher("/{{name}}ControllerShow").forward(req, resp);	
+					dispatcher.forward(req, resp);
+					return;	
+		       	}
+				getServletContext().getRequestDispatcher("/{{name}}ControllerShow").forward(req, resp);
+				return;
+				
+			}
+		}	

@@ -234,7 +234,11 @@ class NClass(SemanticAction):
           target = open(filename, 'w+')
           target.write(tmpl.render( name = str(className)))
           target.close()
-          
+          tmpl = env.get_template('controller_delete.txt')
+          filename = "controller/"+str(className)+"DeleteController.java"
+          target = open(filename, 'w+')
+          target.write(tmpl.render( name = str(className)))
+          target.close()
           return [str(className),superClass,parentClass,children]
 
 # Connecting rules with semantic actions    
