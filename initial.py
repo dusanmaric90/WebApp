@@ -186,11 +186,19 @@ class NClass(SemanticAction):
           else: 
               superClass = False
               parentClass = ""
-                  
-            
-          
+              
           target.write(tmpl.render( nameClass = str(className),superClass = superClass ,parentClass = parentClass, attributes = children ))
           target.close()
+          
+          env = Environment(loader=FileSystemLoader('templates'))
+          tmpl = env.get_template('controller_show.txt')
+          if not os.path.exists("controller"):
+            os.makedirs("controller")
+          filename = "controller/"+str(className)+"ControllerShow.java"
+          target = open(filename, 'w+')
+          target.write(tmpl.render( name = str(className)))
+          target.close()
+          
           return 0
 
 # Connecting rules with semantic actions    
