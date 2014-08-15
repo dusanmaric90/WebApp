@@ -181,8 +181,13 @@ class NClasses(SemanticAction):
           tmpl_add = env.get_template('controller_add.txt')
           tmpl_update = env.get_template('controller_update.txt')
           tmpl_search = env.get_template('controller_search.txt')
+          tmp_web_show = env.get_template('web_show.txt')
+          tmp_web_add = env.get_template('web_add.txt')
+          
           if not os.path.exists("controller"):
             os.makedirs("controller")
+          if not os.path.exists("web"):
+            os.makedirs("web")
 
           for listClass in children:  
                 filename = "controller/"+listClass[0]+"ControllerPrepareAdd.java"
@@ -200,6 +205,14 @@ class NClasses(SemanticAction):
                 filename = "controller/"+listClass[0]+"SearchController.java"
                 target = open(filename, 'w+')
                 target.write(tmpl_search.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
+                target.close()
+                filename = "web/"+listClass[0]+"Show.jsp"
+                target = open(filename, 'w+')
+                target.write(tmp_web_show.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
+                target.close()
+                filename = "web/"+listClass[0]+"Add.jsp"
+                target = open(filename, 'w+')
+                target.write(tmp_web_add.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
                 target.close()
           
 class NClass(SemanticAction):
