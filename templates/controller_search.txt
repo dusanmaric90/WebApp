@@ -1,0 +1,165 @@
+package controller.search;
+		
+import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import model.*;
+		
+import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.Restrictions;
+		
+
+import dao.*;
+
+public class {{name}}SearchController extends HttpServlet {
+			
+			
+@EJB 
+I{{name}}Dao {{name}}Dao;
+			
+			
+@Override
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	doPost(req,resp);
+}
+			
+			@Override
+			protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+				Conjunction conjuction = Restrictions.conjunction();
+				
+{% for dictionary in attributes %}	
+{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
+String {{dictionary["name"]}}String = req.getParameter("{{dictionary["name"]}}");
+Date {{dictionary["name"]}} = null;
+SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");					
+try {
+	if(!{{dictionary["name"]}}String.equals("")){
+		{{dictionary["name"]}} = dateFormat.parse({{dictionary["name"]}}String);
+		conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+	}
+} catch (ParseException e) {
+	req.setAttribute("badFormat", true);
+	RequestDispatcher dispatcher = req.getRequestDispatcher("./Search{{name}}.jsp");
+	dispatcher.forward(req, resp);
+	return;
+}
+{% elif dictionary["type"] is defined and dictionary["type"] == "Integer" %}
+Integer {{dictionary["name"]}} = null;
+if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}")) ) {
+	String {{dictionary["name"]}}String = req.getParameter("{{dictionary["name"]}}");
+	boolean {{dictionary["name"]}}Boolean = false;
+	if ({{dictionary["name"]}}String.endsWith("*")){
+		{{dictionary["name"]}}Boolean = true;
+		{{dictionary["name"]}}String.replace("*", "");
+	}
+	try{
+		{{dictionary["name"]}} = Integer.parseInt({{dictionary["name"]}}String);
+		if ({{dictionary["name"]}}Boolean)
+			conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+		else
+			conjuction.add(Restrictions.eq("{{dictionary["name"].lower()}}",{{dictionary["name"].lower()}}));
+	} catch (NumberFormatException e) {
+		String error = "Polje treba da bude broj!";
+		req.setAttribute("error", error);
+		RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}Search.jsp");
+		dispatcher.forward(req, resp);
+		return;	
+	}	
+}
+{% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
+{{dictionary["type"]}} {{dictionary["name"]}} = {{dictionary["type"]}}.valueOf(req.getParameter("{{dictionary["name"]}}"));
+conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+{% else %}
+String {{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
+	if ({{dictionary["name"]}} != null && !{{dictionary["name"]}}.equals("")){
+		if({{dictionary["name"]}}.endsWith("*")){
+			{{dictionary["name"]}} = {{dictionary["name"]}}.replace("*", "%");
+			conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+		}else{
+			conjuction.add(Restrictions.eq("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+		}
+	}
+{%- endif %}	
+{% endfor %}
+
+				
+{% for dictionary in attributes_parent %}	
+{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
+String {{dictionary["name"]}}String = req.getParameter("{{dictionary["name"]}}");
+Date {{dictionary["name"]}} = null;
+SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");					
+try {
+	if(!{{dictionary["name"]}}String.equals("")){
+		{{dictionary["name"]}} = dateFormat.parse({{dictionary["name"]}}String);
+		conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+	}
+} catch (ParseException e) {
+	req.setAttribute("badFormat", true);
+	RequestDispatcher dispatcher = req.getRequestDispatcher("./Search{{name}}.jsp");
+	dispatcher.forward(req, resp);
+	return;
+}
+{% elif dictionary["type"] is defined and dictionary["type"] == "Integer" %}
+Integer {{dictionary["name"]}} = null;
+if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}")) ) {
+	String {{dictionary["name"]}}String = req.getParameter("{{dictionary["name"]}}");
+	boolean {{dictionary["name"]}}Boolean = false;
+	if ({{dictionary["name"]}}String.endsWith("*")){
+		{{dictionary["name"]}}Boolean = true;
+		{{dictionary["name"]}}String.replace("*", "");
+	}
+	try{
+		{{dictionary["name"]}} = Integer.parseInt({{dictionary["name"]}}String);
+		if ({{dictionary["name"]}}Boolean)
+			conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+		else
+			conjuction.add(Restrictions.eq("{{dictionary["name"].lower()}}",{{dictionary["name"].lower()}}));
+	} catch (NumberFormatException e) {
+		String error = "Polje treba da bude broj!";
+		req.setAttribute("error", error);
+		RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}Search.jsp");
+		dispatcher.forward(req, resp);
+		return;	
+	}	
+}
+{% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
+{{dictionary["type"]}} {{dictionary["name"]}} = {{dictionary["type"]}}.valueOf(req.getParameter("{{dictionary["name"]}}"));
+conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+{% else %}
+String {{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
+	if ({{dictionary["name"]}} != null && !{{dictionary["name"]}}.equals("")){
+		if({{dictionary["name"]}}.endsWith("*")){
+			{{dictionary["name"]}} = {{dictionary["name"]}}.replace("*", "%");
+			conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+		}else{
+			conjuction.add(Restrictions.eq("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+		}
+	}
+{%- endif %}	
+{% endfor %}
+				
+				
+				
+				
+				
+				
+	List{{name}} {{name.lower()}}s = {{name}}Dao.findBySearchCriteria(conjuction);
+	
+	req.setAttribute("{{name.lower()}}s", {{name.lower()}}s);
+	RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}Search.jsp");
+	dispatcher.forward(req, resp);
+	return;
+
+}
+}	

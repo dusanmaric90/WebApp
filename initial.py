@@ -180,6 +180,7 @@ class NClasses(SemanticAction):
           tmpl_prepare_add = env.get_template('controller_prepare_add.txt')
           tmpl_add = env.get_template('controller_add.txt')
           tmpl_update = env.get_template('controller_update.txt')
+          tmpl_search = env.get_template('controller_search.txt')
           if not os.path.exists("controller"):
             os.makedirs("controller")
 
@@ -195,6 +196,10 @@ class NClasses(SemanticAction):
                 filename = "controller/"+listClass[0]+"UpdateController.java"
                 target = open(filename, 'w+')
                 target.write(tmpl_update.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]],foreignKeysParent = parentForeignKey[listClass[0]]))
+                target.close()
+                filename = "controller/"+listClass[0]+"SearchController.java"
+                target = open(filename, 'w+')
+                target.write(tmpl_search.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
                 target.close()
           
 class NClass(SemanticAction):
