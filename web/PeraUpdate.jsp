@@ -1,11 +1,12 @@
-	
-	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<html>
-	<head>
-		<title>Dodaj Pera</title>
-		
-	<script type="text/javascript">
+		<head>
+			<title>Izmeni Pera</title>
+			
+			
+			
+<script type="text/javascript">
 	
 	function provera(){
 		
@@ -60,16 +61,17 @@
 		
 	}	
 	</script>
-	</head>
 	
-	<body>
-	<h2>Dodaj Pera</h2>
-		<c:if test="${not empty error}">
-		    ${error}
-		</c:if>
-		<form action="./PeraControllerAdd" method="post" name="forma" onsubmit="return provera()" >
-			<table >
-			
+	
+	
+		</head>
+		<body>
+			<c:if test="${not empty error}">
+			    ${error}
+			</c:if>
+			<form action="./PeraUpdateController" method="post" name="forma" onsubmit="return provera()">
+				<table >
+				
 			
 			
 			<tr>
@@ -101,14 +103,14 @@
 			
 			<tr>
 					<td>ime *</td>
-					<td><input type="text" name="ime" maxlength="5" size="5" /> </td>				
-			</tr>	
+					<td><input type="text" name="ime" value="${pera.ime}" maxlength="5" size="5" /> </td>				
+			</tr>			
 			
 			
 			<tr>
 					<td>prezime </td>
-					<td><input type="text" name="prezime"  /> </td>				
-			</tr>	
+					<td><input type="text" name="prezime" value="${pera.prezime}"  /> </td>				
+			</tr>			
 			
 			
 			<tr>
@@ -121,17 +123,16 @@
 						</select>
 					</td>
 				</tr>
-				
+						
 			
-			
-			
-			<tr>
-					<td>&nbsp;</td>
-					<td><input type="submit" name="submit" value="Dodaj Pera"></td>				
-				</tr>
-			</table>						
-		</form>
-		
-		<p> <a href="./home.jsp">Pocetna</a>  </p>
-	<body>
-</html>
+	
+					<tr>
+						<td>&nbsp;</td>
+						<td><input type="hidden" name="id" value="${pera.id}"></td>
+						<td><input type="submit" name="submit" value="Izmeni Pera"></td>
+					</tr>
+				</table>
+			</form>
+			<p> <a href="./home.jsp">Pocetna</a>  </p>
+		</body>
+	</html>

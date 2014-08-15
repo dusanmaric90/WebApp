@@ -136,7 +136,7 @@
 					<td>{{dictionary["name"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
 					<td><input type="text" name="{{dictionary["name"]}}" {% if dictionary["max"] is defined  %}maxlength="{{dictionary["max"]}}" size="{{dictionary["max"]}}"{%- endif %} /> </td>				
 			</tr>
-			{%- endif %}	
+			{%- endif %}			
 			{% endfor %}
 			
 			{% for dictionary in attributes_parent %}

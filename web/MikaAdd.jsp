@@ -37,7 +37,7 @@
 			<tr>
 					<td>ime </td>
 					<td><input type="text" name="ime"  /> </td>				
-			</tr>	
+			</tr>			
 			
 			
 			
