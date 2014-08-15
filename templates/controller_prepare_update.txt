@@ -1,0 +1,57 @@
+package controller.update;
+		
+import java.io.IOException;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+		
+import model.*;
+import dao.*;
+
+		
+public class {{name}}PrepareUpdateController extends HttpServlet {
+			
+			
+@EJB 
+I{{name}}Dao {{name}}Dao;
+			
+{% for dictionary in attributes %}
+{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+@EJB
+private I{{dictionary["type"]}}Dao {{dictionary["type"]}}Dao;	
+{%- endif %}	
+{% endfor %}
+	
+			
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doPost(req,resp);
+	}
+			
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
+		Integer id{{name}} = null;
+			
+		if (req.getParameter("id") != null ) {
+			id{{name}} = Integer.parseInt(req.getParameter("id"));
+		}
+		
+		{{name}} temp{{name}} = {{name}}Dao.findById(id{{name}});
+		req.setAttribute("{{name.lower()}}", temp{{name}});
+		
+		{% for dictionary in attributes %}
+		{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+		List<{{dictionary["type"]}}> list{{dictionary["type"]}} = {{dictionary["type"]}}Dao.findAll();
+		req.setAttribute("list{{dictionary["type"]}}", list{{dictionary["type"]}});
+		{%- endif %}	
+		{% endfor %}
+
+		
+		getServletContext().getRequestDispatcher("/{{name}}Update.jsp").forward(req, resp);
+		
+	}
+}

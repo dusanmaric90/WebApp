@@ -179,6 +179,7 @@ class NClasses(SemanticAction):
           env = Environment(loader=FileSystemLoader('templates'))
           tmpl_prepare_add = env.get_template('controller_prepare_add.txt')
           tmpl_add = env.get_template('controller_add.txt')
+          tmpl_update = env.get_template('controller_update.txt')
           if not os.path.exists("controller"):
             os.makedirs("controller")
 
@@ -190,6 +191,10 @@ class NClasses(SemanticAction):
                 filename = "controller/"+listClass[0]+"ControllerAdd.java"
                 target = open(filename, 'w+')
                 target.write(tmpl_add.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]],foreignKeysParent = parentForeignKey[listClass[0]]))
+                target.close()
+                filename = "controller/"+listClass[0]+"UpdateController.java"
+                target = open(filename, 'w+')
+                target.write(tmpl_update.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]],foreignKeysParent = parentForeignKey[listClass[0]]))
                 target.close()
           
 class NClass(SemanticAction):
@@ -234,11 +239,19 @@ class NClass(SemanticAction):
           target = open(filename, 'w+')
           target.write(tmpl.render( name = str(className)))
           target.close()
+          
           tmpl = env.get_template('controller_delete.txt')
           filename = "controller/"+str(className)+"DeleteController.java"
           target = open(filename, 'w+')
           target.write(tmpl.render( name = str(className)))
           target.close()
+
+          tmpl = env.get_template('controller_prepare_update.txt')
+          filename = "controller/"+str(className)+"PrepareUpdateController.java"
+          target = open(filename, 'w+')
+          target.write(tmpl.render( name = str(className),attributes = children))
+          target.close()
+          
           return [str(className),superClass,parentClass,children]
 
 # Connecting rules with semantic actions    

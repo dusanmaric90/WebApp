@@ -1,0 +1,183 @@
+package controller.update;
+		
+		import java.text.SimpleDateFormat;	
+		import java.text.ParseException;
+		import java.io.IOException;
+		import javax.servlet.RequestDispatcher;
+		import javax.ejb.EJB;
+		import javax.servlet.ServletException;
+		import javax.servlet.http.HttpServlet;
+		import javax.servlet.http.HttpServletRequest;
+		import javax.servlet.http.HttpServletResponse;
+		import model.*;
+		import java.util.Date;
+		import dao.*;
+	
+		
+		
+		
+		public class {{name}}UpdateController extends HttpServlet {
+			
+			
+@EJB 
+I{{name}}Dao {{name}}Dao;
+			
+{% for dictionary in attributes %}
+{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+@EJB
+private I{{dictionary["type"]}}Dao {{dictionary["type"]}}Dao;	
+{%- endif %}	
+{% endfor %}
+
+{% for item in foreignKeysParent %}
+@EJB
+private I{{item}}Dao {{item}}Dao;			
+{% endfor %}
+			
+@Override
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	doPost(req,resp);
+}
+			
+@Override
+protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
+{% for dictionary in attributes %}
+{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+Integer  {{dictionary["name"]}} = null;	
+{% elif dictionary["type"] is defined and dictionary["type"] == "Date" %}
+String  {{dictionary["name"]}} = null;
+{% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
+String  {{dictionary["name"]}} = null;
+{% else %}
+{{dictionary["type"]}} {{dictionary["name"]}} = null
+{%- endif %}	
+{% endfor %}
+
+{% for dictionary in attributes_parent %}
+{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+Integer  {{dictionary["name"]}} = null;	
+{% elif dictionary["type"] is defined and dictionary["type"] == "Date" %}
+String  {{dictionary["name"]}} = null;
+{% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
+String  {{dictionary["name"]}} = null;
+{% else %}
+{{dictionary["type"]}} {{dictionary["name"]}} = null
+{%- endif %}	
+{% endfor %}
+				
+				
+				
+String {{name}}Id = req.getParameter("id");
+				
+{% for dictionary in attributes %}
+{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}"))) {
+{{dictionary["name"]}} = Integer.parseInt(req.getParameter("{{dictionary["name"]}}"));
+}
+{% elif dictionary["type"] is defined and dictionary["type"] == "Integer" %}
+if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}"))) {
+		{{dictionary["name"]}} = Integer.parseInt(req.getParameter("{{dictionary["name"]}}"));
+}
+{% else %}
+if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}")) ) {
+	{{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
+}
+{%- endif %}	
+{% endfor %}
+
+{% for dictionary in attributes_parent %}
+{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}"))) {
+		{{dictionary["name"]}} = Integer.parseInt(req.getParameter("{{dictionary["name"]}}"));
+}
+{% elif dictionary["type"] is defined and dictionary["type"] == "Integer" %}
+if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}"))) {
+{{dictionary["name"]}} = Integer.parseInt(req.getParameter("{{dictionary["name"]}}"));
+}
+{% else %}
+if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}")) ) {
+	{{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
+}
+{%- endif %}	
+{% endfor %}
+
+				
+{{name}} temp{{name}} = new {{name}}();
+temp{{name}}.setId(new Integer({{name}}Id));
+				
+{% for dictionary in attributes %}
+{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+if({{dictionary["name"]}} !=null){
+	temp{{name}}.set{{dictionary["name"].capitalize()}}({{dictionary["type"]}}Dao.findById({{dictionary["name"]}}));
+}
+{% elif dictionary["type"] is defined and dictionary["type"] == "Date" %}
+if({{dictionary["name"]}} !=null){
+	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	try{
+		Date date = format.parse({{dictionary["name"]}});
+		temp{{name}}.set{{dictionary["name"].capitalize()}}(date);
+	} catch (ParseException e) {
+		String error = "Pogresan format datuma!";
+		req.setAttribute("error", error);
+		RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}Add.jsp");
+		dispatcher.forward(req, resp);
+		return;
+	}
+}
+{% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
+if({{dictionary["name"]}} !=null){
+	{{dictionary["type"]}} enum{{dictionary["name"].capitalize()}} = {{dictionary["type"]}}.valueOf({{dictionary["name"]}});
+	temp{{name}}.set{{dictionary["name"].capitalize()}}(enum{{dictionary["name"].capitalize()}});
+}
+{% else %}
+if({{dictionary["name"]}} !=null){
+	temp{{name}}.set{{dictionary["name"].capitalize()}}({{dictionary["name"]}});
+}
+{%- endif %}	
+{% endfor %}
+
+{% for dictionary in attributes_parent %}
+{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+if({{dictionary["name"]}} !=null){
+	temp{{name}}.set{{dictionary["name"].capitalize()}}({{dictionary["type"]}}Dao.findById({{dictionary["name"]}}));
+}
+{% elif dictionary["type"] is defined and dictionary["type"] == "Date" %}
+if({{dictionary["name"]}} !=null){
+	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	try{
+		Date date = format.parse({{dictionary["name"]}});
+		temp{{name}}.set{{dictionary["name"].capitalize()}}(date);
+	} catch (ParseException e) {
+		String error = "Pogresan format datuma!";
+		req.setAttribute("error", error);
+		RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}Add.jsp");
+		dispatcher.forward(req, resp);
+		return;
+	}
+}
+{% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
+if({{dictionary["name"]}} !=null){
+	{{dictionary["type"]}} enum{{dictionary["name"].capitalize()}} = {{dictionary["type"]}}.valueOf({{dictionary["name"]}});
+	temp{{name}}.set{{dictionary["name"].capitalize()}}(enum{{dictionary["name"].capitalize()}});
+}
+{% else %}
+if({{dictionary["name"]}} !=null){
+	temp{{name}}.set{{dictionary["name"].capitalize()}}({{dictionary["name"]}});
+}
+{%- endif %}	
+{% endfor %}
+				
+				
+try{
+	{{name}}Dao.merge(temp{{name}});
+} catch (Exception e){
+	String error = "Pogresni podaci!";
+	req.setAttribute("error", error);
+	RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}Update.jsp");
+	dispatcher.forward(req, resp);
+	return;
+}
+getServletContext().getRequestDispatcher("/{{name}}ControllerShow").forward(req, resp);
+
+}
+}
