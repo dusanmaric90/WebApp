@@ -1,0 +1,110 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8"%>
+	
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	
+	<%@page import="java.util.List"%>
+	<%@page import="model.{{name}}"%>
+	<%
+		List<{{name}}> {{name.lower()}}s = (List<{{name}}>) request.getAttribute("{{name.lower()}}s");
+	%>
+	<%
+		Boolean badFormat = (Boolean) request.getAttribute("badFormat");
+	%>
+	
+	
+	<html>
+		<head>
+			<title>Pretraga {{name}}</title>
+		</head>
+		<body>
+		
+			<form action="./{{name}}SearchController" method="post">
+				<table>
+				
+				
+				{% for dictionary in attributes %}
+				<tr>
+				{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
+				<td> {{dictionary["name"]}} (dd-MM-yyyy)</td>
+				{% else %}
+				<td>{{dictionary["name"]}}</td>
+				{%- endif %}
+				
+				{% if dictionary["enum"] is defined and dictionary["enum"] == "true" %}
+				<td>
+					<select name="{{dictionary["name"]}}">
+						<c:forEach var="temp{{dictionary["type"]}}" items="<%= model.{{dictionary["type"]}}.values() %>">
+							<option value="${temp{{dictionary["type"]}}}">${temp{{dictionary["type"]}}}</option>
+						</c:forEach>
+					</select>
+				</td>
+				{% else %}
+				<td><input type="text" name="{{dictionary["name"]}}" /></td>
+				{%- endif %}
+				</tr>				
+				{% endfor %}
+				
+				{% for dictionary in attributes_parent %}
+				<tr>
+				{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
+				<td> {{dictionary["name"]}} (dd-MM-yyyy)</td>
+				{% else %}
+				<td>{{dictionary["name"]}}</td>
+				{%- endif %}
+				
+				{% if dictionary["enum"] is defined and dictionary["enum"] == "true" %}
+				<td>
+					<select name="{{dictionary["name"]}}">
+						<c:forEach var="temp{{dictionary["type"]}}" items="<%= model.{{dictionary["type"]}}.values() %>">
+							<option value="${temp{{dictionary["type"]}}}">${temp{{dictionary["type"]}}}</option>
+						</c:forEach>
+					</select>
+				</td>
+				{% else %}
+				<td><input type="text" name="{{dictionary["name"]}}" /></td>
+				{%- endif %}
+				</tr>				
+				{% endfor %}
+
+					<c:if test="${badFormat }">
+						<tr>
+							<td>&nbsp;</td>
+							<td><font color="red">ERROR: Bad date format!</font></td>
+						</tr>
+					</c:if>
+					<tr>
+						<td>&nbsp;</td>
+						<td><input type="submit" name="Search" value="Search" />
+					</tr>
+				</table>
+			</form>
+			
+			
+			<c:if test="${!empty {{name.lower()}}s }">
+				<p>Results:</p>
+				<table id="{{name.lower()}}sTable">
+					<tr>
+					{% for dictionary in attributes %}
+					<th>{{dictionary["name"]}}</th>
+					{% endfor %}
+					</tr>
+					<c:forEach var="{{name.lower()}}" items="{% raw %}${{% endraw %}{{name.lower()}}{% raw %}s }{% endraw %}">
+						<tr>
+						{% for dictionary in attributes %}
+						<td>{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"]}}{% raw %} } {% endraw %}</td>
+						{% endfor %}
+
+							<td>
+								<form action="./{{name}}ControllerShow" method="post">
+									<input type="hidden" name="id" value="{% raw %}${{% endraw %}{{name.lower()}}.id {% raw %}}{% endraw %}"> <input
+										type="submit" name="View {{name}}" value="View {{name}}">
+								</form>
+							</td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:if>
+		<p> <a href="./home.jsp">Pocetna</a>  </p>
+		</body>
+	</html>

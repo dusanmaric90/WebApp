@@ -184,6 +184,7 @@ class NClasses(SemanticAction):
           tmp_web_show = env.get_template('web_show.txt')
           tmp_web_add = env.get_template('web_add.txt')
           tmp_web_update = env.get_template('web_update.txt')
+          tmp_web_search = env.get_template('web_search.txt')
           
           if not os.path.exists("controller"):
             os.makedirs("controller")
@@ -218,6 +219,10 @@ class NClasses(SemanticAction):
                 filename = "web/"+listClass[0]+"Update.jsp"
                 target = open(filename, 'w+')
                 target.write(tmp_web_update.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
+                target.close()
+                filename = "web/"+listClass[0]+"Search.jsp"
+                target = open(filename, 'w+')
+                target.write(tmp_web_search.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
                 target.close()
           
 class NClass(SemanticAction):
