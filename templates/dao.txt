@@ -1,0 +1,9 @@
+	package dao;
+		
+		import dao.generic.IGenericDao;
+		import model.*;
+		
+		
+		public interface I{{name}}Dao extends IGenericDao<{{name}}>{
+			
+		}

@@ -1,0 +1,13 @@
+package dao;
+		
+		import javax.ejb.Local;
+		import javax.ejb.Stateless;
+		import dao.generic.AbstractHibernateDao;
+		import model.*;
+		
+		@Stateless
+		@Local(I{{name}}Dao.class)
+		public class {{name}}HibernateDao extends AbstractHibernateDao<{{name}}> implements 
+		I{{name}}Dao{
+			
+		}

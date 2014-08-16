@@ -1,14 +1,4 @@
-#######################################################################
-# Name: calc.py
-# Purpose: Simple expression evaluator example
-# Author: Igor R. Dejanovic <igor DOT dejanovic AT gmail DOT com>
-# Copyright: (c) 2009-2014 Igor R. Dejanovic <igor DOT dejanovic AT gmail DOT com>
-# License: MIT License
-#
-# This example demonstrates grammar definition using python constructs as
-# well as using semantic actions to evaluate simple expression in infix
-# notation.
-#######################################################################
+
 
 from arpeggio import Optional, ZeroOrMore, OneOrMore, EOF, SemanticAction,\
     ParserPython
@@ -63,6 +53,24 @@ class Initial(SemanticAction):
   
     def first_pass(self, parser, node, children):
           print "initial!!!!!!"
+          env = Environment(loader=FileSystemLoader('templates'))
+
+          if not os.path.exists("dao"):
+            os.makedirs("dao")
+          if not os.path.exists("dao/generic"):
+            os.makedirs("dao/generic")
+            
+          tmpl = env.get_template('abstract_hibernate_dao.txt')
+          filename = "dao/generic/AbstractHibernateDao.java"
+          target = open(filename, 'w+')
+          target.write(tmpl.render())
+          target.close()
+
+          tmpl = env.get_template('generic_dao.txt')
+          filename = "dao/generic/IGenericDao.java"
+          target = open(filename, 'w+')
+          target.write(tmpl.render())
+          target.close()
 
           
 class Database_config(SemanticAction):
@@ -241,6 +249,8 @@ class NClass(SemanticAction):
           tmpl = env.get_template('model.txt')
           if not os.path.exists("model"):
             os.makedirs("model")
+          if not os.path.exists("dao"):
+            os.makedirs("dao") 
           filename = "model/"+str(className)+".java"
           print filename
           target = open(filename, 'w+')
@@ -278,6 +288,18 @@ class NClass(SemanticAction):
           filename = "controller/"+str(className)+"PrepareUpdateController.java"
           target = open(filename, 'w+')
           target.write(tmpl.render( name = str(className),attributes = children))
+          target.close()
+
+          tmpl = env.get_template('dao.txt')
+          filename = "dao/I"+str(className)+"Dao.java"
+          target = open(filename, 'w+')
+          target.write(tmpl.render( name = str(className)))
+          target.close()
+
+          tmpl = env.get_template('hibernate_dao.txt')
+          filename = "dao/"+str(className)+"HibernateDao.java"
+          target = open(filename, 'w+')
+          target.write(tmpl.render( name = str(className)))
           target.close()
           
           return [str(className),superClass,parentClass,children]
