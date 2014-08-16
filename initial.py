@@ -57,6 +57,8 @@ class Initial(SemanticAction):
 
           if not os.path.exists("dao"):
             os.makedirs("dao")
+          if not os.path.exists("web"):
+            os.makedirs("web")
           if not os.path.exists("dao/generic"):
             os.makedirs("dao/generic")
             
@@ -68,6 +70,18 @@ class Initial(SemanticAction):
 
           tmpl = env.get_template('generic_dao.txt')
           filename = "dao/generic/IGenericDao.java"
+          target = open(filename, 'w+')
+          target.write(tmpl.render())
+          target.close()
+
+          tmpl = env.get_template('error.txt')
+          filename = "web/error.jsp"
+          target = open(filename, 'w+')
+          target.write(tmpl.render())
+          target.close()
+
+          tmpl = env.get_template('404.txt')
+          filename = "web/404.jsp"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
@@ -170,10 +184,14 @@ class NClasses(SemanticAction):
           print "NClasses!!!!!!"
           parentForeignKey = {}
           parrentAttribute ={}
+          allClasses = []
+
+          
           for listClass in children:
               parentForeignKey[listClass[0]] = []
               parrentAttribute[listClass[0]] = []
-          
+              allClasses.append(listClass[0])
+              
           for listClass in children: # class
               if listClass[1]:       # if specific class has extended some other class             
                   for listClassParent in children: # go to other classes 
@@ -193,11 +211,16 @@ class NClasses(SemanticAction):
           tmp_web_add = env.get_template('web_add.txt')
           tmp_web_update = env.get_template('web_update.txt')
           tmp_web_search = env.get_template('web_search.txt')
-          
+          tmp_web_home = env.get_template('home.txt')
           if not os.path.exists("controller"):
             os.makedirs("controller")
           if not os.path.exists("web"):
             os.makedirs("web")
+
+          filename = "web/home.jsp"
+          target = open(filename, 'w+')
+          target.write(tmp_web_home.render( classes = allClasses ))
+          target.close()
 
           for listClass in children:  
                 filename = "controller/"+listClass[0]+"ControllerPrepareAdd.java"
@@ -232,6 +255,7 @@ class NClasses(SemanticAction):
                 target = open(filename, 'w+')
                 target.write(tmp_web_search.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
                 target.close()
+               
           
 class NClass(SemanticAction):
     """
