@@ -37,7 +37,7 @@ class Pera : Zika
 	]
 enumeration Pol : Pera; Mika; Zika; 
 enumeration Boja : Zuta; Plava;
-database JSDApp:
+database WebApp:
 	driver = com.mysql.jdbc.Driver
 	username = root
 	password = root

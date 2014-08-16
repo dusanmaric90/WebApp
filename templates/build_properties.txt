@@ -1,0 +1,4 @@
+tomee.dir=C:/lokacija/do/tomee
+		warname=WebApp.war
+		jarname=WebApp.jar
+		earname=WebApp.ear

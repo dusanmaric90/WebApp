@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+		<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+				{% for class in classes %}
+					<servlet>
+						<servlet-name>{{class}}ControllerAdd</servlet-name>
+						<servlet-class>controller.add.{{class}}ControllerAdd</servlet-class>
+					</servlet>
+					
+					<servlet-mapping>
+						<servlet-name>{{class}}ControllerAdd</servlet-name>
+						<url-pattern>/{{class}}ControllerAdd</url-pattern>
+					</servlet-mapping>
+					
+					
+					<servlet>
+						<servlet-name>{{class}}DeleteController</servlet-name>
+						<servlet-class>controller.delete.{{class}}DeleteController</servlet-class>
+					</servlet>
+					
+					<servlet-mapping>
+						<servlet-name>{{class}}DeleteController</servlet-name>
+						<url-pattern>/{{class}}DeleteController</url-pattern>
+					</servlet-mapping>
+					
+					<servlet>
+						<servlet-name>{{class}}ControllerPrepareAdd</servlet-name>
+						<servlet-class>controller.prepareAdd.{{class}}ControllerPrepareAdd</servlet-class>
+					</servlet>
+					
+					<servlet>
+						<servlet-name>{{class}}SearchController</servlet-name>
+						<servlet-class>controller.search.{{class}}SearchController</servlet-class>
+					</servlet>
+					
+					<servlet-mapping>
+						<servlet-name>{{class}}ControllerPrepareAdd</servlet-name>
+						<url-pattern>/{{class}}ControllerPrepareAdd</url-pattern>
+					</servlet-mapping>
+					
+					<servlet>
+						<servlet-name>{{class}}ControllerShow</servlet-name>
+						<servlet-class>controller.show.{{class}}ControllerShow</servlet-class>
+					</servlet>
+					
+					<servlet-mapping>
+						<servlet-name>{{class}}ControllerShow</servlet-name>
+						<url-pattern>/{{class}}ControllerShow</url-pattern>
+					</servlet-mapping>
+					
+					<servlet>
+						<servlet-name>{{class}}PrepareUpdateController</servlet-name>
+						<servlet-class>controller.update.{{class}}PrepareUpdateController</servlet-class>
+					</servlet>
+					
+					<servlet-mapping>
+						<servlet-name>{{class}}PrepareUpdateController</servlet-name>
+						<url-pattern>/{{class}}PrepareUpdateController</url-pattern>
+					</servlet-mapping>
+					
+					<servlet>
+						<servlet-name>{{class}}UpdateController</servlet-name>
+						<servlet-class>controller.update.{{class}}UpdateController</servlet-class>
+					</servlet>
+					
+					<servlet-mapping>
+						<servlet-name>{{class}}UpdateController</servlet-name>
+						<url-pattern>/{{class}}UpdateController</url-pattern>
+					</servlet-mapping>
+					
+					<servlet-mapping>
+						<servlet-name>{{class}}SearchController</servlet-name>
+						<url-pattern>/{{class}}SearchController</url-pattern>
+					</servlet-mapping>
+			   {% endfor %}
+		
+		<listener>
+				<listener-class>util.HibernateListener</listener-class>
+		</listener> 
+		
+		<welcome-file-list>
+			<welcome-file>/home.jsp</welcome-file>
+		</welcome-file-list>
+		<error-page>
+			<exception-type>
+				java.lang.Throwable
+			</exception-type>
+			
+			<location>/error.jsp</location>
+		</error-page>
+		<error-page>
+			<error-code>404</error-code>
+			<location>/404.jsp</location>
+		</error-page>
+			
+		</web-app>

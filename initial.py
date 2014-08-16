@@ -61,6 +61,12 @@ class Initial(SemanticAction):
             os.makedirs("web")
           if not os.path.exists("dao/generic"):
             os.makedirs("dao/generic")
+
+          if not os.path.exists("META-INF"):
+            os.makedirs("META-INF")
+
+          if not os.path.exists("util"):
+            os.makedirs("util")
             
           tmpl = env.get_template('abstract_hibernate_dao.txt')
           filename = "dao/generic/AbstractHibernateDao.java"
@@ -82,6 +88,54 @@ class Initial(SemanticAction):
 
           tmpl = env.get_template('404.txt')
           filename = "web/404.jsp"
+          target = open(filename, 'w+')
+          target.write(tmpl.render())
+          target.close()
+
+          tmpl = env.get_template('application.txt')
+          filename = "META-INF/application.xml"
+          target = open(filename, 'w+')
+          target.write(tmpl.render())
+          target.close()
+
+          tmpl = env.get_template('hibernate_util.txt')
+          filename = "util/HibernateUtil.java"
+          target = open(filename, 'w+')
+          target.write(tmpl.render())
+          target.close()
+
+          tmpl = env.get_template('hibernate_listener.txt')
+          filename = "util/HibernateListener.java"
+          target = open(filename, 'w+')
+          target.write(tmpl.render())
+          target.close()
+
+          tmpl = env.get_template('classpath.txt')
+          filename = ".classpath"
+          target = open(filename, 'w+')
+          target.write(tmpl.render())
+          target.close()
+
+          tmpl = env.get_template('project.txt')
+          filename = ".project"
+          target = open(filename, 'w+')
+          target.write(tmpl.render())
+          target.close()
+
+          tmpl = env.get_template('build_properties.txt')
+          filename = "build.properties"
+          target = open(filename, 'w+')
+          target.write(tmpl.render())
+          target.close()
+
+          tmpl = env.get_template('jndi_properties.txt')
+          filename = "jndi.properties"
+          target = open(filename, 'w+')
+          target.write(tmpl.render())
+          target.close()
+
+          tmpl = env.get_template('build.txt')
+          filename = "build.xml"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
@@ -212,16 +266,22 @@ class NClasses(SemanticAction):
           tmp_web_update = env.get_template('web_update.txt')
           tmp_web_search = env.get_template('web_search.txt')
           tmp_web_home = env.get_template('home.txt')
+          tmp_web_xml = env.get_template('web_xml.txt')
           if not os.path.exists("controller"):
             os.makedirs("controller")
-          if not os.path.exists("web"):
-            os.makedirs("web")
-
+          if not os.path.exists("web/WEB-INF"):
+            os.makedirs("web/WEB-INF")
+ 
           filename = "web/home.jsp"
           target = open(filename, 'w+')
           target.write(tmp_web_home.render( classes = allClasses ))
           target.close()
 
+          filename = "web/WEB-INF/web.xml"
+          target = open(filename, 'w+')
+          target.write(tmp_web_xml.render( classes = allClasses ))
+          target.close()
+          
           for listClass in children:  
                 filename = "controller/"+listClass[0]+"ControllerPrepareAdd.java"
                 target = open(filename, 'w+')
