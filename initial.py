@@ -54,7 +54,10 @@ class Initial(SemanticAction):
     def first_pass(self, parser, node, children):
           print "initial!!!!!!"
           env = Environment(loader=FileSystemLoader('templates'))
-
+          env_web = Environment(loader=FileSystemLoader('templates/web'))
+          env_dao = Environment(loader=FileSystemLoader('templates/dao'))
+          env_hibernate = Environment(loader=FileSystemLoader('templates/hibernate'))
+          env_project = Environment(loader=FileSystemLoader('templates/project'))
           
           if not os.path.exists("WebApp/web"):
             os.makedirs("WebApp/web")
@@ -67,73 +70,73 @@ class Initial(SemanticAction):
           if not os.path.exists("WebApp/src/util"):
             os.makedirs("WebApp/src/util")
             
-          tmpl = env.get_template('abstract_hibernate_dao.txt')
+          tmpl = env_dao.get_template('abstract_hibernate_dao.txt')
           filename = "WebApp/src/dao/generic/AbstractHibernateDao.java"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
-          tmpl = env.get_template('generic_dao.txt')
+          tmpl = env_dao.get_template('generic_dao.txt')
           filename = "WebApp/src/dao/generic/IGenericDao.java"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
-          tmpl = env.get_template('error.txt')
+          tmpl = env_web.get_template('error.txt')
           filename = "WebApp/web/error.jsp"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
-          tmpl = env.get_template('404.txt')
+          tmpl = env_web.get_template('404.txt')
           filename = "WebApp/web/404.jsp"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
-          tmpl = env.get_template('application.txt')
+          tmpl = env_project.get_template('application.txt')
           filename = "WebApp/src/META-INF/application.xml"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
-          tmpl = env.get_template('hibernate_util.txt')
+          tmpl = env_hibernate.get_template('hibernate_util.txt')
           filename = "WebApp/src/util/HibernateUtil.java"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
-          tmpl = env.get_template('hibernate_listener.txt')
+          tmpl = env_hibernate.get_template('hibernate_listener.txt')
           filename = "WebApp/src/util/HibernateListener.java"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
-          tmpl = env.get_template('classpath.txt')
+          tmpl = env_project.get_template('classpath.txt')
           filename = "WebApp/.classpath"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
-          tmpl = env.get_template('project.txt')
+          tmpl = env_project.get_template('project.txt')
           filename = "WebApp/.project"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
-          tmpl = env.get_template('build_properties.txt')
+          tmpl = env_project.get_template('build_properties.txt')
           filename = "WebApp/build.properties"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
-          tmpl = env.get_template('jndi_properties.txt')
+          tmpl = env_project.get_template('jndi_properties.txt')
           filename = "WebApp/src/jndi.properties"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
-          tmpl = env.get_template('build.txt')
+          tmpl = env_project.get_template('build.txt')
           filename = "WebApp/build.xml"
           target = open(filename, 'w+')
           target.write(tmpl.render())
@@ -145,7 +148,7 @@ class Database_config(SemanticAction):
     def first_pass(self, parser, node, children):
           print "database_config!!!!!!"
           print str(node[5]) +" "+ str(node[8])+" "+str(node[11])+" "+str(node[14])
-          env = Environment(loader=FileSystemLoader('templates'))
+          env = Environment(loader=FileSystemLoader('templates/hibernate'))
           tmpl =  env.get_template('persistence.txt')
           if not os.path.exists("WebApp/src/META-INF"):
             os.makedirs("WebApp/src/META-INF")
@@ -223,7 +226,7 @@ class Enumeration(SemanticAction):
            
           enumeration_name = node[1]
           
-          env = Environment(loader=FileSystemLoader('templates'))
+          env = Environment(loader=FileSystemLoader('templates/enumeration'))
           tmpl =  env.get_template('enumeration.txt')
           if not os.path.exists("WebApp/src/enumeration"):
             os.makedirs("WebApp/src/enumeration")
@@ -256,16 +259,18 @@ class NClasses(SemanticAction):
                                    print str(parentForeignKey)
                                    
           env = Environment(loader=FileSystemLoader('templates'))
-          tmpl_prepare_add = env.get_template('controller_prepare_add.txt')
-          tmpl_add = env.get_template('controller_add.txt')
-          tmpl_update = env.get_template('controller_update.txt')
-          tmpl_search = env.get_template('controller_search.txt')
-          tmp_web_show = env.get_template('web_show.txt')
-          tmp_web_add = env.get_template('web_add.txt')
-          tmp_web_update = env.get_template('web_update.txt')
-          tmp_web_search = env.get_template('web_search.txt')
-          tmp_web_home = env.get_template('home.txt')
-          tmp_web_xml = env.get_template('web_xml.txt')
+          env_controller = Environment(loader=FileSystemLoader('templates/controller'))
+          env_web = Environment(loader=FileSystemLoader('templates/web'))
+          tmpl_prepare_add = env_controller.get_template('controller_prepare_add.txt')
+          tmpl_add = env_controller.get_template('controller_add.txt')
+          tmpl_update = env_controller.get_template('controller_update.txt')
+          tmpl_search = env_controller.get_template('controller_search.txt')
+          tmp_web_show = env_web.get_template('web_show.txt')
+          tmp_web_add = env_web.get_template('web_add.txt')
+          tmp_web_update = env_web.get_template('web_update.txt')
+          tmp_web_search = env_web.get_template('web_search.txt')
+          tmp_web_home = env_web.get_template('home.txt')
+          tmp_web_xml = env_web.get_template('web_xml.txt')
           if not os.path.exists("WebApp/src/controller/prepareAdd"):
             os.makedirs("WebApp/src/controller/prepareAdd")
           if not os.path.exists("WebApp/src/controller/add"):
@@ -335,7 +340,9 @@ class NClass(SemanticAction):
                 print "Key = "+key +" Value = "+value
           className = node[1]
           env = Environment(loader=FileSystemLoader('templates'))
-          tmpl = env.get_template('model.txt')
+          env_model = Environment(loader=FileSystemLoader('templates/model'))
+          env_dao = Environment(loader=FileSystemLoader('templates/dao'))
+          tmpl = env_model.get_template('model.txt')
           if not os.path.exists("WebApp"):
             os.makedirs("WebApp")
           if not os.path.exists("WebApp/src/model"):
@@ -361,7 +368,8 @@ class NClass(SemanticAction):
           target.close()
           
           env = Environment(loader=FileSystemLoader('templates'))
-          tmpl = env.get_template('controller_show.txt')
+          env_controller = Environment(loader=FileSystemLoader('templates/controller'))
+          tmpl = env_controller.get_template('controller_show.txt')
           if not os.path.exists("WebApp/src/controller/show"):
             os.makedirs("WebApp/src/controller/show")
           if not os.path.exists("WebApp/src/controller/delete"):
@@ -374,25 +382,25 @@ class NClass(SemanticAction):
           target.write(tmpl.render( name = str(className)))
           target.close()
           
-          tmpl = env.get_template('controller_delete.txt')
+          tmpl = env_controller.get_template('controller_delete.txt')
           filename = "WebApp/src/controller/delete/"+str(className)+"DeleteController.java"
           target = open(filename, 'w+')
           target.write(tmpl.render( name = str(className)))
           target.close()
 
-          tmpl = env.get_template('controller_prepare_update.txt')
+          tmpl = env_controller.get_template('controller_prepare_update.txt')
           filename = "WebApp/src/controller/prepareUpdate/"+str(className)+"PrepareUpdateController.java"
           target = open(filename, 'w+')
           target.write(tmpl.render( name = str(className),attributes = children))
           target.close()
 
-          tmpl = env.get_template('dao.txt')
+          tmpl = env_dao.get_template('dao.txt')
           filename = "WebApp/src/dao/I"+str(className)+"Dao.java"
           target = open(filename, 'w+')
           target.write(tmpl.render( name = str(className)))
           target.close()
 
-          tmpl = env.get_template('hibernate_dao.txt')
+          tmpl = env_dao.get_template('hibernate_dao.txt')
           filename = "WebApp/src/dao/"+str(className)+"HibernateDao.java"
           target = open(filename, 'w+')
           target.write(tmpl.render( name = str(className)))
