@@ -15,7 +15,7 @@ import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import model.*;
-		
+import enumeration.*;		
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Restrictions;
 		
@@ -154,7 +154,7 @@ String {{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
 				
 				
 				
-	List{{name}} {{name.lower()}}s = {{name}}Dao.findBySearchCriteria(conjuction);
+	List<{{name}}> {{name.lower()}}s = {{name}}Dao.findBySearchCriteria(conjuction);
 	
 	req.setAttribute("{{name.lower()}}s", {{name.lower()}}s);
 	RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}Search.jsp");

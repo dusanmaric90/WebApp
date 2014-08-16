@@ -1,3 +1,4 @@
+package enumeration;
 public enum {{enumeration_name}} { 
 {% for i in enumeration_values %} {{i}}{% if  not loop.last%},{% endif %}{% endfor %}
 }

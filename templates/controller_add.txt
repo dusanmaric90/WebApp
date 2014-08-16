@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.lang.IllegalArgumentException;
 
 import dao.*;
+import enumeration.*;
  
     
 
@@ -52,7 +53,7 @@ String  {{dictionary["name"]}} = null;
 {% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
 String  {{dictionary["name"]}} = null;
 {% else %}
-{{dictionary["type"]}} {{dictionary["name"]}} = null
+{{dictionary["type"]}} {{dictionary["name"]}} = null;
 {%- endif %}	
 {% endfor %}
 
@@ -64,7 +65,7 @@ String  {{dictionary["name"]}} = null;
 {% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
 String  {{dictionary["name"]}} = null;
 {% else %}
-{{dictionary["type"]}} {{dictionary["name"]}} = null
+{{dictionary["type"]}} {{dictionary["name"]}} = null;
 {%- endif %}	
 {% endfor %}
 

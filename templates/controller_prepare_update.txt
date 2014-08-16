@@ -1,4 +1,4 @@
-package controller.update;
+package controller.prepareUpdate;
 		
 import java.io.IOException;
 import java.util.List;

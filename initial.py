@@ -55,87 +55,86 @@ class Initial(SemanticAction):
           print "initial!!!!!!"
           env = Environment(loader=FileSystemLoader('templates'))
 
-          if not os.path.exists("dao"):
-            os.makedirs("dao")
-          if not os.path.exists("web"):
-            os.makedirs("web")
-          if not os.path.exists("dao/generic"):
-            os.makedirs("dao/generic")
+          
+          if not os.path.exists("WebApp/web"):
+            os.makedirs("WebApp/web")
+          if not os.path.exists("WebApp/src/dao/generic"):
+            os.makedirs("WebApp/src/dao/generic")
 
-          if not os.path.exists("META-INF"):
-            os.makedirs("META-INF")
+          if not os.path.exists("WebApp/src/META-INF"):
+            os.makedirs("WebApp/src/META-INF")
 
-          if not os.path.exists("util"):
-            os.makedirs("util")
+          if not os.path.exists("WebApp/src/util"):
+            os.makedirs("WebApp/src/util")
             
           tmpl = env.get_template('abstract_hibernate_dao.txt')
-          filename = "dao/generic/AbstractHibernateDao.java"
+          filename = "WebApp/src/dao/generic/AbstractHibernateDao.java"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
           tmpl = env.get_template('generic_dao.txt')
-          filename = "dao/generic/IGenericDao.java"
+          filename = "WebApp/src/dao/generic/IGenericDao.java"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
           tmpl = env.get_template('error.txt')
-          filename = "web/error.jsp"
+          filename = "WebApp/web/error.jsp"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
           tmpl = env.get_template('404.txt')
-          filename = "web/404.jsp"
+          filename = "WebApp/web/404.jsp"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
           tmpl = env.get_template('application.txt')
-          filename = "META-INF/application.xml"
+          filename = "WebApp/src/META-INF/application.xml"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
           tmpl = env.get_template('hibernate_util.txt')
-          filename = "util/HibernateUtil.java"
+          filename = "WebApp/src/util/HibernateUtil.java"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
           tmpl = env.get_template('hibernate_listener.txt')
-          filename = "util/HibernateListener.java"
+          filename = "WebApp/src/util/HibernateListener.java"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
           tmpl = env.get_template('classpath.txt')
-          filename = ".classpath"
+          filename = "WebApp/.classpath"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
           tmpl = env.get_template('project.txt')
-          filename = ".project"
+          filename = "WebApp/.project"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
           tmpl = env.get_template('build_properties.txt')
-          filename = "build.properties"
+          filename = "WebApp/build.properties"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
           tmpl = env.get_template('jndi_properties.txt')
-          filename = "jndi.properties"
+          filename = "WebApp/src/jndi.properties"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
 
           tmpl = env.get_template('build.txt')
-          filename = "build.xml"
+          filename = "WebApp/build.xml"
           target = open(filename, 'w+')
           target.write(tmpl.render())
           target.close()
@@ -148,14 +147,14 @@ class Database_config(SemanticAction):
           print str(node[5]) +" "+ str(node[8])+" "+str(node[11])+" "+str(node[14])
           env = Environment(loader=FileSystemLoader('templates'))
           tmpl =  env.get_template('persistence.txt')
-          if not os.path.exists("META-INF"):
-            os.makedirs("META-INF")
-          filename = "META-INF/persistence.xml"
+          if not os.path.exists("WebApp/src/META-INF"):
+            os.makedirs("WebApp/src/META-INF")
+          filename = "WebApp/src/META-INF/persistence.xml"
           target = open(filename, 'w+')
           target.write(tmpl.render( name = str(node[1]), driver = str(node[5]), username = str(node[8]), password = str(node[11]),url =str(node[14]), database_tables = children  ))
           target.close()
           tmpl =  env.get_template('hibernate.cfg.txt')
-          filename = "hibernate.cfg.xml"
+          filename = "WebApp/src/hibernate.cfg.xml"
           target = open(filename, 'w+')
           target.write(tmpl.render( driver = str(node[5]), username = str(node[8]), password = str(node[11]),url =str(node[14]), database_tables = children  ))
           target.close()
@@ -226,9 +225,9 @@ class Enumeration(SemanticAction):
           
           env = Environment(loader=FileSystemLoader('templates'))
           tmpl =  env.get_template('enumeration.txt')
-          if not os.path.exists("enumeration"):
-            os.makedirs("enumeration")
-          filename = "enumeration/"+str(enumeration_name)+".java"
+          if not os.path.exists("WebApp/src/enumeration"):
+            os.makedirs("WebApp/src/enumeration")
+          filename = "WebApp/src/enumeration/"+str(enumeration_name)+".java"
           target = open(filename, 'w+')
           target.write(tmpl.render( enumeration_name = enumeration_name, enumeration_values = children  ))
           target.close()
@@ -267,51 +266,57 @@ class NClasses(SemanticAction):
           tmp_web_search = env.get_template('web_search.txt')
           tmp_web_home = env.get_template('home.txt')
           tmp_web_xml = env.get_template('web_xml.txt')
-          if not os.path.exists("controller"):
-            os.makedirs("controller")
-          if not os.path.exists("web/WEB-INF"):
-            os.makedirs("web/WEB-INF")
+          if not os.path.exists("WebApp/src/controller/prepareAdd"):
+            os.makedirs("WebApp/src/controller/prepareAdd")
+          if not os.path.exists("WebApp/src/controller/add"):
+            os.makedirs("WebApp/src/controller/add")
+          if not os.path.exists("WebApp/src/controller/update"):
+            os.makedirs("WebApp/src/controller/update")
+          if not os.path.exists("WebApp/src/controller/search"):
+            os.makedirs("WebApp/src/controller/search")
+          if not os.path.exists("WebApp/web/WEB-INF"):
+            os.makedirs("WebApp/web/WEB-INF")
  
-          filename = "web/home.jsp"
+          filename = "WebApp/web/home.jsp"
           target = open(filename, 'w+')
           target.write(tmp_web_home.render( classes = allClasses ))
           target.close()
 
-          filename = "web/WEB-INF/web.xml"
+          filename = "WebApp/web/WEB-INF/web.xml"
           target = open(filename, 'w+')
           target.write(tmp_web_xml.render( classes = allClasses ))
           target.close()
           
           for listClass in children:  
-                filename = "controller/"+listClass[0]+"ControllerPrepareAdd.java"
+                filename = "WebApp/src/controller/prepareAdd/"+listClass[0]+"ControllerPrepareAdd.java"
                 target = open(filename, 'w+')
                 target.write(tmpl_prepare_add.render( name = listClass[0], attributes = listClass[3], foreignKeysParent = parentForeignKey[listClass[0]] ))
                 target.close()
-                filename = "controller/"+listClass[0]+"ControllerAdd.java"
+                filename = "WebApp/src/controller/add/"+listClass[0]+"ControllerAdd.java"
                 target = open(filename, 'w+')
                 target.write(tmpl_add.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]],foreignKeysParent = parentForeignKey[listClass[0]]))
                 target.close()
-                filename = "controller/"+listClass[0]+"UpdateController.java"
+                filename = "WebApp/src/controller/update/"+listClass[0]+"UpdateController.java"
                 target = open(filename, 'w+')
                 target.write(tmpl_update.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]],foreignKeysParent = parentForeignKey[listClass[0]]))
                 target.close()
-                filename = "controller/"+listClass[0]+"SearchController.java"
+                filename = "WebApp/src/controller/search/"+listClass[0]+"SearchController.java"
                 target = open(filename, 'w+')
                 target.write(tmpl_search.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
                 target.close()
-                filename = "web/"+listClass[0]+"Show.jsp"
+                filename = "WebApp/web/"+listClass[0]+"Show.jsp"
                 target = open(filename, 'w+')
                 target.write(tmp_web_show.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
                 target.close()
-                filename = "web/"+listClass[0]+"Add.jsp"
+                filename = "WebApp/web/"+listClass[0]+"Add.jsp"
                 target = open(filename, 'w+')
                 target.write(tmp_web_add.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
                 target.close()
-                filename = "web/"+listClass[0]+"Update.jsp"
+                filename = "WebApp/web/"+listClass[0]+"Update.jsp"
                 target = open(filename, 'w+')
                 target.write(tmp_web_update.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
                 target.close()
-                filename = "web/"+listClass[0]+"Search.jsp"
+                filename = "WebApp/web/"+listClass[0]+"Search.jsp"
                 target = open(filename, 'w+')
                 target.write(tmp_web_search.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
                 target.close()
@@ -331,11 +336,13 @@ class NClass(SemanticAction):
           className = node[1]
           env = Environment(loader=FileSystemLoader('templates'))
           tmpl = env.get_template('model.txt')
-          if not os.path.exists("model"):
-            os.makedirs("model")
-          if not os.path.exists("dao"):
-            os.makedirs("dao") 
-          filename = "model/"+str(className)+".java"
+          if not os.path.exists("WebApp"):
+            os.makedirs("WebApp")
+          if not os.path.exists("WebApp/src/model"):
+            os.makedirs("WebApp/src/model")
+          if not os.path.exists("WebApp/src/dao"):
+            os.makedirs("WebApp/src/dao") 
+          filename = "WebApp/src/model/"+str(className)+".java"
           print filename
           target = open(filename, 'w+')
           length = len(node)
@@ -355,33 +362,38 @@ class NClass(SemanticAction):
           
           env = Environment(loader=FileSystemLoader('templates'))
           tmpl = env.get_template('controller_show.txt')
-          if not os.path.exists("controller"):
-            os.makedirs("controller")
-          filename = "controller/"+str(className)+"ControllerShow.java"
+          if not os.path.exists("WebApp/src/controller/show"):
+            os.makedirs("WebApp/src/controller/show")
+          if not os.path.exists("WebApp/src/controller/delete"):
+            os.makedirs("WebApp/src/controller/delete")
+          if not os.path.exists("WebApp/src/controller/prepareUpdate"):
+            os.makedirs("WebApp/src/controller/prepareUpdate")
+            
+          filename = "WebApp/src/controller/show/"+str(className)+"ControllerShow.java"
           target = open(filename, 'w+')
           target.write(tmpl.render( name = str(className)))
           target.close()
           
           tmpl = env.get_template('controller_delete.txt')
-          filename = "controller/"+str(className)+"DeleteController.java"
+          filename = "WebApp/src/controller/delete/"+str(className)+"DeleteController.java"
           target = open(filename, 'w+')
           target.write(tmpl.render( name = str(className)))
           target.close()
 
           tmpl = env.get_template('controller_prepare_update.txt')
-          filename = "controller/"+str(className)+"PrepareUpdateController.java"
+          filename = "WebApp/src/controller/prepareUpdate/"+str(className)+"PrepareUpdateController.java"
           target = open(filename, 'w+')
           target.write(tmpl.render( name = str(className),attributes = children))
           target.close()
 
           tmpl = env.get_template('dao.txt')
-          filename = "dao/I"+str(className)+"Dao.java"
+          filename = "WebApp/src/dao/I"+str(className)+"Dao.java"
           target = open(filename, 'w+')
           target.write(tmpl.render( name = str(className)))
           target.close()
 
           tmpl = env.get_template('hibernate_dao.txt')
-          filename = "dao/"+str(className)+"HibernateDao.java"
+          filename = "WebApp/src/dao/"+str(className)+"HibernateDao.java"
           target = open(filename, 'w+')
           target.write(tmpl.render( name = str(className)))
           target.close()

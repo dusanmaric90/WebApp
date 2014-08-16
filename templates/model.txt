@@ -4,8 +4,9 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.*;
 import javax.validation.constraints.*;
+import enumeration.*;
 @Entity
-public class {{nameClass}}{% if superClass  %}extends {{parentClass}}{% endif %} {
+public class {{nameClass}}{% if superClass  %} extends {{parentClass}}{% endif %} {
 
 {% if superClass == False  %}
 @Id
@@ -23,6 +24,15 @@ protected Integer id;
 protected {{ dictionary["type"] }}  {{ dictionary["name"] }};	
 	
 {% endfor %}
+{% if superClass == False  %}
+public Integer getId() {
+	return id;
+}
+
+public void setId(Integer id) {
+	this.id = id;
+}
+{% endif %}
 {% for dictionary in attributes %}
 {% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}@ManyToOne{% endif %}
 public {{ dictionary["type"] }} get{{ dictionary["name"].capitalize() }}() {
@@ -33,6 +43,7 @@ public void set{{ dictionary["name"].capitalize() }}({{ dictionary["type"] }} {{
 	this.{{ dictionary["name"] }} = {{ dictionary["name"] }};
 }		
 {% endfor %}
+
 
 
 
