@@ -24,6 +24,7 @@
 				
 				
 				{% for dictionary in attributes %}
+				{% if dictionary["one_to_many"] is not defined %}
 				<tr>
 				{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
 				<td> {{dictionary["name"]}} (dd-MM-yyyy)</td>
@@ -42,10 +43,12 @@
 				{% else %}
 				<td><input type="text" name="{{dictionary["name"]}}" /></td>
 				{%- endif %}
-				</tr>				
+				</tr>
+				{%- endif %}				
 				{% endfor %}
 				
 				{% for dictionary in attributes_parent %}
+				{% if dictionary["one_to_many"] is not defined %}
 				<tr>
 				{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
 				<td> {{dictionary["name"]}} (dd-MM-yyyy)</td>
@@ -64,7 +67,8 @@
 				{% else %}
 				<td><input type="text" name="{{dictionary["name"]}}" /></td>
 				{%- endif %}
-				</tr>				
+				</tr>	
+				{%- endif %}				
 				{% endfor %}
 
 					<c:if test="${badFormat }">
@@ -86,13 +90,17 @@
 				<table id="{{name.lower()}}sTable">
 					<tr>
 					{% for dictionary in attributes %}
+					{% if dictionary["one_to_many"] is not defined %}
 					<th>{{dictionary["name"]}}</th>
+					{%- endif %}
 					{% endfor %}
 					</tr>
 					<c:forEach var="{{name.lower()}}" items="{% raw %}${{% endraw %}{{name.lower()}}{% raw %}s }{% endraw %}">
 						<tr>
 						{% for dictionary in attributes %}
+						{% if dictionary["one_to_many"] is not defined %}
 						<td>{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"]}}{% raw %} } {% endraw %}</td>
+						{%- endif %}
 						{% endfor %}
 
 							<td>

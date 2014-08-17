@@ -40,10 +40,20 @@ class Student : Person
 		name = countexampassed
 		type = Integer
 	]
+	[
+		name = grades
+		type = Grade
+		one_to_many = true
+	]
 class Professor : Person
 	[
 		name = countsubjests
 		type = Integer
+	]
+	[
+		name = grades
+		type = Grade
+		one_to_many = true
 	]
 class Subject
 	[
@@ -53,9 +63,15 @@ class Subject
 		min = 0
 		max = 30
 	]
+
 	[
 		name = espb
 		type = Integer	
+	]
+	[
+		name = grades
+		type = Grade
+		one_to_many = true
 	]
 class Grade 
     [

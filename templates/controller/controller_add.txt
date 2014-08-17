@@ -15,7 +15,7 @@ import java.text.ParseException;
 import java.lang.IllegalArgumentException;
 
 import dao.*;
-import enumeration.*;
+
  
     
 
@@ -52,7 +52,7 @@ Integer  {{dictionary["name"]}} = null;
 String  {{dictionary["name"]}} = null;
 {% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
 String  {{dictionary["name"]}} = null;
-{% else %}
+{% elif dictionary["one_to_many"] is not defined %}
 {{dictionary["type"]}} {{dictionary["name"]}} = null;
 {%- endif %}	
 {% endfor %}
@@ -64,7 +64,7 @@ Integer  {{dictionary["name"]}} = null;
 String  {{dictionary["name"]}} = null;
 {% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
 String  {{dictionary["name"]}} = null;
-{% else %}
+{% elif dictionary["one_to_many"] is not defined %}
 {{dictionary["type"]}} {{dictionary["name"]}} = null;
 {%- endif %}	
 {% endfor %}
@@ -96,7 +96,7 @@ if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getPara
 	}
 
 }
-{% else %}
+{% elif dictionary["one_to_many"] is not defined %}
 if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}")) ) {
 	{{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
 }
@@ -130,7 +130,7 @@ if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getPara
 	}
 
 }
-{% else %}
+{% elif dictionary["one_to_many"] is not defined %}
 if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}")) ) {
 	{{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
 }
@@ -163,7 +163,7 @@ if({{dictionary["name"]}} !=null){
 	{{dictionary["type"]}} enum{{dictionary["name"].capitalize()}} = {{dictionary["type"]}}.valueOf({{dictionary["name"]}});
 	temp{{name}}.set{{dictionary["name"].capitalize()}}(enum{{dictionary["name"].capitalize()}});
 }
-{% else %}
+{% elif dictionary["one_to_many"] is not defined %}
 if({{dictionary["name"]}} !=null){
 	temp{{name}}.set{{dictionary["name"].capitalize()}}({{dictionary["name"]}});
 }
@@ -194,7 +194,7 @@ if({{dictionary["name"]}} !=null){
 	{{dictionary["type"]}} enum{{dictionary["name"].capitalize()}} = {{dictionary["type"]}}.valueOf({{dictionary["name"]}});
 	temp{{name}}.set{{dictionary["name"].capitalize()}}(enum{{dictionary["name"].capitalize()}});
 }
-{% else %}
+{% elif dictionary["one_to_many"] is not defined %}
 if({{dictionary["name"]}} !=null){
 	temp{{name}}.set{{dictionary["name"].capitalize()}}({{dictionary["name"]}});
 }

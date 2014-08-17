@@ -14,10 +14,14 @@
 				<table border="1">
 					<tr> 
 					{% for dictionary in attributes %}
-					 <th>	{{dictionary["name"]}} </th>	
+					{% if dictionary["one_to_many"] is not defined %}
+					 <th>	{{dictionary["name"]}} </th>
+					{%- endif %}					 
 					{% endfor %}
 					{% for dictionary in attributes_parent %}
-					 <th>	{{dictionary["name"]}} </th>	
+					{% if dictionary["one_to_many"] is not defined %}
+					 <th>	{{dictionary["name"]}} </th>
+					{%- endif %}					 
 					{% endfor %}
 					 <th colspan="2"> </th>
 						
@@ -28,7 +32,7 @@
 					{% for dictionary in attributes %}
 					{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
 					<td>${show.{{dictionary["name"]}}.toString()}  </td>
-					{% else %}
+					{% elif dictionary["one_to_many"] is not defined %}
 					<td>${show.{{dictionary["name"]}}} </td>
 					{%- endif %}	
 					{% endfor %}
@@ -36,7 +40,7 @@
 					{% for dictionary in attributes_parent %}
 					{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
 					<td>${show.{{dictionary["name"]}}.toString()}  </td>
-					{% else %}
+					{% elif dictionary["one_to_many"] is not defined %}
 					<td>${show.{{dictionary["name"]}}} </td>
 					{%- endif %}	
 					{% endfor %}

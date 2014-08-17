@@ -19,6 +19,7 @@ def REQUIRED():       return "required"
 def MIN():            return "min"
 def MAX():            return "max"
 def MANY_TO_ONE():    return "many_to_one"
+def ONE_TO_MANY():    return "one_to_many"
 def ENUM():           return "enum"
 def ENUMERATION():    return "enumeration"
 def DATABASE():       return "database"
@@ -41,7 +42,7 @@ def attribute():            return attribute_key, "=", attribute_value
 def class_name():           return _(r"[a-zA-Z_]([a-zA-Z_]|[0-9])*")
 def attribute_value():      return _(r"([a-zA-Z_]|[0-9])*")
 def enumeration_value():    return _(r"([a-zA-Z_]|[0-9])*")
-def attribute_key():        return [NAME, TYPE, UNIQUE, REQUIRED, MIN, MAX, MANY_TO_ONE, ENUM]
+def attribute_key():        return [NAME, TYPE, UNIQUE, REQUIRED, MIN, MAX, MANY_TO_ONE, ENUM, ONE_TO_MANY]
 def enumeration():          return ENUMERATION, enumeration_value, ":", OneOrMore(enumeration_element)
 def enumeration_element():  return enumeration_value, ";"
 def database_config():      return DATABASE, database_value, ":", DRIVER, "=", database_value, USERNAME, "=", database_value, PASSWORD, "=", database_value, URL, "=", url_value, ZeroOrMore(database_table)  
@@ -228,9 +229,9 @@ class Enumeration(SemanticAction):
           
           env = Environment(loader=FileSystemLoader('templates/enumeration'))
           tmpl =  env.get_template('enumeration.txt')
-          if not os.path.exists("WebApp/src/enumeration"):
-            os.makedirs("WebApp/src/enumeration")
-          filename = "WebApp/src/enumeration/"+str(enumeration_name)+".java"
+          if not os.path.exists("WebApp/src/model"):
+            os.makedirs("WebApp/src/model")
+          filename = "WebApp/src/model/"+str(enumeration_name)+".java"
           target = open(filename, 'w+')
           target.write(tmpl.render( enumeration_name = enumeration_name, enumeration_values = children  ))
           target.close()
@@ -377,7 +378,7 @@ class NClass(SemanticAction):
               superClass = False
               parentClass = ""
               
-          target.write(tmpl.render( nameClass = str(className),superClass = superClass ,parentClass = parentClass, attributes = children, abstract =abstract ))
+          target.write(tmpl.render( nameClass = str(className),superClass = superClass ,parentClass = parentClass, attributes = children, abstract = abstract ))
           target.close()
           
           env = Environment(loader=FileSystemLoader('templates'))

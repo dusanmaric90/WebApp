@@ -4,7 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.*;
 import javax.validation.constraints.*;
-import enumeration.*;
+
 
 {% if abstract == False  %}
 @Entity
@@ -27,13 +27,25 @@ protected Integer id;
 {% endif %}
 
 {% for dictionary in attributes %}
-{% if dictionary["enum"] is defined and dictionary["enum"] == "true" %}@Enumerated(EnumType.STRING){% endif %}
-{% if dictionary["min"] is defined %}@Min({{dictionary["min"]}}){% endif %}
-{% if dictionary["max"] is defined %}@Max({{dictionary["max"]}}){% endif %}
+
+{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+@ManyToOne
+@JoinColumn
+protected {{ dictionary["type"] }}  {{ dictionary["name"] }};	
+{% elif dictionary["one_to_many"] is defined and dictionary["one_to_many"] == "true" %}
+@OneToMany(mappedBy="{{nameClass.lower()}}", fetch=FetchType.EAGER)
+protected Set<{{ dictionary["type"] }}> {{ dictionary["name"] }} = new HashSet<{{ dictionary["type"] }}>();
+{% else %}
+{% if dictionary["enum"] is defined and dictionary["enum"] == "true" -%}@Enumerated(EnumType.STRING){%- endif %}
+{% if dictionary["min"] is defined -%}@Min({{dictionary["min"]}}){%- endif %}
+{% if dictionary["max"] is defined -%}@Max({{dictionary["max"]}}){%- endif %}
 {% if (dictionary["unique"] is defined and dictionary["unique"] == "true") or (dictionary["required"] is defined and dictionary["required"] == "true") -%}
 @Column({% if dictionary["unique"] is defined and dictionary["unique"] == "true" %}unique = true{% endif %}{% if (dictionary["unique"] is defined and dictionary["unique"] == "true") and (dictionary["required"] is defined and dictionary["required"] == "true") %}, {% endif %}{% if dictionary["required"] is defined and dictionary["required"] == "true" %}nullable = false{% endif %})
 {%- endif %}
 protected {{ dictionary["type"] }}  {{ dictionary["name"] }};	
+{% endif %}
+
+
 	
 {% endfor %}
 {% if superClass == False  %}
@@ -46,14 +58,15 @@ public void setId(Integer id) {
 }
 {% endif %}
 {% for dictionary in attributes %}
-{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}@ManyToOne{% endif %}
+{% if dictionary["one_to_many"] is not defined  %}
 public {{ dictionary["type"] }} get{{ dictionary["name"].capitalize() }}() {
 	return {{ dictionary["name"] }};
 }
 		
 public void set{{ dictionary["name"].capitalize() }}({{ dictionary["type"] }} {{ dictionary["name"] }}) {
 	this.{{ dictionary["name"] }} = {{ dictionary["name"] }};
-}		
+}
+{% endif %}		
 {% endfor %}
 
 

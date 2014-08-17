@@ -10,6 +10,7 @@
 	function provera(){
 		
 		{% for dictionary in attributes %}
+		{% if dictionary["one_to_many"] is not defined %}
 		{% if dictionary["required"] is defined and dictionary["required"] == "true" %}
 		parametar = document.forms['forma'].{{dictionary["name"]}}.value;
 		if(parametar==""){
@@ -50,10 +51,13 @@
 		 }
 		}
 	   }
+		{%- endif %}
+		
 		{%- endif %}
 		{% endfor %}
 		
 		{% for dictionary in attributes_parent %}
+		{% if dictionary["one_to_many"] is not defined %}
 		{% if dictionary["required"] is defined and dictionary["required"] == "true" %}
 		parametar = document.forms['forma'].{{dictionary["name"]}}.value;
 		if(parametar==""){
@@ -94,6 +98,7 @@
 		 }
 		}
 	   }
+		{%- endif %}
 		{%- endif %}
 		{% endfor %}
 		
@@ -131,7 +136,7 @@
 						</select>
 					</td>
 				</tr>
-			{% else %}
+			{% elif dictionary["one_to_many"] is not defined %}
 			<tr>
 					<td>{{dictionary["name"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
 					<td><input type="text" name="{{dictionary["name"]}}" {% if dictionary["max"] is defined  %}maxlength="{{dictionary["max"]}}" size="{{dictionary["max"]}}"{%- endif %} /> </td>				
@@ -161,7 +166,7 @@
 						</select>
 					</td>
 				</tr>
-			{% else %}
+			{% elif dictionary["one_to_many"] is not defined %}
 			<tr>
 					<td>{{dictionary["name"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
 					<td><input type="text" name="{{dictionary["name"]}}" {% if dictionary["max"] is defined  %}maxlength="{{dictionary["max"]}}" size="{{dictionary["max"]}}"{%- endif %} /> </td>				
