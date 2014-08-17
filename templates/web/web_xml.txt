@@ -49,7 +49,7 @@
 					
 					<servlet>
 						<servlet-name>{{class}}PrepareUpdateController</servlet-name>
-						<servlet-class>controller.update.{{class}}PrepareUpdateController</servlet-class>
+						<servlet-class>controller.prepareUpdate.{{class}}PrepareUpdateController</servlet-class>
 					</servlet>
 					
 					<servlet-mapping>

@@ -1,15 +1,15 @@
-		<?xml version="1.0" encoding="UTF-8"?>
-		<application>
-		    <display-name>WebApp</display-name>
-		    
-		    <module>
-		        <web>
-		            <web-uri>WebApp.war</web-uri>
-		            <context-root>/WebApp</context-root>
-		        </web>
-		    </module>
-		
-		    <module>
-		        <ejb>WebApp.jar</ejb>
-		    </module>
-		</application>
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+	<display-name>WebApp</display-name>
+	
+	<module>
+		<web>
+			<web-uri>WebApp.war</web-uri>
+			<context-root>/WebApp</context-root>
+		</web>
+	</module>
+
+	<module>
+		<ejb>WebApp.jar</ejb>
+	</module>
+</application>

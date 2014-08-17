@@ -35,7 +35,7 @@ def TABLE():          return "table"
 
 def initial():              return OneOrMore([nclasses,enumeration,database_config]), EOF
 def nclasses():             return OneOrMore(nclass)
-def nclass():               return CLASS, class_name,Optional(":", class_name), ZeroOrMore(attributes)
+def nclass():               return  Optional(ABSTRACT),CLASS, class_name,Optional(":", class_name), ZeroOrMore(attributes)
 def attributes():           return "[", OneOrMore(attribute), "]"
 def attribute():            return attribute_key, "=", attribute_value 
 def class_name():           return _(r"[a-zA-Z_]([a-zA-Z_]|[0-9])*")
@@ -241,12 +241,17 @@ class NClasses(SemanticAction):
           parentForeignKey = {}
           parrentAttribute ={}
           allClasses = []
-
+          allClassesNotAbstract = []
+        
           
           for listClass in children:
               parentForeignKey[listClass[0]] = []
               parrentAttribute[listClass[0]] = []
               allClasses.append(listClass[0])
+              if listClass[4] == False:
+                 allClassesNotAbstract.append(listClass[0]) 
+              
+              
               
           for listClass in children: # class
               if listClass[1]:       # if specific class has extended some other class             
@@ -284,47 +289,48 @@ class NClasses(SemanticAction):
  
           filename = "WebApp/web/home.jsp"
           target = open(filename, 'w+')
-          target.write(tmp_web_home.render( classes = allClasses ))
+          target.write(tmp_web_home.render( classes = allClassesNotAbstract ))
           target.close()
 
           filename = "WebApp/web/WEB-INF/web.xml"
           target = open(filename, 'w+')
-          target.write(tmp_web_xml.render( classes = allClasses ))
+          target.write(tmp_web_xml.render( classes = allClassesNotAbstract ))
           target.close()
           
-          for listClass in children:  
-                filename = "WebApp/src/controller/prepareAdd/"+listClass[0]+"ControllerPrepareAdd.java"
-                target = open(filename, 'w+')
-                target.write(tmpl_prepare_add.render( name = listClass[0], attributes = listClass[3], foreignKeysParent = parentForeignKey[listClass[0]] ))
-                target.close()
-                filename = "WebApp/src/controller/add/"+listClass[0]+"ControllerAdd.java"
-                target = open(filename, 'w+')
-                target.write(tmpl_add.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]],foreignKeysParent = parentForeignKey[listClass[0]]))
-                target.close()
-                filename = "WebApp/src/controller/update/"+listClass[0]+"UpdateController.java"
-                target = open(filename, 'w+')
-                target.write(tmpl_update.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]],foreignKeysParent = parentForeignKey[listClass[0]]))
-                target.close()
-                filename = "WebApp/src/controller/search/"+listClass[0]+"SearchController.java"
-                target = open(filename, 'w+')
-                target.write(tmpl_search.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
-                target.close()
-                filename = "WebApp/web/"+listClass[0]+"Show.jsp"
-                target = open(filename, 'w+')
-                target.write(tmp_web_show.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
-                target.close()
-                filename = "WebApp/web/"+listClass[0]+"Add.jsp"
-                target = open(filename, 'w+')
-                target.write(tmp_web_add.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
-                target.close()
-                filename = "WebApp/web/"+listClass[0]+"Update.jsp"
-                target = open(filename, 'w+')
-                target.write(tmp_web_update.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
-                target.close()
-                filename = "WebApp/web/"+listClass[0]+"Search.jsp"
-                target = open(filename, 'w+')
-                target.write(tmp_web_search.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
-                target.close()
+          for listClass in children:
+                if listClass[4] == False:
+                    filename = "WebApp/src/controller/prepareAdd/"+listClass[0]+"ControllerPrepareAdd.java"
+                    target = open(filename, 'w+')
+                    target.write(tmpl_prepare_add.render( name = listClass[0], attributes = listClass[3], foreignKeysParent = parentForeignKey[listClass[0]] ))
+                    target.close()
+                    filename = "WebApp/src/controller/add/"+listClass[0]+"ControllerAdd.java"
+                    target = open(filename, 'w+')
+                    target.write(tmpl_add.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]],foreignKeysParent = parentForeignKey[listClass[0]]))
+                    target.close()
+                    filename = "WebApp/src/controller/update/"+listClass[0]+"UpdateController.java"
+                    target = open(filename, 'w+')
+                    target.write(tmpl_update.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]],foreignKeysParent = parentForeignKey[listClass[0]]))
+                    target.close()
+                    filename = "WebApp/src/controller/search/"+listClass[0]+"SearchController.java"
+                    target = open(filename, 'w+')
+                    target.write(tmpl_search.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
+                    target.close()
+                    filename = "WebApp/web/"+listClass[0]+"Show.jsp"
+                    target = open(filename, 'w+')
+                    target.write(tmp_web_show.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
+                    target.close()
+                    filename = "WebApp/web/"+listClass[0]+"Add.jsp"
+                    target = open(filename, 'w+')
+                    target.write(tmp_web_add.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
+                    target.close()
+                    filename = "WebApp/web/"+listClass[0]+"Update.jsp"
+                    target = open(filename, 'w+')
+                    target.write(tmp_web_update.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
+                    target.close()
+                    filename = "WebApp/web/"+listClass[0]+"Search.jsp"
+                    target = open(filename, 'w+')
+                    target.write(tmp_web_search.render( name = listClass[0], attributes = listClass[3], attributes_parent = parrentAttribute[listClass[0]]))
+                    target.close()
                
           
 class NClass(SemanticAction):
@@ -335,6 +341,13 @@ class NClass(SemanticAction):
           print "usao sam!!!!!!!!!"
           if parser.debug:
             print node[1]
+          abstract = False
+          if node[0] == "abstract":
+            print "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+            node.pop(0)
+            children.pop(0)
+            abstract = True
+           
           for i in children:
             for key, value in i.iteritems():
                 print "Key = "+key +" Value = "+value
@@ -364,7 +377,7 @@ class NClass(SemanticAction):
               superClass = False
               parentClass = ""
               
-          target.write(tmpl.render( nameClass = str(className),superClass = superClass ,parentClass = parentClass, attributes = children ))
+          target.write(tmpl.render( nameClass = str(className),superClass = superClass ,parentClass = parentClass, attributes = children, abstract =abstract ))
           target.close()
           
           env = Environment(loader=FileSystemLoader('templates'))
@@ -376,37 +389,38 @@ class NClass(SemanticAction):
             os.makedirs("WebApp/src/controller/delete")
           if not os.path.exists("WebApp/src/controller/prepareUpdate"):
             os.makedirs("WebApp/src/controller/prepareUpdate")
-            
-          filename = "WebApp/src/controller/show/"+str(className)+"ControllerShow.java"
-          target = open(filename, 'w+')
-          target.write(tmpl.render( name = str(className)))
-          target.close()
+
+          if abstract == False :
+              filename = "WebApp/src/controller/show/"+str(className)+"ControllerShow.java"
+              target = open(filename, 'w+')
+              target.write(tmpl.render( name = str(className)))
+              target.close()
+              
+              tmpl = env_controller.get_template('controller_delete.txt')
+              filename = "WebApp/src/controller/delete/"+str(className)+"DeleteController.java"
+              target = open(filename, 'w+')
+              target.write(tmpl.render( name = str(className)))
+              target.close()
+
+              tmpl = env_controller.get_template('controller_prepare_update.txt')
+              filename = "WebApp/src/controller/prepareUpdate/"+str(className)+"PrepareUpdateController.java"
+              target = open(filename, 'w+')
+              target.write(tmpl.render( name = str(className),attributes = children))
+              target.close()
+
+              tmpl = env_dao.get_template('dao.txt')
+              filename = "WebApp/src/dao/I"+str(className)+"Dao.java"
+              target = open(filename, 'w+')
+              target.write(tmpl.render( name = str(className)))
+              target.close()
+
+              tmpl = env_dao.get_template('hibernate_dao.txt')
+              filename = "WebApp/src/dao/"+str(className)+"HibernateDao.java"
+              target = open(filename, 'w+')
+              target.write(tmpl.render( name = str(className)))
+              target.close()
           
-          tmpl = env_controller.get_template('controller_delete.txt')
-          filename = "WebApp/src/controller/delete/"+str(className)+"DeleteController.java"
-          target = open(filename, 'w+')
-          target.write(tmpl.render( name = str(className)))
-          target.close()
-
-          tmpl = env_controller.get_template('controller_prepare_update.txt')
-          filename = "WebApp/src/controller/prepareUpdate/"+str(className)+"PrepareUpdateController.java"
-          target = open(filename, 'w+')
-          target.write(tmpl.render( name = str(className),attributes = children))
-          target.close()
-
-          tmpl = env_dao.get_template('dao.txt')
-          filename = "WebApp/src/dao/I"+str(className)+"Dao.java"
-          target = open(filename, 'w+')
-          target.write(tmpl.render( name = str(className)))
-          target.close()
-
-          tmpl = env_dao.get_template('hibernate_dao.txt')
-          filename = "WebApp/src/dao/"+str(className)+"HibernateDao.java"
-          target = open(filename, 'w+')
-          target.write(tmpl.render( name = str(className)))
-          target.close()
-          
-          return [str(className),superClass,parentClass,children]
+          return [str(className),superClass,parentClass,children,abstract]
 
 # Connecting rules with semantic actions    
 initial.sem =  Initial()

@@ -5,12 +5,24 @@ import javax.persistence.*;
 import java.util.*;
 import javax.validation.constraints.*;
 import enumeration.*;
-@Entity
-public class {{nameClass}}{% if superClass  %} extends {{parentClass}}{% endif %} {
 
-{% if superClass == False  %}
+{% if abstract == False  %}
+@Entity
+public class {{nameClass}}{% if superClass  %} extends {{parentClass}}{% endif %} implements Serializable{
+{% elif abstract == True  %}
+@Entity
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+public class {{nameClass}}{% if superClass  %} extends {{parentClass}}{% endif %} implements Serializable{
+{% endif %}
+
+
+{% if superClass == False and abstract == False %}
 @Id
 @GeneratedValue(strategy=GenerationType.IDENTITY)
+protected Integer id;
+{% elif superClass == False and abstract == True %}
+@Id
+@GeneratedValue(strategy=GenerationType.TABLE)
 protected Integer id;
 {% endif %}
 

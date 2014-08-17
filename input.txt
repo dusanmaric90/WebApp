@@ -1,46 +1,97 @@
 
-class Mika
-	[
-		name = ime
-		type = String
-	]
+enumeration Gender : MALE; FEMALE;  
 
-class Zika
-	[
-		name = ime
+abstract class Person
+    [
+		name = firstname
 		type = String
-		unique = true
 		required = true
-		min = 2
-		max = 5
+		min = 0
+		max = 30
 	]
 	[
-		name = prezime
+		name = lastname
 		type = String
-		unique = true
+		required = true
+		min = 0
+		max = 30
 	]
-	[	
-		name = mika
-		type = Mika
-		many_to_one = true
-	]	
-class Pera : Zika
 	[
-		name = adresa
-		type = Boja
+		name = birthday
+		type = Date
+		required = true
+	]
+	[
+		name = gender
+		type = Gender
+		required = true
 		enum = true
 	]
+
+class Student : Person
+    [
+		name = indexnumber
+		type = String
+		required = true
+		min = 0
+		max = 30
+	]	
 	[
-		name = zika
-		type = Zika
+		name = countexampassed
+		type = Integer
+	]
+class Professor : Person
+	[
+		name = countsubjests
+		type = Integer
+	]
+class Subject
+	[
+		name = subjectname
+		type = String
+		required = true
+		min = 0
+		max = 30
+	]
+	[
+		name = espb
+		type = Integer	
+	]
+class Grade 
+    [
+		name = points
+		type = Integer
+		required = true
+	]
+	[
+		name = grade
+		type = Integer
+		required = true
+	]
+	[
+		name = subject
+		type = Subject
 		many_to_one = true
 	]
-enumeration Pol : Pera; Mika; Zika; 
-enumeration Boja : Zuta; Plava;
+	[
+		name = professor
+		type = Professor
+		many_to_one = true
+	]
+	[
+		name = student
+		type = Student
+		many_to_one = true
+	]
+
+
 database WebApp:
 	driver = com.mysql.jdbc.Driver
 	username = root
 	password = root
-	url = jdbc:mysql://localhost:3306/bazaJSD
-	table Zika
-	table Pera
+	url = jdbc:mysql://localhost:3306/database
+	table Person
+	table Student
+	table Professor
+	table Subject
+	table Grade
