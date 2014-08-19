@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	<html>
 	  
 		<head>
@@ -33,7 +34,11 @@
 					{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
 					<td>${show.{{dictionary["name"]}}.toString()}  </td>
 					{% elif dictionary["one_to_many"] is not defined %}
+					{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
+					<td> <fmt:formatDate pattern="dd-MM-yyyy" value="${show.birthday}" /></td>
+					{% else %}
 					<td>${show.{{dictionary["name"]}}} </td>
+					{%- endif %}
 					{%- endif %}	
 					{% endfor %}
 
@@ -41,7 +46,11 @@
 					{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
 					<td>${show.{{dictionary["name"]}}.toString()}  </td>
 					{% elif dictionary["one_to_many"] is not defined %}
+					{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
+					<td> <fmt:formatDate pattern="dd-MM-yyyy" value="${show.birthday}" /></td>
+					{% else %}
 					<td>${show.{{dictionary["name"]}}} </td>
+					{%- endif %}
 					{%- endif %}	
 					{% endfor %}
 				   

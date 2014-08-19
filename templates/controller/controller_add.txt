@@ -146,7 +146,7 @@ if({{dictionary["name"]}} !=null){
 }
 {% elif dictionary["type"] is defined and dictionary["type"] == "Date" %}
 if({{dictionary["name"]}} !=null){
-	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 	try{
 		Date date = format.parse({{dictionary["name"]}});
 		temp{{name}}.set{{dictionary["name"].capitalize()}}(date);
@@ -177,7 +177,7 @@ if({{dictionary["name"]}} !=null){
 }
 {% elif dictionary["type"] is defined and dictionary["type"] == "Date" %}
 if({{dictionary["name"]}} !=null){
-	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 	try{
 		Date date = format.parse({{dictionary["name"]}});
 		temp{{name}}.set{{dictionary["name"].capitalize()}}(date);

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	<html>
 		<head>
 			<title>Izmeni {{name}}</title>
@@ -20,10 +21,10 @@
 		}
 		{%- endif %}
 
-		{% if dictionary["min"] is defined %}
+		{% if dictionary["min_length"] is defined %}
 		parametar = document.forms['forma'].{{dictionary["name"]}}.value.length;
-		if(parametar<{{dictionary["min"]}}){
-			alert("Za polje {{dictionary["name"]}} minimalna duzina mora biti {{dictionary["min"]}} ");
+		if(parametar<{{dictionary["min_length"]}}){
+			alert("Za polje {{dictionary["name"]}} min_lengthimalna duzina mora biti {{dictionary["min_length"]}} ");
 			return false;
 		}
 		{%- endif %}	
@@ -43,11 +44,11 @@
 		var niz=new Array();
 		niz=date.split('-');
 		if(niz.length!=3){
-		 alert("Format {{dictionary["name"]}} mora biti yyyy-MM-dd");
+		 alert("Format {{dictionary["name"]}} mora biti dd-MM-yyyy");
 		  return false; 
 		}else{
-		 if(isNaN(niz[0]) || isNaN(niz[1]) || isNaN(niz[2]) || niz[0].length!=4|| niz[1].length!=2|| niz[2].length!=2){
-		  alert("Format {{dictionary["name"]}} mora biti yyyy-MM-dd");
+		 if(isNaN(niz[0]) || isNaN(niz[1]) || isNaN(niz[2]) || niz[0].length!=2|| niz[1].length!=2|| niz[2].length!=4){
+		  alert("Format {{dictionary["name"]}} mora biti dd-MM-yyyy");
 		  return false; 
 		 }
 		}
@@ -66,10 +67,10 @@
 		}
 		{%- endif %}
 
-		{% if dictionary["min"] is defined %}
+		{% if dictionary["min_length"] is defined %}
 		parametar = document.forms['forma'].{{dictionary["name"]}}.value.length;
-		if(parametar<{{dictionary["min"]}}){
-			alert("Za polje {{dictionary["name"]}} minimalna duzina mora biti {{dictionary["min"]}} ");
+		if(parametar<{{dictionary["min_length"]}}){
+			alert("Za polje {{dictionary["name"]}} min_lengthimalna duzina mora biti {{dictionary["min_length"]}} ");
 			return false;
 		}
 		{%- endif %}	
@@ -89,11 +90,11 @@
 		var niz=new Array();
 		niz=date.split('-');
 		if(niz.length!=3){
-		 alert("Format {{dictionary["name"]}} mora biti yyyy-MM-dd");
+		 alert("Format {{dictionary["name"]}} mora biti dd-MM-yyyy");
 		  return false; 
 		}else{
-		 if(isNaN(niz[0]) || isNaN(niz[1]) || isNaN(niz[2]) || niz[0].length!=4|| niz[1].length!=2|| niz[2].length!=2){
-		  alert("Format {{dictionary["name"]}} mora biti yyyy-MM-dd");
+		 if(isNaN(niz[0]) || isNaN(niz[1]) || isNaN(niz[2]) || niz[0].length!=2|| niz[1].length!=2|| niz[2].length!=4){
+		  alert("Format {{dictionary["name"]}} mora biti dd-MM-yyyy");
 		  return false; 
 		 }
 		}
@@ -140,7 +141,13 @@
 			{% elif dictionary["one_to_many"] is not defined %}
 			<tr>
 					<td>{{dictionary["name"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
-					<td><input type="text" name="{{dictionary["name"]}}" value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}{% raw %}}{% endraw %}" {% if dictionary["max"] is defined  %}maxlength="{{dictionary["max"]}}" size="{{dictionary["max"]}}"{%- endif %} /> </td>				
+					{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
+					<td>
+					<fmt:formatDate value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}{% raw %}}{% endraw %}"  type="date" pattern="dd-MM-yyyy" var="theFormattedDate" />
+					<input type="text" name="{{dictionary["name"]}}" value="${theFormattedDate}" {% if dictionary["max_length"] is defined  %}max_lengthlength="{{dictionary["max_length"]}}" size="{{dictionary["max_length"]}}"{%- endif %} /> </td>				
+					{% else%}
+					<td><input type="text" name="{{dictionary["name"]}}" value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}{% raw %}}{% endraw %}" {% if dictionary["max_length"] is defined  %}max_lengthlength="{{dictionary["max_length"]}}" size="{{dictionary["max_length"]}}"{%- endif %} /> </td>				
+					{% endif %}
 			</tr>
 			{%- endif %}			
 			{% endfor %}
@@ -170,7 +177,13 @@
 			{% elif dictionary["one_to_many"] is not defined %}
 			<tr>
 					<td>{{dictionary["name"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
-					<td><input type="text" name="{{dictionary["name"]}}" value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}{% raw %}}{% endraw %}" {% if dictionary["max"] is defined  %}maxlength="{{dictionary["max"]}}" size="{{dictionary["max"]}}"{%- endif %} /> </td>				
+					{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
+					<td>
+					<fmt:formatDate value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}{% raw %}}{% endraw %}"  type="date" pattern="dd-MM-yyyy" var="theFormattedDate" />
+					<input type="text" name="{{dictionary["name"]}}" value="${theFormattedDate}" {% if dictionary["max_length"] is defined  %}max_lengthlength="{{dictionary["max_length"]}}" size="{{dictionary["max_length"]}}"{%- endif %} /> </td>				
+					{% else%}
+					<td><input type="text" name="{{dictionary["name"]}}" value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}{% raw %}}{% endraw %}" {% if dictionary["max_length"] is defined  %}max_lengthlength="{{dictionary["max_length"]}}" size="{{dictionary["max_length"]}}"{%- endif %} /> </td>				
+					{% endif %}
 			</tr>
 			{%- endif %}			
 			{% endfor %}

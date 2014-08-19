@@ -36,9 +36,9 @@ protected {{ dictionary["type"] }}  {{ dictionary["name"] }};
 @OneToMany(mappedBy="{{nameClass.lower()}}", fetch=FetchType.EAGER)
 protected Set<{{ dictionary["type"] }}> {{ dictionary["name"] }} = new HashSet<{{ dictionary["type"] }}>();
 {% else %}
+{% if dictionary["type"] is defined and dictionary["type"] == "Date" -%}@Temporal(TemporalType.DATE){%- endif %}
 {% if dictionary["enum"] is defined and dictionary["enum"] == "true" -%}@Enumerated(EnumType.STRING){%- endif %}
-{% if dictionary["min"] is defined -%}@Min({{dictionary["min"]}}){%- endif %}
-{% if dictionary["max"] is defined -%}@Max({{dictionary["max"]}}){%- endif %}
+{% if dictionary["min_length"] is defined and  dictionary["max_length"] is defined -%}@Size(min = {{dictionary["min_length"]}}, max = {{dictionary["max_length"]}}){%- endif %}
 {% if (dictionary["unique"] is defined and dictionary["unique"] == "true") or (dictionary["required"] is defined and dictionary["required"] == "true") -%}
 @Column({% if dictionary["unique"] is defined and dictionary["unique"] == "true" %}unique = true{% endif %}{% if (dictionary["unique"] is defined and dictionary["unique"] == "true") and (dictionary["required"] is defined and dictionary["required"] == "true") %}, {% endif %}{% if dictionary["required"] is defined and dictionary["required"] == "true" %}nullable = false{% endif %})
 {%- endif %}
@@ -68,7 +68,20 @@ public void set{{ dictionary["name"].capitalize() }}({{ dictionary["type"] }} {{
 }
 {% endif %}		
 {% endfor %}
-
+{% if superClass == True  %}
+@Override
+public String toString() {
+	return super.toString();
+} 
+{% else %}
+@Override
+public String toString() {
+	return "" + 
+{% for dictionary in attributes %}
+{% if dictionary["show"] is defined and dictionary["show"] == "true" -%}{{dictionary["name"]}}+ " " +{%- endif %}
+{% endfor %}
+	" ";}
+{% endif %}
 
 
 

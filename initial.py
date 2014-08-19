@@ -16,8 +16,8 @@ def NAME():           return "name"
 def TYPE():           return "type"
 def UNIQUE():         return "unique"
 def REQUIRED():       return "required"
-def MIN():            return "min"
-def MAX():            return "max"
+def MIN():            return "min_length"
+def MAX():            return "max_length"
 def MANY_TO_ONE():    return "many_to_one"
 def ONE_TO_MANY():    return "one_to_many"
 def ENUM():           return "enum"
@@ -28,6 +28,7 @@ def USERNAME():       return "username"
 def PASSWORD():       return "password"
 def URL():            return "url"
 def TABLE():          return "table"
+def SHOW():           return "show"
 
 
 
@@ -42,7 +43,7 @@ def attribute():            return attribute_key, "=", attribute_value
 def class_name():           return _(r"[a-zA-Z_]([a-zA-Z_]|[0-9])*")
 def attribute_value():      return _(r"([a-zA-Z_]|[0-9])*")
 def enumeration_value():    return _(r"([a-zA-Z_]|[0-9])*")
-def attribute_key():        return [NAME, TYPE, UNIQUE, REQUIRED, MIN, MAX, MANY_TO_ONE, ENUM, ONE_TO_MANY]
+def attribute_key():        return [NAME, TYPE, UNIQUE, REQUIRED, MIN, MAX, MANY_TO_ONE, ENUM, ONE_TO_MANY, SHOW]
 def enumeration():          return ENUMERATION, enumeration_value, ":", OneOrMore(enumeration_element)
 def enumeration_element():  return enumeration_value, ";"
 def database_config():      return DATABASE, database_value, ":", DRIVER, "=", database_value, USERNAME, "=", database_value, PASSWORD, "=", database_value, URL, "=", url_value, ZeroOrMore(database_table)  
