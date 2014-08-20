@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		pageEncoding="UTF-8"%>
+		
 	
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 	
 	<%@page import="java.util.List"%>
 	<%@page import="model.{{name}}"%>
@@ -24,6 +26,7 @@
 				
 				
 				{% for dictionary in attributes %}
+
 				{% if dictionary["one_to_many"] is not defined %}
 				<tr>
 				{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
@@ -59,6 +62,7 @@
 				{% if dictionary["enum"] is defined and dictionary["enum"] == "true" %}
 				<td>
 					<select name="{{dictionary["name"]}}">
+					<option value="null"></option>
 						<c:forEach var="temp{{dictionary["type"]}}" items="<%= model.{{dictionary["type"]}}.values() %>">
 							<option value="${temp{{dictionary["type"]}}}">${temp{{dictionary["type"]}}}</option>
 						</c:forEach>
@@ -94,21 +98,32 @@
 					<th>{{dictionary["name"]}}</th>
 					{%- endif %}
 					{% endfor %}
+					{% for dictionary in attributes_parent %}
+					{% if dictionary["one_to_many"] is not defined %}
+					<th>{{dictionary["name"]}}</th>
+					{%- endif %}
+					{% endfor %}
 					</tr>
 					<c:forEach var="{{name.lower()}}" items="{% raw %}${{% endraw %}{{name.lower()}}{% raw %}s }{% endraw %}">
 						<tr>
 						{% for dictionary in attributes %}
 						{% if dictionary["one_to_many"] is not defined %}
+						{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
+						<td> <fmt:formatDate pattern="dd-MM-yyyy" value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"]}}{% raw %}}{% endraw %}" /></td>
+						{% else %}
 						<td>{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"]}}{% raw %} } {% endraw %}</td>
 						{%- endif %}
+						{%- endif %}
 						{% endfor %}
-
-							<td>
-								<form action="./{{name}}ControllerShow" method="post">
-									<input type="hidden" name="id" value="{% raw %}${{% endraw %}{{name.lower()}}.id {% raw %}}{% endraw %}"> <input
-										type="submit" name="View {{name}}" value="View {{name}}">
-								</form>
-							</td>
+						{% for dictionary in attributes_parent %}
+						{% if dictionary["one_to_many"] is not defined %}
+						{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
+						<td> <fmt:formatDate pattern="dd-MM-yyyy" value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"]}}{% raw %}}{% endraw %}" /></td>
+						{% else %}
+						<td>{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"]}}{% raw %} } {% endraw %}</td>
+						{%- endif %}
+						{%- endif %}
+						{% endfor %}
 						</tr>
 					</c:forEach>
 				</table>

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Collection;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -42,11 +43,11 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 {% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
 String {{dictionary["name"]}}String = req.getParameter("{{dictionary["name"]}}");
 Date {{dictionary["name"]}} = null;
-SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");					
+SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");					
 try {
 	if(!{{dictionary["name"]}}String.equals("")){
 		{{dictionary["name"]}} = dateFormat.parse({{dictionary["name"]}}String);
-		conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+		conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"]}}));
 	}
 } catch (ParseException e) {
 	req.setAttribute("badFormat", true);
@@ -66,9 +67,9 @@ if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getPara
 	try{
 		{{dictionary["name"]}} = Integer.parseInt({{dictionary["name"]}}String);
 		if ({{dictionary["name"]}}Boolean)
-			conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+			conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"]}}));
 		else
-			conjuction.add(Restrictions.eq("{{dictionary["name"].lower()}}",{{dictionary["name"].lower()}}));
+			conjuction.add(Restrictions.eq("{{dictionary["name"].lower()}}",{{dictionary["name"]}}));
 	} catch (NumberFormatException e) {
 		String error = "Polje treba da bude broj!";
 		req.setAttribute("error", error);
@@ -78,16 +79,19 @@ if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getPara
 	}	
 }
 {% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
-{{dictionary["type"]}} {{dictionary["name"]}} = {{dictionary["type"]}}.valueOf(req.getParameter("{{dictionary["name"]}}"));
-conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+String {{dictionary["name"]}}Value =    req.getParameter("{{dictionary["name"]}}");
+if(!{{dictionary["name"]}}Value.equals("null")){
+	{{dictionary["type"]}} {{dictionary["name"]}} = {{dictionary["type"]}}.valueOf(req.getParameter("{{dictionary["name"]}}"));
+	conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"]}}));
+}
 {% elif dictionary["one_to_many"] is not defined %}
 String {{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
 	if ({{dictionary["name"]}} != null && !{{dictionary["name"]}}.equals("")){
 		if({{dictionary["name"]}}.endsWith("*")){
 			{{dictionary["name"]}} = {{dictionary["name"]}}.replace("*", "%");
-			conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+			conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"]}}));
 		}else{
-			conjuction.add(Restrictions.eq("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+			conjuction.add(Restrictions.eq("{{dictionary["name"].lower()}}", {{dictionary["name"]}}));
 		}
 	}
 {%- endif %}	
@@ -98,11 +102,11 @@ String {{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
 {% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
 String {{dictionary["name"]}}String = req.getParameter("{{dictionary["name"]}}");
 Date {{dictionary["name"]}} = null;
-SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");					
+SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");					
 try {
 	if(!{{dictionary["name"]}}String.equals("")){
 		{{dictionary["name"]}} = dateFormat.parse({{dictionary["name"]}}String);
-		conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+		conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"]}}));
 	}
 } catch (ParseException e) {
 	req.setAttribute("badFormat", true);
@@ -122,9 +126,9 @@ if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getPara
 	try{
 		{{dictionary["name"]}} = Integer.parseInt({{dictionary["name"]}}String);
 		if ({{dictionary["name"]}}Boolean)
-			conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+			conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"]}}));
 		else
-			conjuction.add(Restrictions.eq("{{dictionary["name"].lower()}}",{{dictionary["name"].lower()}}));
+			conjuction.add(Restrictions.eq("{{dictionary["name"].lower()}}",{{dictionary["name"]}}));
 	} catch (NumberFormatException e) {
 		String error = "Polje treba da bude broj!";
 		req.setAttribute("error", error);
@@ -134,32 +138,44 @@ if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getPara
 	}	
 }
 {% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
-{{dictionary["type"]}} {{dictionary["name"]}} = {{dictionary["type"]}}.valueOf(req.getParameter("{{dictionary["name"]}}"));
-conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+String {{dictionary["name"]}}Value =    req.getParameter("{{dictionary["name"]}}");
+if(!{{dictionary["name"]}}Value.equals("null")){
+	{{dictionary["type"]}} {{dictionary["name"]}} = {{dictionary["type"]}}.valueOf(req.getParameter("{{dictionary["name"]}}"));
+	conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"]}}));
+}
 {% elif dictionary["one_to_many"] is not defined %}
 String {{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
 	if ({{dictionary["name"]}} != null && !{{dictionary["name"]}}.equals("")){
 		if({{dictionary["name"]}}.endsWith("*")){
 			{{dictionary["name"]}} = {{dictionary["name"]}}.replace("*", "%");
-			conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+			conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"]}}));
 		}else{
-			conjuction.add(Restrictions.eq("{{dictionary["name"].lower()}}", {{dictionary["name"].lower()}}));
+			conjuction.add(Restrictions.eq("{{dictionary["name"].lower()}}", {{dictionary["name"]}}));
 		}
 	}
 {%- endif %}	
 {% endfor %}
-				
-				
-				
-				
-				
-				
-	List<{{name}}> {{name.lower()}}s = {{name}}Dao.findBySearchCriteria(conjuction);
-	
+						
+	List<{{name}}> {{name.lower()}}s;			
+	if(size(conjuction.conditions())!=0){
+		 {{name.lower()}}s = {{name}}Dao.findBySearchCriteria(conjuction);
+	}else{
+		 {{name.lower()}}s = {{name}}Dao.findAll();
+	}				
 	req.setAttribute("{{name.lower()}}s", {{name.lower()}}s);
 	RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}Search.jsp");
 	dispatcher.forward(req, resp);
 	return;
 
 }
+public int size(Iterable<?> it) {
+	  if (it instanceof Collection)
+	    return ((Collection<?>)it).size();
+
+	  // else iterate
+
+	  int i = 0;
+	  for (Object obj : it) i++;
+	  return i;
+	}
 }	

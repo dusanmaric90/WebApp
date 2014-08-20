@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+		<classpath>
+			<classpathentry kind="src" path="src"/>
+			<classpathentry kind="lib" path="lib/antlr-2.7.7.jar"/>
+			<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
+			<classpathentry kind="lib" path="lib/commons-fileupload-1.1.jar"/>
+			<classpathentry kind="lib" path="lib/commons-io-1.1.jar"/>
+			<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
+			<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
+			<classpathentry kind="lib" path="lib/hibernate-commons-annotations-4.0.2.Final.jar"/>
+			<classpathentry kind="lib" path="lib/hibernate-core-4.2.8.Final.jar"/>
+			<classpathentry kind="lib" path="lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+			<classpathentry kind="lib" path="lib/javaee-api-6.0-4-tomcat.jar"/>
+			<classpathentry kind="lib" path="lib/javassist-3.18.1-GA.jar"/>
+			<classpathentry kind="lib" path="lib/jboss-logging-3.1.0.GA.jar"/>
+			<classpathentry kind="lib" path="lib/jboss-transaction-api_1.1_spec-1.0.1.Final.jar"/>
+			<classpathentry kind="lib" path="lib/jstl-1.2.jar"/>
+			<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.22-bin.jar"/>
+			<classpathentry kind="lib" path="lib/openejb-client-4.5.0.jar"/>
+			<classpathentry kind="lib" path="lib/openjpa-asm-shaded-2.2.0.jar"/>
+			<classpathentry kind="lib" path="lib/serp-1.13.1.jar"/>
+			<classpathentry kind="lib" path="lib/servlet-api.jar"/>
+			<classpathentry kind="lib" path="lib/standard.jar"/>
+			<classpathentry kind="lib" path="lib/validation-api-1.0.0.GA.jar"/>
+			<classpathentry kind="lib" path="lib/xbean-asm-shaded-3.11.jar"/>
+			<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+			<classpathentry kind="output" path="bin"/>
+		</classpath>

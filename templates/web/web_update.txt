@@ -70,7 +70,7 @@
 		{% if dictionary["min_length"] is defined %}
 		parametar = document.forms['forma'].{{dictionary["name"]}}.value.length;
 		if(parametar<{{dictionary["min_length"]}}){
-			alert("Za polje {{dictionary["name"]}} min_lengthimalna duzina mora biti {{dictionary["min_length"]}} ");
+			alert("Za polje {{dictionary["name"]}} minimalna duzina mora biti {{dictionary["min_length"]}} ");
 			return false;
 		}
 		{%- endif %}	
@@ -133,7 +133,7 @@
 				 <td>{{dictionary["name"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
 					<td><select name="{{dictionary["name"]}}">
 							<c:forEach var="temp{{dictionary["type"]}}" items="<%= model.{{dictionary["type"]}}.values() %>">
-								<option value="${temp{{dictionary["type"]}}}">${temp{{dictionary["type"]}}}</option>
+								<option value="${temp{{dictionary["type"]}}}" <c:if test="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}==temp{{dictionary["type"]}}{% raw %}}{% endraw %}">selected="selected"</c:if>>${temp{{dictionary["type"]}}}</option>
 							</c:forEach>
 						</select>
 					</td>
@@ -169,7 +169,7 @@
 				 <td>{{dictionary["name"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
 					<td><select name="{{dictionary["name"]}}">
 							<c:forEach var="temp{{dictionary["type"]}}" items="<%= model.{{dictionary["type"]}}.values() %>">
-								<option value="${temp{{dictionary["type"]}}}">${temp{{dictionary["type"]}}}</option>
+								<option value="${temp{{dictionary["type"]}}}" <c:if test="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}==temp{{dictionary["type"]}}{% raw %}}{% endraw %}">selected="selected"</c:if>>${temp{{dictionary["type"]}}}</option>
 							</c:forEach>
 						</select>
 					</td>
