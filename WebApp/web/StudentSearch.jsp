@@ -13,19 +13,23 @@
 	<%
 		Boolean badFormat = (Boolean) request.getAttribute("badFormat");
 	%>
-	
+	<link href="style.css" type="text/css" rel="stylesheet">
 	
 	<html>
 		<head>
 			<title>Pretraga Student</title>
 		</head>
 		<body>
-		
+			<%@include  file="menu.jsp"  %>
+			<div class ="content">
+			<div class = "listCentar"> <h2>Search Student</h2> </div>
+			<div class = "listCentar">
 			<form action="./StudentSearchController" method="post">
 				<table>
 				
 				
 				
+
 				
 				<tr>
 				
@@ -35,6 +39,7 @@
 				<td><input type="text" name="index_number" /></td>
 				</tr>				
 				
+
 				
 				<tr>
 				
@@ -44,6 +49,7 @@
 				<td><input type="text" name="count_exam_passed" /></td>
 				</tr>				
 				
+
 								
 				
 				
@@ -106,10 +112,11 @@
 					</tr>
 				</table>
 			</form>
-			
+			</div>
 			
 			<c:if test="${!empty students }">
-				<p>Results:</p>
+				<div class = "listCentar"><p>Results:</p> </div>
+				<div class = "listCentar">
 				<table id="studentsTable">
 					<tr>
 					
@@ -169,7 +176,9 @@
 						</tr>
 					</c:forEach>
 				</table>
+				</div>
 			</c:if>
 		<p> <a href="./home.jsp">Pocetna</a>  </p>
+		</div>
 		</body>
 	</html>

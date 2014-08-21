@@ -1,6 +1,7 @@
 	
 	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<link href="style.css" type="text/css" rel="stylesheet">
 	<html>
 	<head>
 		<title>Dodaj Grade</title>
@@ -80,10 +81,13 @@
 	</head>
 	
 	<body>
-	<h2>Dodaj Grade</h2>
+	<%@include  file="menu.jsp"  %>
+	<div class ="content">
+	<div class = "listCentar"> <h2>Dodaj Grade</h2> </div>
 		<c:if test="${not empty error}">
 		    ${error}
 		</c:if>
+		<div class = "listCentar">
 		<form action="./GradeControllerAdd" method="post" name="forma" onsubmit="return provera()" >
 			<table >
 			
@@ -149,7 +153,8 @@
 				</tr>
 			</table>						
 		</form>
-		
+		</div>
 		<p> <a href="./home.jsp">Pocetna</a>  </p>
+		</div>
 	<body>
 </html>

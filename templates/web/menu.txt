@@ -9,20 +9,20 @@
 					
 					</ul>
 				</li>
-				<li style="color: gray;">Student
+				{% for class in classes %}
+				<li style="color: gray;">{{class}}
 					<ul>
-							<li style=" font-size: 20px;"><a href="./StudentControllerShow">List student</a></li>
+							<li style=" font-size: 20px;"><a href="./{{class}}ControllerShow">List {{class.lower()}}</a></li>
 						
 							<li style=" font-size: 20px;"><a
-								href="./StudentControllerPrepareAdd">Create student</a></li>
+								href="./{{class}}ControllerPrepareAdd">Create {{class.lower()}}</a></li>
 							<li style=" font-size: 20px;"><a
-								href="./StudentSearch.jsp">Search student</a></li>
+								href="./{{class}}Search.jsp">Search {{class.lower()}}</a></li>
 					</ul>
-				</li>
-	
+				</li>	
+				{% endfor %}
 			</ul>
 		</div>
 	</nav>
 
 	</div>
-<div/>

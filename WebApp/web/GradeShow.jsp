@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	<link href="style.css" type="text/css" rel="stylesheet">
 	<html>
 	  
 		<head>
@@ -8,10 +9,13 @@
 		
 		</head>
 		<body>
-		<h2> Tabela Grade </h2>
+		<%@include  file="menu.jsp"  %>
+		<div class ="content">
+		<div class = "listCentar"><h2 >Tabela Grade</h2> 
 			<c:if test="${not empty error}">
 			    ${error}
 			</c:if>
+			
 				<table border="1">
 					<tr> 
 					
@@ -78,8 +82,10 @@
 				    </tr>
 				</c:forEach>
 				</table>
+				</div>
 	<p> <a href="./GradeControllerPrepareAdd">Dodavanje Grade</a>  </p>
 	<p> <a href="./GradeSearch.jsp">Pretraga Grade</a>  </p>
 	<p> <a href="./home.jsp">Pocetna</a>  </p>
+	</div>
 		</body>
 	</html>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	<link href="style.css" type="text/css" rel="stylesheet">
 	<html>
 		<head>
 			<title>Izmeni Professor</title>
@@ -115,9 +116,13 @@
 	
 		</head>
 		<body>
+		<%@include  file="menu.jsp"  %>
+		<div class ="content">
 			<c:if test="${not empty error}">
 			    ${error}
 			</c:if>
+			<div class = "listCentar"> <h2>Update Professor</h2> </div>
+			<div class = "listCentar">
 			<form action="./ProfessorUpdateController" method="post" name="forma" onsubmit="return provera()">
 				<table >
 				
@@ -174,12 +179,14 @@
 			
 	
 					<tr>
-						<td>&nbsp;</td>
+					
 						<td><input type="hidden" name="id" value="${professor.id}"></td>
 						<td><input type="submit" name="submit" value="Izmeni Professor"></td>
 					</tr>
 				</table>
 			</form>
+			</div>
 			<p> <a href="./home.jsp">Pocetna</a>  </p>
+			</div>
 		</body>
 	</html>

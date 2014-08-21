@@ -144,6 +144,12 @@ class Initial(SemanticAction):
           target.write(tmpl.render())
           target.close()
 
+          tmpl = env_web.get_template('css.txt')
+          filename = "WebApp/web/style.css"
+          target = open(filename, 'w+')
+          target.write(tmpl.render())
+          target.close()
+
           
 class Database_config(SemanticAction):
   
@@ -278,6 +284,7 @@ class NClasses(SemanticAction):
           tmp_web_search = env_web.get_template('web_search.txt')
           tmp_web_home = env_web.get_template('home.txt')
           tmp_web_xml = env_web.get_template('web_xml.txt')
+          tmp_web_menu = env_web.get_template('menu.txt')
           if not os.path.exists("WebApp/src/controller/prepareAdd"):
             os.makedirs("WebApp/src/controller/prepareAdd")
           if not os.path.exists("WebApp/src/controller/add"):
@@ -297,6 +304,11 @@ class NClasses(SemanticAction):
           filename = "WebApp/web/WEB-INF/web.xml"
           target = open(filename, 'w+')
           target.write(tmp_web_xml.render( classes = allClassesNotAbstract ))
+          target.close()
+
+          filename = "WebApp/web/menu.jsp"
+          target = open(filename, 'w+')
+          target.write(tmp_web_menu.render( classes = allClassesNotAbstract ))
           target.close()
           
           for listClass in children:
