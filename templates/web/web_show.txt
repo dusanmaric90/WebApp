@@ -16,7 +16,7 @@
 			    ${error}
 			</c:if>
 			
-				<table border="1">
+				<table border="1" class = "listCentarGrey">
 					<tr> 
 					{% for dictionary in attributes %}
 					{% if dictionary["one_to_many"] is not defined %}
@@ -62,12 +62,12 @@
 				   
 				    <form action="./{{name}}PrepareUpdateController" method="post">
 								<td><input type="hidden" name="id" value="${show.id}" /><input
-									type="submit" value="Izmena" /></td>
+									type="submit" value="Izmena" class = "button"/></td>
 					</form>
 				   
 				     <form action="./{{name}}DeleteController">
 								<td><input type="hidden" name="id" value="${show.id}" /><input
-									type="submit" value="Brisanje" /></td>
+									type="submit" value="Brisanje" class = "button" /></td>
 					</form>
 				   
 
@@ -76,9 +76,7 @@
 				</c:forEach>
 				</table>
 				</div>
-	<p> <a href="./{{name}}ControllerPrepareAdd">Dodavanje {{name}}</a>  </p>
-	<p> <a href="./{{name}}Search.jsp">Pretraga {{name}}</a>  </p>
-	<p> <a href="./home.jsp">Pocetna</a>  </p>
+
 	</div>
 		</body>
 	</html>

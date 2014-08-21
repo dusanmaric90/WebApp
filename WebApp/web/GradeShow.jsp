@@ -16,7 +16,7 @@
 			    ${error}
 			</c:if>
 			
-				<table border="1">
+				<table border="1" class = "listCentarGrey">
 					<tr> 
 					
 					
@@ -69,12 +69,12 @@
 				   
 				    <form action="./GradePrepareUpdateController" method="post">
 								<td><input type="hidden" name="id" value="${show.id}" /><input
-									type="submit" value="Izmena" /></td>
+									type="submit" value="Izmena" class = "button"/></td>
 					</form>
 				   
 				     <form action="./GradeDeleteController">
 								<td><input type="hidden" name="id" value="${show.id}" /><input
-									type="submit" value="Brisanje" /></td>
+									type="submit" value="Brisanje" class = "button" /></td>
 					</form>
 				   
 
@@ -83,9 +83,7 @@
 				</c:forEach>
 				</table>
 				</div>
-	<p> <a href="./GradeControllerPrepareAdd">Dodavanje Grade</a>  </p>
-	<p> <a href="./GradeSearch.jsp">Pretraga Grade</a>  </p>
-	<p> <a href="./home.jsp">Pocetna</a>  </p>
+
 	</div>
 		</body>
 	</html>

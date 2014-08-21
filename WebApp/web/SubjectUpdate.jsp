@@ -63,7 +63,7 @@
 			    ${error}
 			</c:if>
 			<div class = "listCentar"> <h2>Update Subject</h2> </div>
-			<div class = "listCentar">
+			<div class = "listCentarGrey">
 			<form action="./SubjectUpdateController" method="post" name="forma" onsubmit="return provera()">
 				<table >
 				
@@ -92,7 +92,7 @@
 					<tr>
 					
 						<td><input type="hidden" name="id" value="${subject.id}"></td>
-						<td><input type="submit" name="submit" value="Izmeni Subject"></td>
+						<td><input type="submit" name="submit" value="Izmeni Subject" class = "button"></td>
 					</tr>
 				</table>
 			</form>

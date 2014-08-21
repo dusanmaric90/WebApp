@@ -118,7 +118,7 @@
 		<c:if test="${not empty error}">
 		    ${error}
 		</c:if>
-		<div class = "listCentar">
+		<div class = "listCentarGrey">
 		<form action="./ProfessorControllerAdd" method="post" name="forma" onsubmit="return provera()" >
 			<table >
 			
@@ -167,7 +167,7 @@
 			
 			<tr>
 					<td>&nbsp;</td>
-					<td><input type="submit" name="submit" value="Dodaj Professor"></td>				
+					<td><input type="submit" name="submit" value="Dodaj Professor" class = "button"></td>				
 				</tr>
 			</table>						
 		</form>

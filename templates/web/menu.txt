@@ -3,14 +3,14 @@
 <nav ="nav-left">
 		<div class = "nav-menu">
 			<ul>
-				<li style="color: gray;">Home<ul>
+				<li style="color: #ffffff;">Home<ul>
 						<li style=" font-size: 20px;"><a
 							href="./home.jsp">Home page</a></li>
 					
 					</ul>
 				</li>
 				{% for class in classes %}
-				<li style="color: gray;">{{class}}
+				<li style="color: #ffffff;">{{class}}
 					<ul>
 							<li style=" font-size: 20px;"><a href="./{{class}}ControllerShow">List {{class.lower()}}</a></li>
 						

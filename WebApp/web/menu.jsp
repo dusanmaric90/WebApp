@@ -3,14 +3,14 @@
 <nav ="nav-left">
 		<div class = "nav-menu">
 			<ul>
-				<li style="color: gray;">Home<ul>
+				<li style="color: #ffffff;">Home<ul>
 						<li style=" font-size: 20px;"><a
 							href="./home.jsp">Home page</a></li>
 					
 					</ul>
 				</li>
 				
-				<li style="color: gray;">Student
+				<li style="color: #ffffff;">Student
 					<ul>
 							<li style=" font-size: 20px;"><a href="./StudentControllerShow">List student</a></li>
 						
@@ -21,7 +21,7 @@
 					</ul>
 				</li>	
 				
-				<li style="color: gray;">Professor
+				<li style="color: #ffffff;">Professor
 					<ul>
 							<li style=" font-size: 20px;"><a href="./ProfessorControllerShow">List professor</a></li>
 						
@@ -32,7 +32,7 @@
 					</ul>
 				</li>	
 				
-				<li style="color: gray;">Subject
+				<li style="color: #ffffff;">Subject
 					<ul>
 							<li style=" font-size: 20px;"><a href="./SubjectControllerShow">List subject</a></li>
 						
@@ -43,7 +43,7 @@
 					</ul>
 				</li>	
 				
-				<li style="color: gray;">Grade
+				<li style="color: #ffffff;">Grade
 					<ul>
 							<li style=" font-size: 20px;"><a href="./GradeControllerShow">List grade</a></li>
 						

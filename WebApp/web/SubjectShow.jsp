@@ -16,7 +16,7 @@
 			    ${error}
 			</c:if>
 			
-				<table border="1">
+				<table border="1" class = "listCentarGrey">
 					<tr> 
 					
 					
@@ -52,12 +52,12 @@
 				   
 				    <form action="./SubjectPrepareUpdateController" method="post">
 								<td><input type="hidden" name="id" value="${show.id}" /><input
-									type="submit" value="Izmena" /></td>
+									type="submit" value="Izmena" class = "button"/></td>
 					</form>
 				   
 				     <form action="./SubjectDeleteController">
 								<td><input type="hidden" name="id" value="${show.id}" /><input
-									type="submit" value="Brisanje" /></td>
+									type="submit" value="Brisanje" class = "button" /></td>
 					</form>
 				   
 
@@ -66,9 +66,7 @@
 				</c:forEach>
 				</table>
 				</div>
-	<p> <a href="./SubjectControllerPrepareAdd">Dodavanje Subject</a>  </p>
-	<p> <a href="./SubjectSearch.jsp">Pretraga Subject</a>  </p>
-	<p> <a href="./home.jsp">Pocetna</a>  </p>
+
 	</div>
 		</body>
 	</html>

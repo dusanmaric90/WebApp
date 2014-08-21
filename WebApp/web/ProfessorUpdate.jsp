@@ -122,7 +122,7 @@
 			    ${error}
 			</c:if>
 			<div class = "listCentar"> <h2>Update Professor</h2> </div>
-			<div class = "listCentar">
+			<div class = "listCentarGrey">
 			<form action="./ProfessorUpdateController" method="post" name="forma" onsubmit="return provera()">
 				<table >
 				
@@ -181,7 +181,7 @@
 					<tr>
 					
 						<td><input type="hidden" name="id" value="${professor.id}"></td>
-						<td><input type="submit" name="submit" value="Izmeni Professor"></td>
+						<td><input type="submit" name="submit" value="Izmeni Professor" class = "button"></td>
 					</tr>
 				</table>
 			</form>

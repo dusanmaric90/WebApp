@@ -23,7 +23,7 @@
 			<%@include  file="menu.jsp"  %>
 			<div class ="content">
 			<div class = "listCentar"> <h2>Search {{name}}</h2> </div>
-			<div class = "listCentar">
+			<div class = "listCentarGrey">
 			<form action="./{{name}}SearchController" method="post">
 				<table>
 				
@@ -86,16 +86,16 @@
 					</c:if>
 					<tr>
 						<td>&nbsp;</td>
-						<td><input type="submit" name="Search" value="Search" />
+						<td><input type="submit" name="Search" value="Search" class = "button"/>
 					</tr>
 				</table>
 			</form>
 			</div>
 			
 			<c:if test="${!empty {{name.lower()}}s }">
-				<div class = "listCentar"><p>Results:</p> </div>
-				<div class = "listCentar">
-				<table id="{{name.lower()}}sTable">
+				<div class = "listCentar"><h2>Results:</h2> </div>
+				<div class = "listCentarGrey">
+				<table id="{{name.lower()}}sTable" border="1" class = "listCentarGrey">
 					<tr>
 					{% for dictionary in attributes %}
 					{% if dictionary["one_to_many"] is not defined %}
@@ -133,7 +133,7 @@
 				</table>
 				</div>
 			</c:if>
-		<p> <a href="./home.jsp">Pocetna</a>  </p>
+	
 		</div>
 		</body>
 	</html>

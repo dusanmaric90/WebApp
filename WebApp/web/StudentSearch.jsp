@@ -23,7 +23,7 @@
 			<%@include  file="menu.jsp"  %>
 			<div class ="content">
 			<div class = "listCentar"> <h2>Search Student</h2> </div>
-			<div class = "listCentar">
+			<div class = "listCentarGrey">
 			<form action="./StudentSearchController" method="post">
 				<table>
 				
@@ -108,16 +108,16 @@
 					</c:if>
 					<tr>
 						<td>&nbsp;</td>
-						<td><input type="submit" name="Search" value="Search" />
+						<td><input type="submit" name="Search" value="Search" class = "button"/>
 					</tr>
 				</table>
 			</form>
 			</div>
 			
 			<c:if test="${!empty students }">
-				<div class = "listCentar"><p>Results:</p> </div>
-				<div class = "listCentar">
-				<table id="studentsTable">
+				<div class = "listCentar"><h2>Results:</h2> </div>
+				<div class = "listCentarGrey">
+				<table id="studentsTable" border="1">
 					<tr>
 					
 					
@@ -178,7 +178,7 @@
 				</table>
 				</div>
 			</c:if>
-		<p> <a href="./home.jsp">Pocetna</a>  </p>
+	
 		</div>
 		</body>
 	</html>
