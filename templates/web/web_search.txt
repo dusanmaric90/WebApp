@@ -17,7 +17,7 @@
 	
 	<html>
 		<head>
-			<title>Pretraga {{name}}</title>
+			<title>Search {{name}}</title>
 		</head>
 		<body>
 			<%@include  file="menu.jsp"  %>
@@ -33,9 +33,9 @@
 				{% if dictionary["one_to_many"] is not defined %}
 				<tr>
 				{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
-				<td> {{dictionary["name"]}} (dd-MM-yyyy)</td>
+				<td> {{dictionary["label"]}} (dd-MM-yyyy)</td>
 				{% else %}
-				<td>{{dictionary["name"]}}</td>
+				<td>{{dictionary["label"]}}</td>
 				{%- endif %}
 				
 				{% if dictionary["enum"] is defined and dictionary["enum"] == "true" %}
@@ -57,9 +57,9 @@
 				{% if dictionary["one_to_many"] is not defined %}
 				<tr>
 				{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
-				<td> {{dictionary["name"]}} (dd-MM-yyyy)</td>
+				<td> {{dictionary["label"]}} (dd-MM-yyyy)</td>
 				{% else %}
-				<td>{{dictionary["name"]}}</td>
+				<td>{{dictionary["label"]}}</td>
 				{%- endif %}
 				
 				{% if dictionary["enum"] is defined and dictionary["enum"] == "true" %}
@@ -99,12 +99,12 @@
 					<tr>
 					{% for dictionary in attributes %}
 					{% if dictionary["one_to_many"] is not defined %}
-					<th>{{dictionary["name"]}}</th>
+					<th>{{dictionary["label"]}}</th>
 					{%- endif %}
 					{% endfor %}
 					{% for dictionary in attributes_parent %}
 					{% if dictionary["one_to_many"] is not defined %}
-					<th>{{dictionary["name"]}}</th>
+					<th>{{dictionary["label"]}}</th>
 					{%- endif %}
 					{% endfor %}
 					</tr>

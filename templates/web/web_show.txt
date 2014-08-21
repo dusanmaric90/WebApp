@@ -5,13 +5,13 @@
 	<html>
 	  
 		<head>
-			<title> Prikaz {{name}} </title>
+			<title> Show {{name}} </title>
 		
 		</head>
 		<body>
 		<%@include  file="menu.jsp"  %>
 		<div class ="content">
-		<div class = "listCentar"><h2 >Tabela {{name}}</h2> 
+		<div class = "listCentar"><h2 >Tabel {{name}}</h2> 
 			<c:if test="${not empty error}">
 			    ${error}
 			</c:if>
@@ -20,12 +20,12 @@
 					<tr> 
 					{% for dictionary in attributes %}
 					{% if dictionary["one_to_many"] is not defined %}
-					 <th>	{{dictionary["name"]}} </th>
+					 <th>	{{dictionary["label"]}} </th>
 					{%- endif %}					 
 					{% endfor %}
 					{% for dictionary in attributes_parent %}
 					{% if dictionary["one_to_many"] is not defined %}
-					 <th>	{{dictionary["name"]}} </th>
+					 <th>	{{dictionary["label"]}} </th>
 					{%- endif %}					 
 					{% endfor %}
 					 <th colspan="2"> </th>
@@ -62,12 +62,12 @@
 				   
 				    <form action="./{{name}}PrepareUpdateController" method="post">
 								<td><input type="hidden" name="id" value="${show.id}" /><input
-									type="submit" value="Izmena" class = "button"/></td>
+									type="submit" value="Update" class = "button"/></td>
 					</form>
 				   
 				     <form action="./{{name}}DeleteController">
 								<td><input type="hidden" name="id" value="${show.id}" /><input
-									type="submit" value="Brisanje" class = "button" /></td>
+									type="submit" value="Delete" class = "button" /></td>
 					</form>
 				   
 

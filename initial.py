@@ -29,27 +29,30 @@ def PASSWORD():       return "password"
 def URL():            return "url"
 def TABLE():          return "table"
 def SHOW():           return "show"
+def LABEL():          return "label"
 
 
 
 
 # PEG syntax rules
 
-def initial():              return OneOrMore([nclasses,enumeration,database_config]), EOF
-def nclasses():             return OneOrMore(nclass)
-def nclass():               return  Optional(ABSTRACT),CLASS, class_name,Optional(":", class_name), ZeroOrMore(attributes)
-def attributes():           return "[", OneOrMore(attribute), "]"
-def attribute():            return attribute_key, "=", attribute_value 
-def class_name():           return _(r"[a-zA-Z_]([a-zA-Z_]|[0-9])*")
-def attribute_value():      return _(r"([a-zA-Z_]|[0-9])*")
-def enumeration_value():    return _(r"([a-zA-Z_]|[0-9])*")
-def attribute_key():        return [NAME, TYPE, UNIQUE, REQUIRED, MIN, MAX, MANY_TO_ONE, ENUM, ONE_TO_MANY, SHOW]
-def enumeration():          return ENUMERATION, enumeration_value, ":", OneOrMore(enumeration_element)
-def enumeration_element():  return enumeration_value, ";"
-def database_config():      return DATABASE, database_value, ":", DRIVER, "=", database_value, USERNAME, "=", database_value, PASSWORD, "=", database_value, URL, "=", url_value, ZeroOrMore(database_table)  
-def database_value():       return _(r"([a-zA-Z_.]|[0-9])*")
-def url_value():            return _(r"(ftp|file|jdbc:[a-z]+[0-9]*)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]*")
-def database_table():       return TABLE, class_name
+def initial():               return OneOrMore([nclasses,enumeration,database_config]), EOF
+def nclasses():              return OneOrMore(nclass)
+def nclass():                return  Optional(ABSTRACT),CLASS, class_name,Optional(":", class_name), ZeroOrMore(attributes)
+def attributes():            return "[", OneOrMore(attribute), Optional(attribute_label),"]"
+def attribute():             return attribute_key, "=", attribute_value
+def attribute_label():       return LABEL,"=","#", attribute_label_value,"#"
+def attribute_label_value(): return _(r"([a-zA-Z_\s])*")
+def class_name():            return _(r"[a-zA-Z_]([a-zA-Z_]|[0-9])*")
+def attribute_value():       return _(r"([a-zA-Z_]|[0-9])*")
+def enumeration_value():     return _(r"([a-zA-Z_]|[0-9])*")
+def attribute_key():         return [NAME, TYPE, UNIQUE, REQUIRED, MIN, MAX, MANY_TO_ONE, ENUM, ONE_TO_MANY, SHOW]
+def enumeration():           return ENUMERATION, enumeration_value, ":", OneOrMore(enumeration_element)
+def enumeration_element():   return enumeration_value, ";"
+def database_config():       return DATABASE, database_value, ":", DRIVER, "=", database_value, USERNAME, "=", database_value, PASSWORD, "=", database_value, URL, "=", url_value, ZeroOrMore(database_table)  
+def database_value():        return _(r"([a-zA-Z_.]|[0-9])*")
+def url_value():             return _(r"(ftp|file|jdbc:[a-z]+[0-9]*)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]*")
+def database_table():        return TABLE, class_name
 
 class Initial(SemanticAction):
   
@@ -169,11 +172,22 @@ class Database_config(SemanticAction):
           target = open(filename, 'w+')
           target.write(tmpl.render( driver = str(node[5]), username = str(node[8]), password = str(node[11]),url =str(node[14]), database_tables = children  ))
           target.close()
+class Attribute_label(SemanticAction):
+  
+    def first_pass(self, parser, node, children):
+          print "attribute_label!!!!!!"
+          retVal = [ str(node[0]), str(node[3])]  
+          return retVal
+         
+class Attribute_label_value(SemanticAction):
+  
+    def first_pass(self, parser, node, children):
+          print "attribute_label_value!!!!!!"
+          
 class Database_value(SemanticAction):
   
     def first_pass(self, parser, node, children):
-          print "database_value!!!!!!"
-        
+          print "database_value!!!!!!"        
 
 class Url_value(SemanticAction):
   
@@ -214,7 +228,8 @@ class Attribute(SemanticAction):
   
     def first_pass(self, parser, node, children):
           print "attribute!!!!!"
-          retVal = [ str(node[0]), str(node[2])]
+          
+          retVal = [ str(node[0]), str(node[2])]  
           return retVal
           
          
@@ -298,7 +313,7 @@ class NClasses(SemanticAction):
  
           filename = "WebApp/web/home.jsp"
           target = open(filename, 'w+')
-          target.write(tmp_web_home.render( classes = allClassesNotAbstract ))
+          target.write(tmp_web_home.render(  ))
           target.close()
 
           filename = "WebApp/web/WEB-INF/web.xml"
@@ -452,7 +467,8 @@ database_config.sem = Database_config()
 database_value.sem = Database_value()
 url_value.sem = Url_value()
 database_table.sem = Database_table()
-
+attribute_label.sem = Attribute_label()
+attribute_label_value.sem = Attribute_label_value()
 def main(debug=False):
     # First we will make a parser - an instance of the calc parser model.
     # Parser model is given in the form of python constructs therefore we

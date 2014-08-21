@@ -71,7 +71,7 @@ if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getPara
 		else
 			conjuction.add(Restrictions.eq("{{dictionary["name"].lower()}}",{{dictionary["name"]}}));
 	} catch (NumberFormatException e) {
-		String error = "Polje treba da bude broj!";
+		String error = "Field must be integer!";
 		req.setAttribute("error", error);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}Search.jsp");
 		dispatcher.forward(req, resp);

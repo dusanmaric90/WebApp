@@ -4,52 +4,52 @@
 	<link href="style.css" type="text/css" rel="stylesheet">
 	<html>
 		<head>
-			<title>Izmeni {{name}}</title>
+			<title>Update {{name}}</title>
 			
 			
 			
 <script type="text/javascript">
 	
-	function provera(){
+	function check(){
 		
 		{% for dictionary in attributes %}
 		{% if dictionary["one_to_many"] is not defined %}
 		{% if dictionary["required"] is defined and dictionary["required"] == "true" %}
-		parametar = document.forms['forma'].{{dictionary["name"]}}.value;
-		if(parametar==""){
-			alert("Niste uneli {{dictionary["name"]}}");
+		parameter = document.forms['formUpdate'].{{dictionary["name"]}}.value;
+		if(parameter==""){
+			alert("Field {{dictionary["label"]}} is required");
 			return false;
 		}
 		{%- endif %}
 
 		{% if dictionary["min_length"] is defined %}
-		parametar = document.forms['forma'].{{dictionary["name"]}}.value.length;
-		if(parametar<{{dictionary["min_length"]}}){
-			alert("Za polje {{dictionary["name"]}} min_lengthimalna duzina mora biti {{dictionary["min_length"]}} ");
+		parameter = document.forms['formUpdate'].{{dictionary["name"]}}.value.length;
+		if(parameter<{{dictionary["min_length"]}}){
+			alert("For field {{dictionary["label"]}} minimal length is {{dictionary["min_length"]}} ");
 			return false;
 		}
 		{%- endif %}	
 		
 		{% if dictionary["type"] is defined and dictionary["type"] == "Integer" %}
-		parametar=document.forms['forma'].{{dictionary["name"]}}.value;
-		var num = parametar.replace(/\,/g,'');
-		if(isNaN(parametar)|| num.indexOf('.') > -1 ) {
-				alert("{{dictionary["name"]}} mora biti ceo broj");
+		parameter=document.forms['formUpdate'].{{dictionary["name"]}}.value;
+		var num = parameter.replace(/\,/g,'');
+		if(isNaN(parameter)|| num.indexOf('.') > -1 ) {
+				alert("Field {{dictionary["label"]}} must be integer");
 				return false;
 		}
 		{%- endif %}
 		{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
-	    vrednost=document.forms['forma'].{{dictionary["name"]}}.value;
-	   var date=vrednost.trim();
-	   if(vrednost.length!=0){ 
-		var niz=new Array();
-		niz=date.split('-');
-		if(niz.length!=3){
-		 alert("Format {{dictionary["name"]}} mora biti dd-MM-yyyy");
+	    tempValue=document.forms['formUpdate'].{{dictionary["name"]}}.value;
+	   var date=tempValue.trim();
+	   if(tempValue.length!=0){ 
+		var tempArray=new Array();
+		tempArray=date.split('-');
+		if(tempArray.length!=3){
+		 alert("Field {{dictionary["label"]}} must have pattern dd-MM-yyyy");
 		  return false; 
 		}else{
-		 if(isNaN(niz[0]) || isNaN(niz[1]) || isNaN(niz[2]) || niz[0].length!=2|| niz[1].length!=2|| niz[2].length!=4){
-		  alert("Format {{dictionary["name"]}} mora biti dd-MM-yyyy");
+		 if(isNaN(tempArray[0]) || isNaN(tempArray[1]) || isNaN(tempArray[2]) || tempArray[0].length!=2|| tempArray[1].length!=2|| tempArray[2].length!=4){
+		  alert("Field {{dictionary["label"]}} must have pattern dd-MM-yyyy");
 		  return false; 
 		 }
 		}
@@ -61,41 +61,41 @@
 		{% for dictionary in attributes_parent %}
 		{% if dictionary["one_to_many"] is not defined %}
 		{% if dictionary["required"] is defined and dictionary["required"] == "true" %}
-		parametar = document.forms['forma'].{{dictionary["name"]}}.value;
-		if(parametar==""){
-			alert("Niste uneli {{dictionary["name"]}}");
+		parameter = document.forms['formUpdate'].{{dictionary["name"]}}.value;
+		if(parameter==""){
+			alert("Field{{dictionary["label"]}} is required");
 			return false;
 		}
 		{%- endif %}
 
 		{% if dictionary["min_length"] is defined %}
-		parametar = document.forms['forma'].{{dictionary["name"]}}.value.length;
-		if(parametar<{{dictionary["min_length"]}}){
-			alert("Za polje {{dictionary["name"]}} minimalna duzina mora biti {{dictionary["min_length"]}} ");
+		parameter = document.forms['formUpdate'].{{dictionary["name"]}}.value.length;
+		if(parameter<{{dictionary["min_length"]}}){
+			alert("For field {{dictionary["label"]}} minimal length must be {{dictionary["min_length"]}} ");
 			return false;
 		}
 		{%- endif %}	
 		
 		{% if dictionary["type"] is defined and dictionary["type"] == "Integer" %}
-		parametar=document.forms['forma'].{{dictionary["name"]}}.value;
-		var num = parametar.replace(/\,/g,'');
-		if(isNaN(parametar)|| num.indexOf('.') > -1 ) {
-				alert("{{dictionary["name"]}} mora biti ceo broj");
+		parameter=document.forms['formUpdate'].{{dictionary["name"]}}.value;
+		var num = parameter.replace(/\,/g,'');
+		if(isNaN(parameter)|| num.indexOf('.') > -1 ) {
+				alert("Field {{dictionary["label"]}} must be integer");
 				return false;
 		}
 		{%- endif %}
 		{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
-	    vrednost=document.forms['forma'].{{dictionary["name"]}}.value;
-	   var date=vrednost.trim();
-	   if(vrednost.length!=0){ 
-		var niz=new Array();
-		niz=date.split('-');
-		if(niz.length!=3){
-		 alert("Format {{dictionary["name"]}} mora biti dd-MM-yyyy");
+	    tempValue=document.forms['formUpdate'].{{dictionary["name"]}}.value;
+	   var date=tempValue.trim();
+	   if(tempValue.length!=0){ 
+		var tempArray=new Array();
+		tempArray=date.split('-');
+		if(tempArray.length!=3){
+		 alert("Field {{dictionary["label"]}} must have pattern  dd-MM-yyyy");
 		  return false; 
 		}else{
-		 if(isNaN(niz[0]) || isNaN(niz[1]) || isNaN(niz[2]) || niz[0].length!=2|| niz[1].length!=2|| niz[2].length!=4){
-		  alert("Format {{dictionary["name"]}} mora biti dd-MM-yyyy");
+		 if(isNaN(tempArray[0]) || isNaN(tempArray[1]) || isNaN(tempArray[2]) || tempArray[0].length!=2|| tempArray[1].length!=2|| tempArray[2].length!=4){
+		  alert("Field {{dictionary["label"]}} must have pattern dd-MM-yyyy");
 		  return false; 
 		 }
 		}
@@ -118,13 +118,13 @@
 			</c:if>
 			<div class = "listCentar"> <h2>Update {{name}}</h2> </div>
 			<div class = "listCentarGrey">
-			<form action="./{{name}}UpdateController" method="post" name="forma" onsubmit="return provera()">
+			<form action="./{{name}}UpdateController" method="post" name="formUpdate" onsubmit="return check()">
 				<table >
 				
 			{% for dictionary in attributes %}
 			{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
 			<tr>
-				 <td>{{dictionary["name"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
+				 <td>{{dictionary["label"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
 			 	
 					<td><select name="{{dictionary["name"]}}">
 							<c:forEach var="temp{{dictionary["type"]}}" items="${list{{dictionary["type"]}}}">
@@ -135,7 +135,7 @@
 				</tr>
 			{% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
 			<tr>
-				 <td>{{dictionary["name"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
+				 <td>{{dictionary["label"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
 					<td><select name="{{dictionary["name"]}}">
 							<c:forEach var="temp{{dictionary["type"]}}" items="<%= model.{{dictionary["type"]}}.values() %>">
 								<option value="${temp{{dictionary["type"]}}}" <c:if test="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}==temp{{dictionary["type"]}}{% raw %}}{% endraw %}">selected="selected"</c:if>>${temp{{dictionary["type"]}}}</option>
@@ -145,11 +145,11 @@
 				</tr>
 			{% elif dictionary["one_to_many"] is not defined %}
 			<tr>
-					<td>{{dictionary["name"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
+					<td>{{dictionary["label"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
 					{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
 					<td>
-					<fmt:formatDate value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}{% raw %}}{% endraw %}"  type="date" pattern="dd-MM-yyyy" var="theFormattedDate" />
-					<input type="text" name="{{dictionary["name"]}}" value="${theFormattedDate}" {% if dictionary["max_length"] is defined  %}max_lengthlength="{{dictionary["max_length"]}}" size="{{dictionary["max_length"]}}"{%- endif %} /> </td>				
+					<fmt:formatDate value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}{% raw %}}{% endraw %}"  type="date" pattern="dd-MM-yyyy" var="theformUpdatettedDate" />
+					<input type="text" name="{{dictionary["name"]}}" value="${theformUpdatettedDate}" {% if dictionary["max_length"] is defined  %}max_lengthlength="{{dictionary["max_length"]}}" size="{{dictionary["max_length"]}}"{%- endif %} /> </td>				
 					{% else%}
 					<td><input type="text" name="{{dictionary["name"]}}" value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}{% raw %}}{% endraw %}" {% if dictionary["max_length"] is defined  %}max_lengthlength="{{dictionary["max_length"]}}" size="{{dictionary["max_length"]}}"{%- endif %} /> </td>				
 					{% endif %}
@@ -160,7 +160,7 @@
 			{% for dictionary in attributes_parent %}
 			{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
 			<tr>
-				 <td>{{dictionary["name"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
+				 <td>{{dictionary["label"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
 			 	
 					<td><select name="{{dictionary["name"]}}">
 							<c:forEach var="temp{{dictionary["type"]}}" items="${list{{dictionary["type"]}}}">
@@ -171,7 +171,7 @@
 				</tr>
 			{% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
 			<tr>
-				 <td>{{dictionary["name"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
+				 <td>{{dictionary["label"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
 					<td><select name="{{dictionary["name"]}}">
 							<c:forEach var="temp{{dictionary["type"]}}" items="<%= model.{{dictionary["type"]}}.values() %>">
 								<option value="${temp{{dictionary["type"]}}}" <c:if test="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}==temp{{dictionary["type"]}}{% raw %}}{% endraw %}">selected="selected"</c:if>>${temp{{dictionary["type"]}}}</option>
@@ -181,11 +181,11 @@
 				</tr>
 			{% elif dictionary["one_to_many"] is not defined %}
 			<tr>
-					<td>{{dictionary["name"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
+					<td>{{dictionary["label"]}} {% if dictionary["required"] is defined and dictionary["required"] == "true" %}*{%- endif %}</td>
 					{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
 					<td>
-					<fmt:formatDate value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}{% raw %}}{% endraw %}"  type="date" pattern="dd-MM-yyyy" var="theFormattedDate" />
-					<input type="text" name="{{dictionary["name"]}}" value="${theFormattedDate}" {% if dictionary["max_length"] is defined  %}max_lengthlength="{{dictionary["max_length"]}}" size="{{dictionary["max_length"]}}"{%- endif %} /> </td>				
+					<fmt:formatDate value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}{% raw %}}{% endraw %}"  type="date" pattern="dd-MM-yyyy" var="theformUpdatettedDate" />
+					<input type="text" name="{{dictionary["name"]}}" value="${theformUpdatettedDate}" {% if dictionary["max_length"] is defined  %}max_lengthlength="{{dictionary["max_length"]}}" size="{{dictionary["max_length"]}}"{%- endif %} /> </td>				
 					{% else%}
 					<td><input type="text" name="{{dictionary["name"]}}" value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"].lower()}}{% raw %}}{% endraw %}" {% if dictionary["max_length"] is defined  %}max_lengthlength="{{dictionary["max_length"]}}" size="{{dictionary["max_length"]}}"{%- endif %} /> </td>				
 					{% endif %}
@@ -196,7 +196,7 @@
 					<tr>
 					
 						<td><input type="hidden" name="id" value="{% raw %}${{% endraw %}{{name.lower()}}.id{% raw %}}{% endraw %}"></td>
-						<td><input type="submit" name="submit" value="Izmeni {{name}}" class = "button"></td>
+						<td><input type="submit" name="submit" value="Update {{name}}" class = "button"></td>
 					</tr>
 				</table>
 			</form>

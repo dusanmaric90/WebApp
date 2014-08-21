@@ -117,7 +117,7 @@ if({{dictionary["name"]}} !=null){
 		Date date = format.parse({{dictionary["name"]}});
 		temp{{name}}.set{{dictionary["name"].capitalize()}}(date);
 	} catch (ParseException e) {
-		String error = "Pogresan format datuma!";
+		String error = "Error in pattern of date filed!!";
 		req.setAttribute("error", error);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}Add.jsp");
 		dispatcher.forward(req, resp);
@@ -148,7 +148,7 @@ if({{dictionary["name"]}} !=null){
 		Date date = format.parse({{dictionary["name"]}});
 		temp{{name}}.set{{dictionary["name"].capitalize()}}(date);
 	} catch (ParseException e) {
-		String error = "Pogresan format datuma!";
+		String error = "Error in pattern of date filed!!";
 		req.setAttribute("error", error);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}Add.jsp");
 		dispatcher.forward(req, resp);

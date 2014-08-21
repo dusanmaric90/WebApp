@@ -3,18 +3,14 @@
 		<link href="style.css" type="text/css" rel="stylesheet">
 		<html>
 			<head>
-				<title>Pocetna strana</title>
+				<title>Home page</title>
 			</head>
 			<body>
 			<%@include  file="menu.jsp"  %>
 			<div class ="content">
-					<table>
-					{% for class in classes %}
-						<tr>
-							<p><a href="./{{class}}ControllerShow">Prikaz entiteta '{{class}}'</a></p>
-						</tr>
-					{% endfor %}
-					</table>
+			<div class = "listCentarGrey">
+			<a href="https://github.com/dusanmaric90/WebApp" style="color: #ffffff;font-size: 20px;">Location of DSL for WebApp</a>
+			</div>
 			</div>
 			</body>
 		</html>
