@@ -26,23 +26,23 @@ protected Integer id;
 protected Integer id;
 {% endif %}
 
-{% for dictionary in attributes %}
+{% for attribute in attributes %}
 
-{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
 @ManyToOne
 @JoinColumn
-protected {{ dictionary["type"] }}  {{ dictionary["name"] }};	
-{% elif dictionary["one_to_many"] is defined and dictionary["one_to_many"] == "true" %}
+protected {{ attribute["type"] }}  {{ attribute["name"] }};	
+{% elif attribute["one_to_many"] is defined and attribute["one_to_many"] == "true" %}
 @OneToMany(mappedBy="{{nameClass.lower()}}", fetch=FetchType.EAGER)
-protected Set<{{ dictionary["type"] }}> {{ dictionary["name"] }} = new HashSet<{{ dictionary["type"] }}>();
+protected Set<{{ attribute["type"] }}> {{ attribute["name"] }} = new HashSet<{{ attribute["type"] }}>();
 {% else %}
-{% if dictionary["type"] is defined and dictionary["type"] == "Date" -%}@Temporal(TemporalType.DATE){%- endif %}
-{% if dictionary["enum"] is defined and dictionary["enum"] == "true" -%}@Enumerated(EnumType.STRING){%- endif %}
-{% if dictionary["min_length"] is defined and  dictionary["max_length"] is defined -%}@Size(min = {{dictionary["min_length"]}}, max = {{dictionary["max_length"]}}){%- endif %}
-{% if (dictionary["unique"] is defined and dictionary["unique"] == "true") or (dictionary["required"] is defined and dictionary["required"] == "true") -%}
-@Column({% if dictionary["unique"] is defined and dictionary["unique"] == "true" %}unique = true{% endif %}{% if (dictionary["unique"] is defined and dictionary["unique"] == "true") and (dictionary["required"] is defined and dictionary["required"] == "true") %}, {% endif %}{% if dictionary["required"] is defined and dictionary["required"] == "true" %}nullable = false{% endif %})
+{% if attribute["type"] is defined and attribute["type"] == "Date" -%}@Temporal(TemporalType.DATE){%- endif %}
+{% if attribute["enum"] is defined and attribute["enum"] == "true" -%}@Enumerated(EnumType.STRING){%- endif %}
+{% if attribute["min_length"] is defined and  attribute["max_length"] is defined -%}@Size(min = {{attribute["min_length"]}}, max = {{attribute["max_length"]}}){%- endif %}
+{% if (attribute["unique"] is defined and attribute["unique"] == "true") or (attribute["required"] is defined and attribute["required"] == "true") -%}
+@Column({% if attribute["unique"] is defined and attribute["unique"] == "true" %}unique = true{% endif %}{% if (attribute["unique"] is defined and attribute["unique"] == "true") and (attribute["required"] is defined and attribute["required"] == "true") %}, {% endif %}{% if attribute["required"] is defined and attribute["required"] == "true" %}nullable = false{% endif %})
 {%- endif %}
-protected {{ dictionary["type"] }}  {{ dictionary["name"] }};	
+protected {{ attribute["type"] }}  {{ attribute["name"] }};	
 {% endif %}
 
 
@@ -57,14 +57,14 @@ public void setId(Integer id) {
 	this.id = id;
 }
 {% endif %}
-{% for dictionary in attributes %}
-{% if dictionary["one_to_many"] is not defined  %}
-public {{ dictionary["type"] }} get{{ dictionary["name"].capitalize() }}() {
-	return {{ dictionary["name"] }};
+{% for attribute in attributes %}
+{% if attribute["one_to_many"] is not defined  %}
+public {{ attribute["type"] }} get{{ attribute["name"].capitalize() }}() {
+	return {{ attribute["name"] }};
 }
 		
-public void set{{ dictionary["name"].capitalize() }}({{ dictionary["type"] }} {{ dictionary["name"] }}) {
-	this.{{ dictionary["name"] }} = {{ dictionary["name"] }};
+public void set{{ attribute["name"].capitalize() }}({{ attribute["type"] }} {{ attribute["name"] }}) {
+	this.{{ attribute["name"] }} = {{ attribute["name"] }};
 }
 {% endif %}		
 {% endfor %}
@@ -77,8 +77,8 @@ public String toString() {
 @Override
 public String toString() {
 	return "" + 
-{% for dictionary in attributes %}
-{% if dictionary["show"] is defined and dictionary["show"] == "true" -%}{{dictionary["name"]}}+ " " +{%- endif %}
+{% for attribute in attributes %}
+{% if attribute["show"] is defined and attribute["show"] == "true" -%}{{attribute["name"]}}+ " " +{%- endif %}
 {% endfor %}
 	" ";}
 {% endif %}

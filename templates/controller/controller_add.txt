@@ -25,10 +25,10 @@ public class {{name}}ControllerAdd extends HttpServlet {
 @EJB
 private I{{name}}Dao {{name}}Dao;
 	
-{% for dictionary in attributes %}
-{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+{% for attribute in attributes %}
+{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
 @EJB
-private I{{dictionary["type"]}}Dao {{dictionary["type"]}}Dao;	
+private I{{attribute["type"]}}Dao {{attribute["type"]}}Dao;	
 {%- endif %}	
 {% endfor %}
 
@@ -45,35 +45,35 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 @Override
 protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-{% for dictionary in attributes %}
-{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
-Integer  {{dictionary["name"]}} = null;	
-{% elif dictionary["type"] is defined and dictionary["type"] == "Date" %}
-String  {{dictionary["name"]}} = null;
-{% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
-String  {{dictionary["name"]}} = null;
-{% elif dictionary["one_to_many"] is not defined %}
-{{dictionary["type"]}} {{dictionary["name"]}} = null;
+{% for attribute in attributes %}
+{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
+Integer  {{attribute["name"]}} = null;	
+{% elif attribute["type"] is defined and attribute["type"] == "Date" %}
+String  {{attribute["name"]}} = null;
+{% elif attribute["enum"] is defined and attribute["enum"] == "true" %}
+String  {{attribute["name"]}} = null;
+{% elif attribute["one_to_many"] is not defined %}
+{{attribute["type"]}} {{attribute["name"]}} = null;
 {%- endif %}	
 {% endfor %}
 
-{% for dictionary in attributes_parent %}
-{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
-Integer  {{dictionary["name"]}} = null;	
-{% elif dictionary["type"] is defined and dictionary["type"] == "Date" %}
-String  {{dictionary["name"]}} = null;
-{% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
-String  {{dictionary["name"]}} = null;
-{% elif dictionary["one_to_many"] is not defined %}
-{{dictionary["type"]}} {{dictionary["name"]}} = null;
+{% for attribute in attributes_parent %}
+{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
+Integer  {{attribute["name"]}} = null;	
+{% elif attribute["type"] is defined and attribute["type"] == "Date" %}
+String  {{attribute["name"]}} = null;
+{% elif attribute["enum"] is defined and attribute["enum"] == "true" %}
+String  {{attribute["name"]}} = null;
+{% elif attribute["one_to_many"] is not defined %}
+{{attribute["type"]}} {{attribute["name"]}} = null;
 {%- endif %}	
 {% endfor %}
 
-{% for dictionary in attributes %}
-{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
-if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}"))) {
+{% for attribute in attributes %}
+{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
+if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParameter("{{attribute["name"]}}"))) {
 	try{
-		{{dictionary["name"]}} = Integer.parseInt(req.getParameter("{{dictionary["name"]}}"));
+		{{attribute["name"]}} = Integer.parseInt(req.getParameter("{{attribute["name"]}}"));
 	} catch (NumberFormatException e) {
 		String error = "Field must be integer!";
 		req.setAttribute("error", error);
@@ -83,10 +83,10 @@ if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getPara
 	}
 
 }
-{% elif dictionary["type"] is defined and dictionary["type"] == "Integer" %}
-if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}"))) {
+{% elif attribute["type"] is defined and attribute["type"] == "Integer" %}
+if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParameter("{{attribute["name"]}}"))) {
 	try{
-		{{dictionary["name"]}} = Integer.parseInt(req.getParameter("{{dictionary["name"]}}"));
+		{{attribute["name"]}} = Integer.parseInt(req.getParameter("{{attribute["name"]}}"));
 	} catch (NumberFormatException e) {
 		String error = "Field must be integer!";
 		req.setAttribute("error", error);
@@ -96,18 +96,18 @@ if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getPara
 	}
 
 }
-{% elif dictionary["one_to_many"] is not defined %}
-if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}")) ) {
-	{{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
+{% elif attribute["one_to_many"] is not defined %}
+if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParameter("{{attribute["name"]}}")) ) {
+	{{attribute["name"]}} = req.getParameter("{{attribute["name"]}}");
 }
 {%- endif %}	
 {% endfor %}
 
-{% for dictionary in attributes_parent %}
-{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
-if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}"))) {
+{% for attribute in attributes_parent %}
+{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
+if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParameter("{{attribute["name"]}}"))) {
 	try{
-		{{dictionary["name"]}} = Integer.parseInt(req.getParameter("{{dictionary["name"]}}"));
+		{{attribute["name"]}} = Integer.parseInt(req.getParameter("{{attribute["name"]}}"));
 	} catch (NumberFormatException e) {
 		String error = "Field must be integer!";
 		req.setAttribute("error", error);
@@ -117,10 +117,10 @@ if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getPara
 	}
 
 }
-{% elif dictionary["type"] is defined and dictionary["type"] == "Integer" %}
-if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}"))) {
+{% elif attribute["type"] is defined and attribute["type"] == "Integer" %}
+if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParameter("{{attribute["name"]}}"))) {
 	try{
-		{{dictionary["name"]}} = Integer.parseInt(req.getParameter("{{dictionary["name"]}}"));
+		{{attribute["name"]}} = Integer.parseInt(req.getParameter("{{attribute["name"]}}"));
 	} catch (NumberFormatException e) {
 		String error = "Field must be integer!";
 		req.setAttribute("error", error);
@@ -130,26 +130,26 @@ if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getPara
 	}
 
 }
-{% elif dictionary["one_to_many"] is not defined %}
-if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getParameter("{{dictionary["name"]}}")) ) {
-	{{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
+{% elif attribute["one_to_many"] is not defined %}
+if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParameter("{{attribute["name"]}}")) ) {
+	{{attribute["name"]}} = req.getParameter("{{attribute["name"]}}");
 }
 {%- endif %}	
 {% endfor %}
 				
 {{name}} temp{{name}} = new {{name}}();
 
-{% for dictionary in attributes %}
-{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
-if({{dictionary["name"]}} !=null){
-	temp{{name}}.set{{dictionary["name"].capitalize()}}({{dictionary["type"]}}Dao.findById({{dictionary["name"]}}));
+{% for attribute in attributes %}
+{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
+if({{attribute["name"]}} !=null){
+	temp{{name}}.set{{attribute["name"].capitalize()}}({{attribute["type"]}}Dao.findById({{attribute["name"]}}));
 }
-{% elif dictionary["type"] is defined and dictionary["type"] == "Date" %}
-if({{dictionary["name"]}} !=null){
+{% elif attribute["type"] is defined and attribute["type"] == "Date" %}
+if({{attribute["name"]}} !=null){
 	SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 	try{
-		Date date = format.parse({{dictionary["name"]}});
-		temp{{name}}.set{{dictionary["name"].capitalize()}}(date);
+		Date date = format.parse({{attribute["name"]}});
+		temp{{name}}.set{{attribute["name"].capitalize()}}(date);
 	} catch (ParseException e) {
 		String error = "Error in pattern of date filed!";
 		req.setAttribute("error", error);
@@ -158,29 +158,29 @@ if({{dictionary["name"]}} !=null){
 		return;	
 	}
 }
-{% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
-if({{dictionary["name"]}} !=null){
-	{{dictionary["type"]}} enum{{dictionary["name"].capitalize()}} = {{dictionary["type"]}}.valueOf({{dictionary["name"]}});
-	temp{{name}}.set{{dictionary["name"].capitalize()}}(enum{{dictionary["name"].capitalize()}});
+{% elif attribute["enum"] is defined and attribute["enum"] == "true" %}
+if({{attribute["name"]}} !=null){
+	{{attribute["type"]}} enum{{attribute["name"].capitalize()}} = {{attribute["type"]}}.valueOf({{attribute["name"]}});
+	temp{{name}}.set{{attribute["name"].capitalize()}}(enum{{attribute["name"].capitalize()}});
 }
-{% elif dictionary["one_to_many"] is not defined %}
-if({{dictionary["name"]}} !=null){
-	temp{{name}}.set{{dictionary["name"].capitalize()}}({{dictionary["name"]}});
+{% elif attribute["one_to_many"] is not defined %}
+if({{attribute["name"]}} !=null){
+	temp{{name}}.set{{attribute["name"].capitalize()}}({{attribute["name"]}});
 }
 {%- endif %}	
 {% endfor %}
 
-{% for dictionary in attributes_parent %}
-{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
-if({{dictionary["name"]}} !=null){
-	temp{{name}}.set{{dictionary["name"].capitalize()}}({{dictionary["type"]}}Dao.findById({{dictionary["name"]}}));
+{% for attribute in attributes_parent %}
+{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
+if({{attribute["name"]}} !=null){
+	temp{{name}}.set{{attribute["name"].capitalize()}}({{attribute["type"]}}Dao.findById({{attribute["name"]}}));
 }
-{% elif dictionary["type"] is defined and dictionary["type"] == "Date" %}
-if({{dictionary["name"]}} !=null){
+{% elif attribute["type"] is defined and attribute["type"] == "Date" %}
+if({{attribute["name"]}} !=null){
 	SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 	try{
-		Date date = format.parse({{dictionary["name"]}});
-		temp{{name}}.set{{dictionary["name"].capitalize()}}(date);
+		Date date = format.parse({{attribute["name"]}});
+		temp{{name}}.set{{attribute["name"].capitalize()}}(date);
 	} catch (ParseException e) {
 		String error = "Error in pattern of date filed!!";
 		req.setAttribute("error", error);
@@ -189,14 +189,14 @@ if({{dictionary["name"]}} !=null){
 		return;	
 	}
 }
-{% elif dictionary["enum"] is defined and dictionary["enum"] == "true" %}
-if({{dictionary["name"]}} !=null){
-	{{dictionary["type"]}} enum{{dictionary["name"].capitalize()}} = {{dictionary["type"]}}.valueOf({{dictionary["name"]}});
-	temp{{name}}.set{{dictionary["name"].capitalize()}}(enum{{dictionary["name"].capitalize()}});
+{% elif attribute["enum"] is defined and attribute["enum"] == "true" %}
+if({{attribute["name"]}} !=null){
+	{{attribute["type"]}} enum{{attribute["name"].capitalize()}} = {{attribute["type"]}}.valueOf({{attribute["name"]}});
+	temp{{name}}.set{{attribute["name"].capitalize()}}(enum{{attribute["name"].capitalize()}});
 }
-{% elif dictionary["one_to_many"] is not defined %}
-if({{dictionary["name"]}} !=null){
-	temp{{name}}.set{{dictionary["name"].capitalize()}}({{dictionary["name"]}});
+{% elif attribute["one_to_many"] is not defined %}
+if({{attribute["name"]}} !=null){
+	temp{{name}}.set{{attribute["name"].capitalize()}}({{attribute["name"]}});
 }
 {%- endif %}	
 {% endfor %}

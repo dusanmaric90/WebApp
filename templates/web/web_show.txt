@@ -18,14 +18,14 @@
 			
 				<table border="1" class = "listCentarGrey">
 					<tr> 
-					{% for dictionary in attributes %}
-					{% if dictionary["one_to_many"] is not defined %}
-					 <th>	{{dictionary["label"]}} </th>
+					{% for attribute in attributes %}
+					{% if attribute["one_to_many"] is not defined %}
+					 <th>	{{attribute["label"]}} </th>
 					{%- endif %}					 
 					{% endfor %}
-					{% for dictionary in attributes_parent %}
-					{% if dictionary["one_to_many"] is not defined %}
-					 <th>	{{dictionary["label"]}} </th>
+					{% for attribute in attributes_parent %}
+					{% if attribute["one_to_many"] is not defined %}
+					 <th>	{{attribute["label"]}} </th>
 					{%- endif %}					 
 					{% endfor %}
 					 <th colspan="2"> </th>
@@ -34,26 +34,26 @@
 					
 					<c:forEach var="show" items="${list}">
 					<tr> 
-					{% for dictionary in attributes %}
-					{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
-					<td>${show.{{dictionary["name"]}}.toString()}  </td>
-					{% elif dictionary["one_to_many"] is not defined %}
-					{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
+					{% for attribute in attributes %}
+					{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
+					<td>${show.{{attribute["name"]}}.toString()}  </td>
+					{% elif attribute["one_to_many"] is not defined %}
+					{% if attribute["type"] is defined and attribute["type"] == "Date" %}
 					<td> <fmt:formatDate pattern="dd-MM-yyyy" value="${show.birthday}" /></td>
 					{% else %}
-					<td>${show.{{dictionary["name"]}}} </td>
+					<td>${show.{{attribute["name"]}}} </td>
 					{%- endif %}
 					{%- endif %}	
 					{% endfor %}
 
-					{% for dictionary in attributes_parent %}
-					{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
-					<td>${show.{{dictionary["name"]}}.toString()}  </td>
-					{% elif dictionary["one_to_many"] is not defined %}
-					{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
+					{% for attribute in attributes_parent %}
+					{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
+					<td>${show.{{attribute["name"]}}.toString()}  </td>
+					{% elif attribute["one_to_many"] is not defined %}
+					{% if attribute["type"] is defined and attribute["type"] == "Date" %}
 					<td> <fmt:formatDate pattern="dd-MM-yyyy" value="${show.birthday}" /></td>
 					{% else %}
-					<td>${show.{{dictionary["name"]}}} </td>
+					<td>${show.{{attribute["name"]}}} </td>
 					{%- endif %}
 					{%- endif %}	
 					{% endfor %}

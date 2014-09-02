@@ -10,8 +10,7 @@
 				<link href="./theme.css" rel="stylesheet" type="text/css" />
 			</head>
 			<body>
-				<h1>Desila se neocekivana greska</h1>
-				<h2>Neocekivana greska u radu aplikacije:</h2>
+				<h1>An unexpected error occurred </h1>
 				<textarea rows="15" cols="80" >${pageContext.errorData.throwable}:
 				<c:forEach var="stackTraceElement" items="${pageContext.errorData.throwable.stackTrace}">
 					${stackTraceElement}

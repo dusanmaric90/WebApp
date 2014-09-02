@@ -19,10 +19,10 @@ public class {{name}}PrepareUpdateController extends HttpServlet {
 @EJB 
 I{{name}}Dao {{name}}Dao;
 			
-{% for dictionary in attributes %}
-{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+{% for attribute in attributes %}
+{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
 @EJB
-private I{{dictionary["type"]}}Dao {{dictionary["type"]}}Dao;	
+private I{{attribute["type"]}}Dao {{attribute["type"]}}Dao;	
 {%- endif %}	
 {% endfor %}
 	
@@ -43,10 +43,10 @@ private I{{dictionary["type"]}}Dao {{dictionary["type"]}}Dao;
 		{{name}} temp{{name}} = {{name}}Dao.findById(id{{name}});
 		req.setAttribute("{{name.lower()}}", temp{{name}});
 		
-		{% for dictionary in attributes %}
-		{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
-		List<{{dictionary["type"]}}> list{{dictionary["type"]}} = {{dictionary["type"]}}Dao.findAll();
-		req.setAttribute("list{{dictionary["type"]}}", list{{dictionary["type"]}});
+		{% for attribute in attributes %}
+		{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
+		List<{{attribute["type"]}}> list{{attribute["type"]}} = {{attribute["type"]}}Dao.findAll();
+		req.setAttribute("list{{attribute["type"]}}", list{{attribute["type"]}});
 		{%- endif %}	
 		{% endfor %}
 

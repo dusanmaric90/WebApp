@@ -1,4 +1,4 @@
-tomee.dir=C:/lokacija/do/tomee
+tomee.dir=C:/location/to/tomcat
 warname=WebApp.war
 jarname=WebApp.jar
 earname=WebApp.ear

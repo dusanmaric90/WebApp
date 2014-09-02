@@ -28,65 +28,65 @@
 				<table>
 				
 				
-				{% for dictionary in attributes %}
+				{% for attribute in attributes %}
 
-				{% if dictionary["one_to_many"] is not defined %}
+				{% if attribute["one_to_many"] is not defined %}
 				<tr>
-				{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
-				<td> {{dictionary["label"]}} (dd-MM-yyyy)</td>
+				{% if attribute["type"] is defined and attribute["type"] == "Date" %}
+				<td> {{attribute["label"]}} (dd-MM-yyyy)</td>
 				{% else %}
-				<td>{{dictionary["label"]}}</td>
+				<td>{{attribute["label"]}}</td>
 				{%- endif %}
 				
-				{% if dictionary["enum"] is defined and dictionary["enum"] == "true" %}
+				{% if attribute["enum"] is defined and attribute["enum"] == "true" %}
 				<td>
-					<select name="{{dictionary["name"]}}">
-						<c:forEach var="temp{{dictionary["type"]}}" items="<%= model.{{dictionary["type"]}}.values() %>">
-							<option value="${temp{{dictionary["type"]}}}">${temp{{dictionary["type"]}}}</option>
+					<select name="{{attribute["name"]}}">
+						<c:forEach var="temp{{attribute["type"]}}" items="<%= model.{{attribute["type"]}}.values() %>">
+							<option value="${temp{{attribute["type"]}}}">${temp{{attribute["type"]}}}</option>
 						</c:forEach>
 					</select>
 				</td>
-				{% elif dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true"%}
-				<td><select name="{{dictionary["name"]}}">
+				{% elif attribute["many_to_one"] is defined and attribute["many_to_one"] == "true"%}
+				<td><select name="{{attribute["name"]}}">
 							<option value="null"></option>
-							<c:forEach var="temp{{dictionary["type"]}}" items="${list{{dictionary["type"]}}}">
-								<option value="${temp{{dictionary["type"]}}.id}">${temp{{dictionary["type"]}}.toString()}</option>
+							<c:forEach var="temp{{attribute["type"]}}" items="${list{{attribute["type"]}}}">
+								<option value="${temp{{attribute["type"]}}.id}">${temp{{attribute["type"]}}.toString()}</option>
 							</c:forEach>
 						</select></td>
 				{% else %}
-				<td><input type="text" name="{{dictionary["name"]}}" /></td>
+				<td><input type="text" name="{{attribute["name"]}}" /></td>
 				{%- endif %}
 				</tr>
 				{%- endif %}				
 				{% endfor %}
 				
-				{% for dictionary in attributes_parent %}
-				{% if dictionary["one_to_many"] is not defined %}
+				{% for attribute in attributes_parent %}
+				{% if attribute["one_to_many"] is not defined %}
 				<tr>
-				{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
-				<td> {{dictionary["label"]}} (dd-MM-yyyy)</td>
+				{% if attribute["type"] is defined and attribute["type"] == "Date" %}
+				<td> {{attribute["label"]}} (dd-MM-yyyy)</td>
 				{% else %}
-				<td>{{dictionary["label"]}}</td>
+				<td>{{attribute["label"]}}</td>
 				{%- endif %}
 				
-				{% if dictionary["enum"] is defined and dictionary["enum"] == "true" %}
+				{% if attribute["enum"] is defined and attribute["enum"] == "true" %}
 				<td>
-					<select name="{{dictionary["name"]}}">
+					<select name="{{attribute["name"]}}">
 					<option value="null"></option>
-						<c:forEach var="temp{{dictionary["type"]}}" items="<%= model.{{dictionary["type"]}}.values() %>">
-							<option value="${temp{{dictionary["type"]}}}">${temp{{dictionary["type"]}}}</option>
+						<c:forEach var="temp{{attribute["type"]}}" items="<%= model.{{attribute["type"]}}.values() %>">
+							<option value="${temp{{attribute["type"]}}}">${temp{{attribute["type"]}}}</option>
 						</c:forEach>
 					</select>
 				</td>
-				{% elif dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true"%}
-				<td><select name="{{dictionary["name"]}}">
+				{% elif attribute["many_to_one"] is defined and attribute["many_to_one"] == "true"%}
+				<td><select name="{{attribute["name"]}}">
 							<option value="null"></option>
-							<c:forEach var="temp{{dictionary["type"]}}" items="${list{{dictionary["type"]}}}">
-								<option value="${temp{{dictionary["type"]}}.id}">${temp{{dictionary["type"]}}.toString()}</option>
+							<c:forEach var="temp{{attribute["type"]}}" items="${list{{attribute["type"]}}}">
+								<option value="${temp{{attribute["type"]}}.id}">${temp{{attribute["type"]}}.toString()}</option>
 							</c:forEach>
 						</select></td>
 				{% else %}
-				<td><input type="text" name="{{dictionary["name"]}}" /></td>
+				<td><input type="text" name="{{attribute["name"]}}" /></td>
 				{%- endif %}
 				</tr>	
 				{%- endif %}				
@@ -111,34 +111,34 @@
 				<div class = "listCentarGrey">
 				<table id="{{name.lower()}}sTable" border="1" class = "listCentarGrey">
 					<tr>
-					{% for dictionary in attributes %}
-					{% if dictionary["one_to_many"] is not defined %}
-					<th>{{dictionary["label"]}}</th>
+					{% for attribute in attributes %}
+					{% if attribute["one_to_many"] is not defined %}
+					<th>{{attribute["label"]}}</th>
 					{%- endif %}
 					{% endfor %}
-					{% for dictionary in attributes_parent %}
-					{% if dictionary["one_to_many"] is not defined %}
-					<th>{{dictionary["label"]}}</th>
+					{% for attribute in attributes_parent %}
+					{% if attribute["one_to_many"] is not defined %}
+					<th>{{attribute["label"]}}</th>
 					{%- endif %}
 					{% endfor %}
 					</tr>
 					<c:forEach var="{{name.lower()}}" items="{% raw %}${{% endraw %}{{name.lower()}}{% raw %}s }{% endraw %}">
 						<tr>
-						{% for dictionary in attributes %}
-						{% if dictionary["one_to_many"] is not defined %}
-						{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
-						<td> <fmt:formatDate pattern="dd-MM-yyyy" value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"]}}{% raw %}}{% endraw %}" /></td>
+						{% for attribute in attributes %}
+						{% if attribute["one_to_many"] is not defined %}
+						{% if attribute["type"] is defined and attribute["type"] == "Date" %}
+						<td> <fmt:formatDate pattern="dd-MM-yyyy" value="{% raw %}${{% endraw %}{{name.lower()}}.{{attribute["name"]}}{% raw %}}{% endraw %}" /></td>
 						{% else %}
-						<td>{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"]}}{% raw %} } {% endraw %}</td>
+						<td>{% raw %}${{% endraw %}{{name.lower()}}.{{attribute["name"]}}{% raw %} } {% endraw %}</td>
 						{%- endif %}
 						{%- endif %}
 						{% endfor %}
-						{% for dictionary in attributes_parent %}
-						{% if dictionary["one_to_many"] is not defined %}
-						{% if dictionary["type"] is defined and dictionary["type"] == "Date" %}
-						<td> <fmt:formatDate pattern="dd-MM-yyyy" value="{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"]}}{% raw %}}{% endraw %}" /></td>
+						{% for attribute in attributes_parent %}
+						{% if attribute["one_to_many"] is not defined %}
+						{% if attribute["type"] is defined and attribute["type"] == "Date" %}
+						<td> <fmt:formatDate pattern="dd-MM-yyyy" value="{% raw %}${{% endraw %}{{name.lower()}}.{{attribute["name"]}}{% raw %}}{% endraw %}" /></td>
 						{% else %}
-						<td>{% raw %}${{% endraw %}{{name.lower()}}.{{dictionary["name"]}}{% raw %} } {% endraw %}</td>
+						<td>{% raw %}${{% endraw %}{{name.lower()}}.{{attribute["name"]}}{% raw %} } {% endraw %}</td>
 						{%- endif %}
 						{%- endif %}
 						{% endfor %}

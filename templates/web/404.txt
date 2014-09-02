@@ -9,7 +9,7 @@
 				<link href="./theme.css" rel="stylesheet" type="text/css" />
 			</head>
 			<body>
-				<h1>Stranica nije pronadjena</h1>
-				<p>Ova stranica ne postoji</p>
+				<h1>Page wasn't found</h1>
+				<p>Page doesn' t exist</p>
 			</body>
 		</html>	
