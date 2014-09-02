@@ -9,7 +9,7 @@ abstract class Person
 		min_length = 0
 		max_length = 30
 		show = true
-		label = #First name#
+		label = "First name"
 	]
 	[
 		name = lastname
@@ -18,20 +18,20 @@ abstract class Person
 		min_length = 0
 		max_length = 30
 		show = true
-		label = #Last name#
+		label = "Last name"
 	]
 	[
 		name = birthday
 		type = Date
 		required = true
-		label = #Birthday#
+		label = "Birthday"
 	]
 	[
 		name = gender
 		type = Gender
 		required = true
 		enum = true
-		label = #Gender#
+		label = "Gender"
 	]
 
 class Student : Person
@@ -41,12 +41,12 @@ class Student : Person
 		required = true
 		min_length = 0
 		max_length = 30
-		label = #Index number#
+		label = "Index number"
 	]	
 	[
 		name = count_exam_passed
 		type = Integer
-		label = #Passed exams#
+		label = "Passed exams"
 	]
 	[
 		name = grades
@@ -57,7 +57,7 @@ class Professor : Person
 	[
 		name = count_subjests
 		type = Integer
-		label = #Subjects number#
+		label = "Subjects number"
 	]
 	[
 		name = grades
@@ -72,13 +72,13 @@ class Subject
 		min_length = 0
 		max_length = 30
 		show = true
-		label = #Subject name#
+		label = "Subject name"
 	]
 
 	[
 		name = espb
 		type = Integer
-		label = #Espb#		
+		label = "Espb"		
 	]
 	[
 		name = grades
@@ -90,31 +90,31 @@ class Grade
 		name = points
 		type = Integer
 		required = true
-		label = #Points#
+		label = "Points"
 	]
 	[
 		name = grade
 		type = Integer
 		required = true
-		label = #Grade#
+		label = "Grade"
 	]
 	[
 		name = subject
 		type = Subject
 		many_to_one = true
-		label = #Subject#
+		label = "Subject"
 	]
 	[
 		name = professor
 		type = Professor
 		many_to_one = true
-		label = #Professor#
+		label = "Professor"
 	]
 	[
 		name = student
 		type = Student
 		many_to_one = true
-		label = #Student#
+		label = "Student"
 	]
 
 

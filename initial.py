@@ -41,7 +41,7 @@ def nclasses():              return OneOrMore(nclass)
 def nclass():                return  Optional(ABSTRACT),CLASS, class_name,Optional(":", class_name), ZeroOrMore(attributes)
 def attributes():            return "[", OneOrMore(attribute), Optional(attribute_label),"]"
 def attribute():             return attribute_key, "=", attribute_value
-def attribute_label():       return LABEL,"=","#", attribute_label_value,"#"
+def attribute_label():       return LABEL,"=",r'"', attribute_label_value,r'"'
 def attribute_label_value(): return _(r"([a-zA-Z_\s])*")
 def class_name():            return _(r"[a-zA-Z_]([a-zA-Z_]|[0-9])*")
 def attribute_value():       return _(r"([a-zA-Z_]|[0-9])*")
