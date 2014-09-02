@@ -23,9 +23,9 @@ public class {{name}}UpdateController extends HttpServlet {
 I{{name}}Dao {{name}}Dao;
 			
 {% for attribute in attributes %}
-{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
+{% if attribute.many_to_one is defined and attribute.many_to_one == "true" %}
 @EJB
-private I{{attribute["type"]}}Dao {{attribute["type"]}}Dao;	
+private I{{attribute.type}}Dao {{attribute.type}}Dao;	
 {%- endif %}	
 {% endfor %}
 
@@ -42,26 +42,26 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 @Override
 protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
 {% for attribute in attributes %}
-{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
-Integer  {{attribute["name"]}} = null;	
-{% elif attribute["type"] is defined and attribute["type"] == "Date" %}
-String  {{attribute["name"]}} = null;
-{% elif attribute["enum"] is defined and attribute["enum"] == "true" %}
-String  {{attribute["name"]}} = null;
-{% elif attribute["one_to_many"] is not defined %}
-{{attribute["type"]}} {{attribute["name"]}} = null;
+{% if attribute.many_to_one is defined and attribute.many_to_one == "true" %}
+Integer  {{attribute.name}} = null;	
+{% elif attribute.type is defined and attribute.type == "Date" %}
+String  {{attribute.name}} = null;
+{% elif attribute.enum is defined and attribute.enum == "true" %}
+String  {{attribute.name}} = null;
+{% elif attribute.one_to_many is not defined %}
+{{attribute.type}} {{attribute.name}} = null;
 {%- endif %}	
 {% endfor %}
 
 {% for attribute in attributes_parent %}
-{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
-Integer  {{attribute["name"]}} = null;	
-{% elif attribute["type"] is defined and attribute["type"] == "Date" %}
-String  {{attribute["name"]}} = null;
-{% elif attribute["enum"] is defined and attribute["enum"] == "true" %}
-String  {{attribute["name"]}} = null;
-{% elif attribute["one_to_many"] is not defined %}
-{{attribute["type"]}} {{attribute["name"]}} = null;
+{% if attribute.many_to_one is defined and attribute.many_to_one == "true" %}
+Integer  {{attribute.name}} = null;	
+{% elif attribute.type is defined and attribute.type == "Date" %}
+String  {{attribute.name}} = null;
+{% elif attribute.enum is defined and attribute.enum == "true" %}
+String  {{attribute.name}} = null;
+{% elif attribute.one_to_many is not defined %}
+{{attribute.type}} {{attribute.name}} = null;
 {%- endif %}	
 {% endfor %}
 				
@@ -70,33 +70,33 @@ String  {{attribute["name"]}} = null;
 String {{name}}Id = req.getParameter("id");
 				
 {% for attribute in attributes %}
-{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
-if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParameter("{{attribute["name"]}}"))) {
-{{attribute["name"]}} = Integer.parseInt(req.getParameter("{{attribute["name"]}}"));
+{% if attribute.many_to_one is defined and attribute.many_to_one == "true" %}
+if (req.getParameter("{{attribute.name}}") != null && !"".equals(req.getParameter("{{attribute.name}}"))) {
+{{attribute.name}} = Integer.parseInt(req.getParameter("{{attribute.name}}"));
 }
-{% elif attribute["type"] is defined and attribute["type"] == "Integer" %}
-if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParameter("{{attribute["name"]}}"))) {
-		{{attribute["name"]}} = Integer.parseInt(req.getParameter("{{attribute["name"]}}"));
+{% elif attribute.type is defined and attribute.type == "Integer" %}
+if (req.getParameter("{{attribute.name}}") != null && !"".equals(req.getParameter("{{attribute.name}}"))) {
+		{{attribute.name}} = Integer.parseInt(req.getParameter("{{attribute.name}}"));
 }
-{% elif attribute["one_to_many"] is not defined %}
-if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParameter("{{attribute["name"]}}")) ) {
-	{{attribute["name"]}} = req.getParameter("{{attribute["name"]}}");
+{% elif attribute.one_to_many is not defined %}
+if (req.getParameter("{{attribute.name}}") != null && !"".equals(req.getParameter("{{attribute.name}}")) ) {
+	{{attribute.name}} = req.getParameter("{{attribute.name}}");
 }
 {%- endif %}	
 {% endfor %}
 
 {% for attribute in attributes_parent %}
-{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
-if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParameter("{{attribute["name"]}}"))) {
-		{{attribute["name"]}} = Integer.parseInt(req.getParameter("{{attribute["name"]}}"));
+{% if attribute.many_to_one is defined and attribute.many_to_one == "true" %}
+if (req.getParameter("{{attribute.name}}") != null && !"".equals(req.getParameter("{{attribute.name}}"))) {
+		{{attribute.name}} = Integer.parseInt(req.getParameter("{{attribute.name}}"));
 }
-{% elif attribute["type"] is defined and attribute["type"] == "Integer" %}
-if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParameter("{{attribute["name"]}}"))) {
-{{attribute["name"]}} = Integer.parseInt(req.getParameter("{{attribute["name"]}}"));
+{% elif attribute.type is defined and attribute.type == "Integer" %}
+if (req.getParameter("{{attribute.name}}") != null && !"".equals(req.getParameter("{{attribute.name}}"))) {
+{{attribute.name}} = Integer.parseInt(req.getParameter("{{attribute.name}}"));
 }
-{% elif attribute["one_to_many"] is not defined %}	
-if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParameter("{{attribute["name"]}}")) ) {
-	{{attribute["name"]}} = req.getParameter("{{attribute["name"]}}");
+{% elif attribute.one_to_many is not defined %}	
+if (req.getParameter("{{attribute.name}}") != null && !"".equals(req.getParameter("{{attribute.name}}")) ) {
+	{{attribute.name}} = req.getParameter("{{attribute.name}}");
 }
 {%- endif %}
 {% endfor %}
@@ -106,16 +106,16 @@ if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParam
 temp{{name}}.setId(new Integer({{name}}Id));
 				
 {% for attribute in attributes %}
-{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
-if({{attribute["name"]}} !=null){
-	temp{{name}}.set{{attribute["name"].capitalize()}}({{attribute["type"]}}Dao.findById({{attribute["name"]}}));
+{% if attribute.many_to_one is defined and attribute.many_to_one == "true" %}
+if({{attribute.name}} !=null){
+	temp{{name}}.set{{attribute.name.capitalize()}}({{attribute.type}}Dao.findById({{attribute.name}}));
 }
-{% elif attribute["type"] is defined and attribute["type"] == "Date" %}
-if({{attribute["name"]}} !=null){
+{% elif attribute.type is defined and attribute.type == "Date" %}
+if({{attribute.name}} !=null){
 	SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 	try{
-		Date date = format.parse({{attribute["name"]}});
-		temp{{name}}.set{{attribute["name"].capitalize()}}(date);
+		Date date = format.parse({{attribute.name}});
+		temp{{name}}.set{{attribute.name.capitalize()}}(date);
 	} catch (ParseException e) {
 		String error = "Error in pattern of date filed!!";
 		req.setAttribute("error", error);
@@ -124,29 +124,29 @@ if({{attribute["name"]}} !=null){
 		return;
 	}
 }
-{% elif attribute["enum"] is defined and attribute["enum"] == "true" %}
-if({{attribute["name"]}} !=null){
-	{{attribute["type"]}} enum{{attribute["name"].capitalize()}} = {{attribute["type"]}}.valueOf({{attribute["name"]}});
-	temp{{name}}.set{{attribute["name"].capitalize()}}(enum{{attribute["name"].capitalize()}});
+{% elif attribute.enum is defined and attribute.enum == "true" %}
+if({{attribute.name}} !=null){
+	{{attribute.type}} enum{{attribute.name.capitalize()}} = {{attribute.type}}.valueOf({{attribute.name}});
+	temp{{name}}.set{{attribute.name.capitalize()}}(enum{{attribute.name.capitalize()}});
 }
-{% elif attribute["one_to_many"] is not defined %}
-if({{attribute["name"]}} !=null){
-	temp{{name}}.set{{attribute["name"].capitalize()}}({{attribute["name"]}});
+{% elif attribute.one_to_many is not defined %}
+if({{attribute.name}} !=null){
+	temp{{name}}.set{{attribute.name.capitalize()}}({{attribute.name}});
 }
 {%- endif %}	
 {% endfor %}
 
 {% for attribute in attributes_parent %}
-{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
-if({{attribute["name"]}} !=null){
-	temp{{name}}.set{{attribute["name"].capitalize()}}({{attribute["type"]}}Dao.findById({{attribute["name"]}}));
+{% if attribute.many_to_one is defined and attribute.many_to_one == "true" %}
+if({{attribute.name}} !=null){
+	temp{{name}}.set{{attribute.name.capitalize()}}({{attribute.type}}Dao.findById({{attribute.name}}));
 }
-{% elif attribute["type"] is defined and attribute["type"] == "Date" %}
-if({{attribute["name"]}} !=null){
+{% elif attribute.type is defined and attribute.type == "Date" %}
+if({{attribute.name}} !=null){
 	SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 	try{
-		Date date = format.parse({{attribute["name"]}});
-		temp{{name}}.set{{attribute["name"].capitalize()}}(date);
+		Date date = format.parse({{attribute.name}});
+		temp{{name}}.set{{attribute.name.capitalize()}}(date);
 	} catch (ParseException e) {
 		String error = "Error in pattern of date filed!!";
 		req.setAttribute("error", error);
@@ -155,14 +155,14 @@ if({{attribute["name"]}} !=null){
 		return;
 	}
 }
-{% elif attribute["enum"] is defined and attribute["enum"] == "true" %}
-if({{attribute["name"]}} !=null){
-	{{attribute["type"]}} enum{{attribute["name"].capitalize()}} = {{attribute["type"]}}.valueOf({{attribute["name"]}});
-	temp{{name}}.set{{attribute["name"].capitalize()}}(enum{{attribute["name"].capitalize()}});
+{% elif attribute.enum is defined and attribute.enum == "true" %}
+if({{attribute.name}} !=null){
+	{{attribute.type}} enum{{attribute.name.capitalize()}} = {{attribute.type}}.valueOf({{attribute.name}});
+	temp{{name}}.set{{attribute.name.capitalize()}}(enum{{attribute.name.capitalize()}});
 }
-{% elif attribute["one_to_many"] is not defined %}
-if({{attribute["name"]}} !=null){
-	temp{{name}}.set{{attribute["name"].capitalize()}}({{attribute["name"]}});
+{% elif attribute.one_to_many is not defined %}
+if({{attribute.name}} !=null){
+	temp{{name}}.set{{attribute.name.capitalize()}}({{attribute.name}});
 }
 {%- endif %}	
 {% endfor %}

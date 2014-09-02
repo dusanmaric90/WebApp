@@ -19,13 +19,13 @@
 				<table border="1" class = "listCentarGrey">
 					<tr> 
 					{% for attribute in attributes %}
-					{% if attribute["one_to_many"] is not defined %}
-					 <th>	{{attribute["label"]}} </th>
+					{% if attribute.one_to_many is not defined %}
+					 <th>	{{attribute.label}} </th>
 					{%- endif %}					 
 					{% endfor %}
 					{% for attribute in attributes_parent %}
-					{% if attribute["one_to_many"] is not defined %}
-					 <th>	{{attribute["label"]}} </th>
+					{% if attribute.one_to_many is not defined %}
+					 <th>	{{attribute.label}} </th>
 					{%- endif %}					 
 					{% endfor %}
 					 <th colspan="2"> </th>
@@ -35,25 +35,25 @@
 					<c:forEach var="show" items="${list}">
 					<tr> 
 					{% for attribute in attributes %}
-					{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
-					<td>${show.{{attribute["name"]}}.toString()}  </td>
-					{% elif attribute["one_to_many"] is not defined %}
-					{% if attribute["type"] is defined and attribute["type"] == "Date" %}
+					{% if attribute.many_to_one is defined and attribute.many_to_one == "true" %}
+					<td>${show.{{attribute.name}}.toString()}  </td>
+					{% elif attribute.one_to_many is not defined %}
+					{% if attribute.type is defined and attribute.type == "Date" %}
 					<td> <fmt:formatDate pattern="dd-MM-yyyy" value="${show.birthday}" /></td>
 					{% else %}
-					<td>${show.{{attribute["name"]}}} </td>
+					<td>${show.{{attribute.name}}} </td>
 					{%- endif %}
 					{%- endif %}	
 					{% endfor %}
 
 					{% for attribute in attributes_parent %}
-					{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
-					<td>${show.{{attribute["name"]}}.toString()}  </td>
-					{% elif attribute["one_to_many"] is not defined %}
-					{% if attribute["type"] is defined and attribute["type"] == "Date" %}
+					{% if attribute.many_to_one is defined and attribute.many_to_one == "true" %}
+					<td>${show.{{attribute.name}}.toString()}  </td>
+					{% elif attribute.one_to_many is not defined %}
+					{% if attribute.type is defined and attribute.type == "Date" %}
 					<td> <fmt:formatDate pattern="dd-MM-yyyy" value="${show.birthday}" /></td>
 					{% else %}
-					<td>${show.{{attribute["name"]}}} </td>
+					<td>${show.{{attribute.name}}} </td>
 					{%- endif %}
 					{%- endif %}	
 					{% endfor %}

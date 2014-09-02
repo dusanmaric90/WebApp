@@ -40,14 +40,14 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 				Conjunction conjuction = Restrictions.conjunction();
 				
 {% for attribute in attributes %}	
-{% if attribute["type"] is defined and attribute["type"] == "Date" %}
-String {{attribute["name"]}}String = req.getParameter("{{attribute["name"]}}");
-Date {{attribute["name"]}} = null;
+{% if attribute.type is defined and attribute.type == "Date" %}
+String {{attribute.name}}String = req.getParameter("{{attribute.name}}");
+Date {{attribute.name}} = null;
 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");					
 try {
-	if(!{{attribute["name"]}}String.equals("")){
-		{{attribute["name"]}} = dateFormat.parse({{attribute["name"]}}String);
-		conjuction.add(Restrictions.like("{{attribute["name"].lower()}}", {{attribute["name"]}}));
+	if(!{{attribute.name}}String.equals("")){
+		{{attribute.name}} = dateFormat.parse({{attribute.name}}String);
+		conjuction.add(Restrictions.like("{{attribute.name.lower()}}", {{attribute.name}}));
 	}
 } catch (ParseException e) {
 	req.setAttribute("badFormat", true);
@@ -55,21 +55,21 @@ try {
 	dispatcher.forward(req, resp);
 	return;
 }
-{% elif attribute["type"] is defined and attribute["type"] == "Integer" %}
-Integer {{attribute["name"]}} = null;
-if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParameter("{{attribute["name"]}}")) ) {
-	String {{attribute["name"]}}String = req.getParameter("{{attribute["name"]}}");
-	boolean {{attribute["name"]}}Boolean = false;
-	if ({{attribute["name"]}}String.endsWith("*")){
-		{{attribute["name"]}}Boolean = true;
-		{{attribute["name"]}}String.replace("*", "");
+{% elif attribute.type is defined and attribute.type == "Integer" %}
+Integer {{attribute.name}} = null;
+if (req.getParameter("{{attribute.name}}") != null && !"".equals(req.getParameter("{{attribute.name}}")) ) {
+	String {{attribute.name}}String = req.getParameter("{{attribute.name}}");
+	boolean {{attribute.name}}Boolean = false;
+	if ({{attribute.name}}String.endsWith("*")){
+		{{attribute.name}}Boolean = true;
+		{{attribute.name}}String.replace("*", "");
 	}
 	try{
-		{{attribute["name"]}} = Integer.parseInt({{attribute["name"]}}String);
-		if ({{attribute["name"]}}Boolean)
-			conjuction.add(Restrictions.like("{{attribute["name"].lower()}}", {{attribute["name"]}}));
+		{{attribute.name}} = Integer.parseInt({{attribute.name}}String);
+		if ({{attribute.name}}Boolean)
+			conjuction.add(Restrictions.like("{{attribute.name.lower()}}", {{attribute.name}}));
 		else
-			conjuction.add(Restrictions.eq("{{attribute["name"].lower()}}",{{attribute["name"]}}));
+			conjuction.add(Restrictions.eq("{{attribute.name.lower()}}",{{attribute.name}}));
 	} catch (NumberFormatException e) {
 		String error = "Field must be integer!";
 		req.setAttribute("error", error);
@@ -78,26 +78,26 @@ if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParam
 		return;	
 	}	
 }
-{% elif attribute["enum"] is defined and attribute["enum"] == "true" %}
-String {{attribute["name"]}}Value =    req.getParameter("{{attribute["name"]}}");
-if(!{{attribute["name"]}}Value.equals("null")){
-	{{attribute["type"]}} {{attribute["name"]}} = {{attribute["type"]}}.valueOf(req.getParameter("{{attribute["name"]}}"));
-	conjuction.add(Restrictions.like("{{attribute["name"].lower()}}", {{attribute["name"]}}));
+{% elif attribute.enum is defined and attribute.enum == "true" %}
+String {{attribute.name}}Value =    req.getParameter("{{attribute.name}}");
+if(!{{attribute.name}}Value.equals("null")){
+	{{attribute.type}} {{attribute.name}} = {{attribute.type}}.valueOf(req.getParameter("{{attribute.name}}"));
+	conjuction.add(Restrictions.like("{{attribute.name.lower()}}", {{attribute.name}}));
 }
-{% elif attribute["many_to_one"] is defined and attribute["many_to_one"] == "true"%}
-String {{attribute["name"]}}Value = req.getParameter("{{attribute["name"]}}");
-if(!{{attribute["name"]}}Value.equals("null")){	
-Integer {{attribute["name"]}} =  	Integer.parseInt({{attribute["name"]}}Value);
-conjuction.add(Restrictions.like("{{attribute["name"]}}.id", {{attribute["name"]}}));
+{% elif attribute.many_to_one is defined and attribute.many_to_one == "true"%}
+String {{attribute.name}}Value = req.getParameter("{{attribute.name}}");
+if(!{{attribute.name}}Value.equals("null")){	
+Integer {{attribute.name}} =  	Integer.parseInt({{attribute.name}}Value);
+conjuction.add(Restrictions.like("{{attribute.name}}.id", {{attribute.name}}));
 }
-{% elif attribute["one_to_many"] is not defined %}
-String {{attribute["name"]}} = req.getParameter("{{attribute["name"]}}");
-	if ({{attribute["name"]}} != null && !{{attribute["name"]}}.equals("")){
-		if({{attribute["name"]}}.endsWith("*")){
-			{{attribute["name"]}} = {{attribute["name"]}}.replace("*", "%");
-			conjuction.add(Restrictions.like("{{attribute["name"].lower()}}", {{attribute["name"]}}));
+{% elif attribute.one_to_many is not defined %}
+String {{attribute.name}} = req.getParameter("{{attribute.name}}");
+	if ({{attribute.name}} != null && !{{attribute.name}}.equals("")){
+		if({{attribute.name}}.endsWith("*")){
+			{{attribute.name}} = {{attribute.name}}.replace("*", "%");
+			conjuction.add(Restrictions.like("{{attribute.name.lower()}}", {{attribute.name}}));
 		}else{
-			conjuction.add(Restrictions.eq("{{attribute["name"].lower()}}", {{attribute["name"]}}));
+			conjuction.add(Restrictions.eq("{{attribute.name.lower()}}", {{attribute.name}}));
 		}
 	}
 {%- endif %}	
@@ -105,14 +105,14 @@ String {{attribute["name"]}} = req.getParameter("{{attribute["name"]}}");
 
 				
 {% for attribute in attributes_parent %}	
-{% if attribute["type"] is defined and attribute["type"] == "Date" %}
-String {{attribute["name"]}}String = req.getParameter("{{attribute["name"]}}");
-Date {{attribute["name"]}} = null;
+{% if attribute.type is defined and attribute.type == "Date" %}
+String {{attribute.name}}String = req.getParameter("{{attribute.name}}");
+Date {{attribute.name}} = null;
 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");					
 try {
-	if(!{{attribute["name"]}}String.equals("")){
-		{{attribute["name"]}} = dateFormat.parse({{attribute["name"]}}String);
-		conjuction.add(Restrictions.like("{{attribute["name"].lower()}}", {{attribute["name"]}}));
+	if(!{{attribute.name}}String.equals("")){
+		{{attribute.name}} = dateFormat.parse({{attribute.name}}String);
+		conjuction.add(Restrictions.like("{{attribute.name.lower()}}", {{attribute.name}}));
 	}
 } catch (ParseException e) {
 	req.setAttribute("badFormat", true);
@@ -120,21 +120,21 @@ try {
 	dispatcher.forward(req, resp);
 	return;
 }
-{% elif attribute["type"] is defined and attribute["type"] == "Integer" %}
-Integer {{attribute["name"]}} = null;
-if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParameter("{{attribute["name"]}}")) ) {
-	String {{attribute["name"]}}String = req.getParameter("{{attribute["name"]}}");
-	boolean {{attribute["name"]}}Boolean = false;
-	if ({{attribute["name"]}}String.endsWith("*")){
-		{{attribute["name"]}}Boolean = true;
-		{{attribute["name"]}}String.replace("*", "");
+{% elif attribute.type is defined and attribute.type == "Integer" %}
+Integer {{attribute.name}} = null;
+if (req.getParameter("{{attribute.name}}") != null && !"".equals(req.getParameter("{{attribute.name}}")) ) {
+	String {{attribute.name}}String = req.getParameter("{{attribute.name}}");
+	boolean {{attribute.name}}Boolean = false;
+	if ({{attribute.name}}String.endsWith("*")){
+		{{attribute.name}}Boolean = true;
+		{{attribute.name}}String.replace("*", "");
 	}
 	try{
-		{{attribute["name"]}} = Integer.parseInt({{attribute["name"]}}String);
-		if ({{attribute["name"]}}Boolean)
-			conjuction.add(Restrictions.like("{{attribute["name"].lower()}}", {{attribute["name"]}}));
+		{{attribute.name}} = Integer.parseInt({{attribute.name}}String);
+		if ({{attribute.name}}Boolean)
+			conjuction.add(Restrictions.like("{{attribute.name.lower()}}", {{attribute.name}}));
 		else
-			conjuction.add(Restrictions.eq("{{attribute["name"].lower()}}",{{attribute["name"]}}));
+			conjuction.add(Restrictions.eq("{{attribute.name.lower()}}",{{attribute.name}}));
 	} catch (NumberFormatException e) {
 		String error = "Polje treba da bude broj!";
 		req.setAttribute("error", error);
@@ -143,26 +143,26 @@ if (req.getParameter("{{attribute["name"]}}") != null && !"".equals(req.getParam
 		return;	
 	}	
 }
-{% elif attribute["enum"] is defined and attribute["enum"] == "true" %}
-String {{attribute["name"]}}Value =    req.getParameter("{{attribute["name"]}}");
-if(!{{attribute["name"]}}Value.equals("null")){
-	{{attribute["type"]}} {{attribute["name"]}} = {{attribute["type"]}}.valueOf(req.getParameter("{{attribute["name"]}}"));
-	conjuction.add(Restrictions.like("{{attribute["name"].lower()}}", {{attribute["name"]}}));
+{% elif attribute.enum is defined and attribute.enum == "true" %}
+String {{attribute.name}}Value =    req.getParameter("{{attribute.name}}");
+if(!{{attribute.name}}Value.equals("null")){
+	{{attribute.type}} {{attribute.name}} = {{attribute.type}}.valueOf(req.getParameter("{{attribute.name}}"));
+	conjuction.add(Restrictions.like("{{attribute.name.lower()}}", {{attribute.name}}));
 }
-{% elif attribute["many_to_one"] is defined and attribute["many_to_one"] == "true"%}
-String {{attribute["name"]}}Value = req.getParameter("{{attribute["name"]}}");
-if(!{{attribute["name"]}}Value.equals("null")){	
-Integer {{attribute["name"]}} =  	Integer.parseInt({{attribute["name"]}}Value);
-conjuction.add(Restrictions.like("{{attribute["name"]}}.id", {{attribute["name"]}}));
+{% elif attribute.many_to_one is defined and attribute.many_to_one == "true"%}
+String {{attribute.name}}Value = req.getParameter("{{attribute.name}}");
+if(!{{attribute.name}}Value.equals("null")){	
+Integer {{attribute.name}} =  	Integer.parseInt({{attribute.name}}Value);
+conjuction.add(Restrictions.like("{{attribute.name}}.id", {{attribute.name}}));
 }
-{% elif attribute["one_to_many"] is not defined %}
-String {{attribute["name"]}} = req.getParameter("{{attribute["name"]}}");
-	if ({{attribute["name"]}} != null && !{{attribute["name"]}}.equals("")){
-		if({{attribute["name"]}}.endsWith("*")){
-			{{attribute["name"]}} = {{attribute["name"]}}.replace("*", "%");
-			conjuction.add(Restrictions.like("{{attribute["name"].lower()}}", {{attribute["name"]}}));
+{% elif attribute.one_to_many is not defined %}
+String {{attribute.name}} = req.getParameter("{{attribute.name}}");
+	if ({{attribute.name}} != null && !{{attribute.name}}.equals("")){
+		if({{attribute.name}}.endsWith("*")){
+			{{attribute.name}} = {{attribute.name}}.replace("*", "%");
+			conjuction.add(Restrictions.like("{{attribute.name.lower()}}", {{attribute.name}}));
 		}else{
-			conjuction.add(Restrictions.eq("{{attribute["name"].lower()}}", {{attribute["name"]}}));
+			conjuction.add(Restrictions.eq("{{attribute.name.lower()}}", {{attribute.name}}));
 		}
 	}
 {%- endif %}	

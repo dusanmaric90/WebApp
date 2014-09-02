@@ -7,47 +7,47 @@
 		<title>Add {{name}}</title>
 		
 	<script type="text/javascript">
-	
+
 	function check(){
 		
 		{% for attribute in attributes %}
-		{% if attribute["one_to_many"] is not defined %}
-		{% if attribute["required"] is defined and attribute["required"] == "true" %}
-		parameter = document.forms['formAdd'].{{attribute["name"]}}.value;
+		{% if attribute.one_to_many is not defined %}
+		{% if attribute.required is defined and attribute.required == "true" %}
+		parameter = document.forms['formAdd'].{{attribute.name}}.value;
 		if(parameter==""){
-			alert("Field {{attribute["label"]}} is required");
+			alert("Field {{attribute.label}} is required");
 			return false;
 		}
 		{%- endif %}
 
-		{% if attribute["min_length"] is defined %}
-		parameter = document.forms['formAdd'].{{attribute["name"]}}.value.length;
-		if(parameter<{{attribute["min_length"]}}){
-			alert("For field {{attribute["label"]}} minimal length must be {{attribute["min_length"]}} ");
+		{% if attribute.min_length is defined %}
+		parameter = document.forms['formAdd'].{{attribute.name}}.value.length;
+		if(parameter<{{attribute.min_length}}){
+			alert("For field {{attribute.label}} minimal length must be {{attribute.min_length}} ");
 			return false;
 		}
 		{%- endif %}	
 		
-		{% if attribute["type"] is defined and attribute["type"] == "Integer" %}
-		parameter=document.forms['formAdd'].{{attribute["name"]}}.value;
+		{% if attribute.type is defined and attribute.type == "Integer" %}
+		parameter=document.forms['formAdd'].{{attribute.name}}.value;
 		var num = parameter.replace(/\,/g,'');
 		if(isNaN(parameter)|| num.indexOf('.') > -1 ) {
-				alert(" Field {{attribute["label"]}} must be integer");
+				alert(" Field {{attribute.label}} must be integer");
 				return false;
 		}
 		{%- endif %}
-		{% if attribute["type"] is defined and attribute["type"] == "Date" %}
-	    tempValue=document.forms['formAdd'].{{attribute["name"]}}.value;
+		{% if attribute.type is defined and attribute.type == "Date" %}
+	    tempValue=document.forms['formAdd'].{{attribute.name}}.value;
 	   var date=tempValue.trim();
 	   if(tempValue.length!=0){ 
 		var tempArray=new Array();
 		tempArray=date.split('-');
 		if(tempArray.length!=3){
-		 alert("Field {{attribute["label"]}} must have a pattern dd-MM-yyyy");
+		 alert("Field {{attribute.label}} must have a pattern dd-MM-yyyy");
 		  return false; 
 		}else{
 		 if(isNaN(tempArray[0]) || isNaN(tempArray[1]) || isNaN(tempArray[2]) || tempArray[0].length!=2|| tempArray[1].length!=2|| tempArray[2].length!=4){
-		  alert("Field {{attribute["label"]}} must have a pattern dd-MM-yyyy");
+		  alert("Field {{attribute.label}} must have a pattern dd-MM-yyyy");
 		  return false; 
 		 }
 		}
@@ -58,43 +58,43 @@
 		{% endfor %}
 		
 		{% for attribute in attributes_parent %}
-		{% if attribute["one_to_many"] is not defined %}
-		{% if attribute["required"] is defined and attribute["required"] == "true" %}
-		parameter = document.forms['formAdd'].{{attribute["name"]}}.value;
+		{% if attribute.one_to_many is not defined %}
+		{% if attribute.required is defined and attribute.required == "true" %}
+		parameter = document.forms['formAdd'].{{attribute.name}}.value;
 		if(parameter==""){
-			alert("Field {{attribute["label"]}} is required");
+			alert("Field {{attribute.label}} is required");
 			return false;
 		}
 		{%- endif %}
 
-		{% if attribute["min_length"] is defined %}
-		parameter = document.forms['formAdd'].{{attribute["name"]}}.value.length;
-		if(parameter<{{attribute["min_length"]}}){
-			alert("For field {{attribute["label"]}} minimal length must be {{attribute["min_length"]}} ");
+		{% if attribute.min_length is defined %}
+		parameter = document.forms['formAdd'].{{attribute.name}}.value.length;
+		if(parameter<{{attribute.min_length}}){
+			alert("For field {{attribute.label}} minimal length must be {{attribute.min_length}} ");
 			return false;
 		}
 		{%- endif %}	
 		
-		{% if attribute["type"] is defined and attribute["type"] == "Integer" %}
-		parameter=document.forms['formAdd'].{{attribute["name"]}}.value;
+		{% if attribute.type is defined and attribute.type == "Integer" %}
+		parameter=document.forms['formAdd'].{{attribute.name}}.value;
 		var num = parameter.replace(/\,/g,'');
 		if(isNaN(parameter)|| num.indexOf('.') > -1 ) {
-				alert("Field {{attribute["label"]}} must be integer");
+				alert("Field {{attribute.label}} must be integer");
 				return false;
 		}
 		{%- endif %}
-		{% if attribute["type"] is defined and attribute["type"] == "Date" %}
-	    tempValue=document.forms['formAdd'].{{attribute["name"]}}.value;
+		{% if attribute.type is defined and attribute.type == "Date" %}
+	    tempValue=document.forms['formAdd'].{{attribute.name}}.value;
 	   var date=tempValue.trim();
 	   if(tempValue.length!=0){ 
 		var tempArray=new Array();
 		tempArray=date.split('-');
 		if(tempArray.length!=3){
-		 alert("Field {{attribute["label"]}} must have pattern dd-MM-yyyy");
+		 alert("Field {{attribute.label}} must have pattern dd-MM-yyyy");
 		  return false; 
 		}else{
 		 if(isNaN(tempArray[0]) || isNaN(tempArray[1]) || isNaN(tempArray[2]) || tempArray[0].length!=2|| tempArray[1].length!=2|| tempArray[2].length!=4){
-		  alert("Field {{attribute["label"]}} must have pattern dd-MM-yyyy");
+		  alert("Field {{attribute.label}} must have pattern dd-MM-yyyy");
 		  return false; 
 		 }
 		}
@@ -119,61 +119,61 @@
 			<table >
 			
 			{% for attribute in attributes %}
-			{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
+			{% if attribute.many_to_one is defined and attribute.many_to_one == "true" %}
 			<tr>
-				 <td>{{attribute["label"]}} {% if attribute["required"] is defined and attribute["required"] == "true" %}*{%- endif %}</td>
+				 <td>{{attribute.label}} {% if attribute.required is defined and attribute.required == "true" %}*{%- endif %}</td>
 			 	
-					<td><select name="{{attribute["name"]}}">
-							<c:forEach var="temp{{attribute["type"]}}" items="${list{{attribute["type"]}}}">
-								<option value="${temp{{attribute["type"]}}.id}">${temp{{attribute["type"]}}.toString()}</option>
+					<td><select name="{{attribute.name}}">
+							<c:forEach var="temp{{attribute.type}}" items="${list{{attribute.type}}}">
+								<option value="${temp{{attribute.type}}.id}">${temp{{attribute.type}}.toString()}</option>
 							</c:forEach>
 						</select>
 					</td>
 				</tr>
-			{% elif attribute["enum"] is defined and attribute["enum"] == "true" %}
+			{% elif attribute.enum is defined and attribute.enum == "true" %}
 			<tr>
-				 <td>{{attribute["label"]}} {% if attribute["required"] is defined and attribute["required"] == "true" %}*{%- endif %}</td>
-					<td><select name="{{attribute["name"]}}">
-							<c:forEach var="temp{{attribute["type"]}}" items="<%= model.{{attribute["type"]}}.values() %>">
-								<option value="${temp{{attribute["type"]}}}">${temp{{attribute["type"]}}}</option>
+				 <td>{{attribute.label}} {% if attribute.required is defined and attribute.required == "true" %}*{%- endif %}</td>
+					<td><select name="{{attribute.name}}">
+							<c:forEach var="temp{{attribute.type}}" items="<%= model.{{attribute.type}}.values() %>">
+								<option value="${temp{{attribute.type}}}">${temp{{attribute.type}}}</option>
 							</c:forEach>
 						</select>
 					</td>
 				</tr>
-			{% elif attribute["one_to_many"] is not defined %}
+			{% elif attribute.one_to_many is not defined %}
 			<tr>
-					<td>{{attribute["label"]}} {% if attribute["required"] is defined and attribute["required"] == "true" %}*{%- endif %}</td>
-					<td><input type="text" name="{{attribute["name"]}}" {% if attribute["max_length_length"] is defined  %}max_length_lengthlength="{{attribute["max_length_length"]}}" size="{{attribute["max_length_length"]}}"{%- endif %} /> </td>				
+					<td>{{attribute.label}} {% if attribute.required is defined and attribute.required == "true" %}*{%- endif %}</td>
+					<td><input type="text" name="{{attribute.name}}" {% if attribute.max_length_length is defined  %}max_length_lengthlength="{{attribute.max_length_length}}" size="{{attribute.max_length_length}}"{%- endif %} /> </td>				
 			</tr>
 			{%- endif %}			
 			{% endfor %}
 			
 			{% for attribute in attributes_parent %}
-			{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
+			{% if attribute.many_to_one is defined and attribute.many_to_one == "true" %}
 			<tr>
-				 <td>{{attribute["label"]}} {% if attribute["required"] is defined and attribute["required"] == "true" %}*{%- endif %}</td>
+				 <td>{{attribute.label}} {% if attribute.required is defined and attribute.required == "true" %}*{%- endif %}</td>
 			 	
-					<td><select name="{{attribute["name"]}}">
-							<c:forEach var="temp{{attribute["type"]}}" items="${list{{attribute["type"]}}}">
-								<option value="${temp{{attribute["type"]}}.id}">${temp{{attribute["type"]}}.toString()}</option>
+					<td><select name="{{attribute.name}}">
+							<c:forEach var="temp{{attribute.type}}" items="${list{{attribute.type}}}">
+								<option value="${temp{{attribute.type}}.id}">${temp{{attribute.type}}.toString()}</option>
 							</c:forEach>
 						</select>
 					</td>
 				</tr>
-			{% elif attribute["enum"] is defined and attribute["enum"] == "true" %}
+			{% elif attribute.enum is defined and attribute.enum == "true" %}
 			<tr>
-				 <td>{{attribute["label"]}} {% if attribute["required"] is defined and attribute["required"] == "true" %}*{%- endif %}</td>
-					<td><select name="{{attribute["name"]}}">
-							<c:forEach var="temp{{attribute["type"]}}" items="<%= model.{{attribute["type"]}}.values() %>">
-								<option value="${temp{{attribute["type"]}}}">${temp{{attribute["type"]}}}</option>
+				 <td>{{attribute.label}} {% if attribute.required is defined and attribute.required == "true" %}*{%- endif %}</td>
+					<td><select name="{{attribute.name}}">
+							<c:forEach var="temp{{attribute.type}}" items="<%= model.{{attribute.type}}.values() %>">
+								<option value="${temp{{attribute.type}}}">${temp{{attribute.type}}}</option>
 							</c:forEach>
 						</select>
 					</td>
 				</tr>
-			{% elif attribute["one_to_many"] is not defined %}
+			{% elif attribute.one_to_many is not defined %}
 			<tr>
-					<td>{{attribute["label"]}} {% if attribute["required"] is defined and attribute["required"] == "true" %}*{%- endif %}</td>
-					<td><input type="text" name="{{attribute["name"]}}" {% if attribute["max_length_length"] is defined  %}max_length_lengthlength="{{attribute["max_length_length"]}}" size="{{attribute["max_length_length"]}}"{%- endif %} /> </td>				
+					<td>{{attribute.label}} {% if attribute.required is defined and attribute.required == "true" %}*{%- endif %}</td>
+					<td><input type="text" name="{{attribute.name}}" {% if attribute.max_length_length is defined  %}max_length_lengthlength="{{attribute.max_length_length}}" size="{{attribute.max_length_length}}"{%- endif %} /> </td>				
 			</tr>
 			{%- endif %}	
 			{% endfor %}

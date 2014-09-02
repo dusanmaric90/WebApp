@@ -16,17 +16,7 @@
 	    <fileset dir="${lib}" includes="*.jar"/>
 	</path>
 	
-	<!-- dodato -->
-	<target name="drop-tables" >
-		<sql classpath="${lib}/mysql-connector-java-5.1.22-bin.jar"
-		driver="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/e13289"
-		userid="root"
-		password="e13289" >
 	
-			DROP ALL OBJECTS;
-		</sql>
-	</target>
 	
 	
 	<!-- Delete all built files -->
@@ -63,7 +53,7 @@
 
 	<!-- Compile everything -->
 	<target name="compile" depends="init">
-		<!-- debug true omogucava da ispise tacno koji je izuzetak u pitanju -->
+		
 	    <javac srcdir="${src}" destdir="${build}" classpathref="classpath" debug="true" />
 		<copy  todir="${build}">
 			<fileset dir="${src}" includes="**/*.properties"/>
@@ -90,7 +80,7 @@
 	      	<include name="messages/*.properties"/>  
 	      	<include name="log4j.properties"/>
 	      	
-	      	<!-- treba mi model i svi servleti -->
+	      
 	      	<include name="model/*.class"/>
 	      	<include name="controller/*/*.class"/>
 	      	<include name="util/*.class" />
@@ -101,11 +91,10 @@
 	    </war>
 	</target>
 
-	<!-- sadrzi session bean, u web i app sloju ima zajednickih stvari, odnosno entitete -->
+	
 	<!-- Jar -->	
 	<target name="jar" depends="compile">
-		<!-- dodato
-		<delete dir="${tomee.dir}/webapps/Vezbe09"/>-->
+		
 		<mkdir dir="${dist}"/>
 		<jar destfile="${dist}/${jarname}">
 			<zipfileset dir="${build}/META-INF" prefix="META-INF">

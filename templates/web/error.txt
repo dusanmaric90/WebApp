@@ -4,7 +4,7 @@
 		
 		<html>
 			<head>
-				<title><fmt:message key="greskaNaslov"/></title>
+				<title>Error</title>
 				<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
 				<meta HTTP-EQUIV="Expires" CONTENT="-1">
 				<link href="./theme.css" rel="stylesheet" type="text/css" />

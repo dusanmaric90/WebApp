@@ -14,9 +14,9 @@ import model.*;
 public class {{name}}ControllerPrepareSearch extends HttpServlet {
 	
 {% for attribute in attributes %}
-{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
+{% if attribute.many_to_one is defined and attribute.many_to_one == "true" %}
 @EJB
-private I{{attribute["type"]}}Dao {{attribute["type"]}}Dao;	
+private I{{attribute.type}}Dao {{attribute.type}}Dao;	
 {%- endif %}	
 {% endfor %}
 {% for item in foreignKeysParent %}
@@ -31,9 +31,9 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws Ser
 protected void doPost(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
 
 {% for attribute in attributes %}
-{% if attribute["many_to_one"] is defined and attribute["many_to_one"] == "true" %}
-List<{{attribute["type"]}}> list{{attribute["type"]}} = {{attribute["type"]}}Dao.findAll();
-req.setAttribute("list{{attribute["type"]}}", list{{attribute["type"]}});
+{% if attribute.many_to_one is defined and attribute.many_to_one == "true" %}
+List<{{attribute.type}}> list{{attribute.type}} = {{attribute.type}}Dao.findAll();
+req.setAttribute("list{{attribute.type}}", list{{attribute.type}});
 {%- endif %}	
 {% endfor %}			
 {% for item in foreignKeysParent %}
