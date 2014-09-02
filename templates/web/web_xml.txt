@@ -27,15 +27,32 @@
 						<servlet-class>controller.prepareAdd.{{class}}ControllerPrepareAdd</servlet-class>
 					</servlet>
 					
+					<servlet-mapping>
+						<servlet-name>{{class}}ControllerPrepareAdd</servlet-name>
+						<url-pattern>/{{class}}ControllerPrepareAdd</url-pattern>
+					</servlet-mapping>
+					
+					<servlet>
+						<servlet-name>{{class}}ControllerPrepareSearch</servlet-name>
+						<servlet-class>controller.prepareSearch.{{class}}ControllerPrepareSearch</servlet-class>
+					</servlet>
+					
+					<servlet-mapping>
+						<servlet-name>{{class}}ControllerPrepareSearch</servlet-name>
+						<url-pattern>/{{class}}ControllerPrepareSearch</url-pattern>
+					</servlet-mapping>
+					
 					<servlet>
 						<servlet-name>{{class}}SearchController</servlet-name>
 						<servlet-class>controller.search.{{class}}SearchController</servlet-class>
 					</servlet>
 					
 					<servlet-mapping>
-						<servlet-name>{{class}}ControllerPrepareAdd</servlet-name>
-						<url-pattern>/{{class}}ControllerPrepareAdd</url-pattern>
+						<servlet-name>{{class}}SearchController</servlet-name>
+						<url-pattern>/{{class}}SearchController</url-pattern>
 					</servlet-mapping>
+					
+				
 					
 					<servlet>
 						<servlet-name>{{class}}ControllerShow</servlet-name>
@@ -67,10 +84,7 @@
 						<url-pattern>/{{class}}UpdateController</url-pattern>
 					</servlet-mapping>
 					
-					<servlet-mapping>
-						<servlet-name>{{class}}SearchController</servlet-name>
-						<url-pattern>/{{class}}SearchController</url-pattern>
-					</servlet-mapping>
+					
 			   {% endfor %}
 		
 		<listener>

@@ -73,7 +73,7 @@ if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getPara
 	} catch (NumberFormatException e) {
 		String error = "Field must be integer!";
 		req.setAttribute("error", error);
-		RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}Search.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}ControllerPrepareSearch");
 		dispatcher.forward(req, resp);
 		return;	
 	}	
@@ -83,6 +83,12 @@ String {{dictionary["name"]}}Value =    req.getParameter("{{dictionary["name"]}}
 if(!{{dictionary["name"]}}Value.equals("null")){
 	{{dictionary["type"]}} {{dictionary["name"]}} = {{dictionary["type"]}}.valueOf(req.getParameter("{{dictionary["name"]}}"));
 	conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"]}}));
+}
+{% elif dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true"%}
+String {{dictionary["name"]}}Value = req.getParameter("{{dictionary["name"]}}");
+if(!{{dictionary["name"]}}Value.equals("null")){	
+Integer {{dictionary["name"]}} =  	Integer.parseInt({{dictionary["name"]}}Value);
+conjuction.add(Restrictions.like("{{dictionary["name"]}}.id", {{dictionary["name"]}}));
 }
 {% elif dictionary["one_to_many"] is not defined %}
 String {{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
@@ -110,7 +116,7 @@ try {
 	}
 } catch (ParseException e) {
 	req.setAttribute("badFormat", true);
-	RequestDispatcher dispatcher = req.getRequestDispatcher("./Search{{name}}.jsp");
+	RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}ControllerPrepareSearch");
 	dispatcher.forward(req, resp);
 	return;
 }
@@ -132,7 +138,7 @@ if (req.getParameter("{{dictionary["name"]}}") != null && !"".equals(req.getPara
 	} catch (NumberFormatException e) {
 		String error = "Polje treba da bude broj!";
 		req.setAttribute("error", error);
-		RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}Search.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}ControllerPrepareSearch");
 		dispatcher.forward(req, resp);
 		return;	
 	}	
@@ -142,6 +148,12 @@ String {{dictionary["name"]}}Value =    req.getParameter("{{dictionary["name"]}}
 if(!{{dictionary["name"]}}Value.equals("null")){
 	{{dictionary["type"]}} {{dictionary["name"]}} = {{dictionary["type"]}}.valueOf(req.getParameter("{{dictionary["name"]}}"));
 	conjuction.add(Restrictions.like("{{dictionary["name"].lower()}}", {{dictionary["name"]}}));
+}
+{% elif dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true"%}
+String {{dictionary["name"]}}Value = req.getParameter("{{dictionary["name"]}}");
+if(!{{dictionary["name"]}}Value.equals("null")){	
+Integer {{dictionary["name"]}} =  	Integer.parseInt({{dictionary["name"]}}Value);
+conjuction.add(Restrictions.like("{{dictionary["name"]}}.id", {{dictionary["name"]}}));
 }
 {% elif dictionary["one_to_many"] is not defined %}
 String {{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
@@ -163,7 +175,7 @@ String {{dictionary["name"]}} = req.getParameter("{{dictionary["name"]}}");
 		 {{name.lower()}}s = {{name}}Dao.findAll();
 	}				
 	req.setAttribute("{{name.lower()}}s", {{name.lower()}}s);
-	RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}Search.jsp");
+	RequestDispatcher dispatcher = req.getRequestDispatcher("./{{name}}ControllerPrepareSearch");
 	dispatcher.forward(req, resp);
 	return;
 

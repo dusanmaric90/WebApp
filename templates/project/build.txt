@@ -142,17 +142,6 @@
 		 <exec command="${tomee.dir}/bin/startup.sh"/>-->
 	</target>
 	
-	<!-- Setup -->
-	<target name="prepare-database">
-	    <echo message="Inserting default user into database."/>
-		<java classname="client.InitClient"  fork="true">
-			<classpath>
-				<pathelement path="${build}" />
-				<fileset dir="${lib}">
-					<include name="*.jar"/>
-				</fileset>
-			</classpath>
-		</java>
-	</target>
+
 
 </project>

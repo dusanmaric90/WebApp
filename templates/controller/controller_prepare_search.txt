@@ -1,0 +1,49 @@
+package controller.prepareSearch;
+		
+		
+import java.io.IOException;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import dao.*;
+import model.*;
+ 
+public class {{name}}ControllerPrepareSearch extends HttpServlet {
+	
+{% for dictionary in attributes %}
+{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+@EJB
+private I{{dictionary["type"]}}Dao {{dictionary["type"]}}Dao;	
+{%- endif %}	
+{% endfor %}
+{% for item in foreignKeysParent %}
+@EJB
+private I{{item}}Dao {{item}}Dao;			
+{% endfor %}		
+@Override
+protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+		doPost(req,resp);
+	}
+@Override
+protected void doPost(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+
+{% for dictionary in attributes %}
+{% if dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true" %}
+List<{{dictionary["type"]}}> list{{dictionary["type"]}} = {{dictionary["type"]}}Dao.findAll();
+req.setAttribute("list{{dictionary["type"]}}", list{{dictionary["type"]}});
+{%- endif %}	
+{% endfor %}			
+{% for item in foreignKeysParent %}
+List<{{item}}> list{{item}} = {{item}}Dao.findAll();
+req.setAttribute("list{{item}}", list{{item}});		
+{% endfor %}
+			
+getServletContext().getRequestDispatcher("/{{name}}Search.jsp").forward(req, resp);
+return;
+	        
+	}
+}
+	

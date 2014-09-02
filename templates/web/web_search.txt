@@ -46,6 +46,13 @@
 						</c:forEach>
 					</select>
 				</td>
+				{% elif dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true"%}
+				<td><select name="{{dictionary["name"]}}">
+							<option value="null"></option>
+							<c:forEach var="temp{{dictionary["type"]}}" items="${list{{dictionary["type"]}}}">
+								<option value="${temp{{dictionary["type"]}}.id}">${temp{{dictionary["type"]}}.toString()}</option>
+							</c:forEach>
+						</select></td>
 				{% else %}
 				<td><input type="text" name="{{dictionary["name"]}}" /></td>
 				{%- endif %}
@@ -71,6 +78,13 @@
 						</c:forEach>
 					</select>
 				</td>
+				{% elif dictionary["many_to_one"] is defined and dictionary["many_to_one"] == "true"%}
+				<td><select name="{{dictionary["name"]}}">
+							<option value="null"></option>
+							<c:forEach var="temp{{dictionary["type"]}}" items="${list{{dictionary["type"]}}}">
+								<option value="${temp{{dictionary["type"]}}.id}">${temp{{dictionary["type"]}}.toString()}</option>
+							</c:forEach>
+						</select></td>
 				{% else %}
 				<td><input type="text" name="{{dictionary["name"]}}" /></td>
 				{%- endif %}

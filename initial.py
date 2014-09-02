@@ -36,7 +36,7 @@ def LABEL():          return "label"
 
 # PEG syntax rules
 
-def initial():               return OneOrMore([nclasses,enumeration,database_config]), EOF
+def initial():               return OneOrMore([nclasses,enumeration]),database_config, EOF
 def nclasses():              return OneOrMore(nclass)
 def nclass():                return  Optional(ABSTRACT),CLASS, class_name,Optional(":", class_name), ZeroOrMore(attributes)
 def attributes():            return "[", OneOrMore(attribute), Optional(attribute_label),"]"
@@ -290,6 +290,7 @@ class NClasses(SemanticAction):
           env_controller = Environment(loader=FileSystemLoader('templates/controller'))
           env_web = Environment(loader=FileSystemLoader('templates/web'))
           tmpl_prepare_add = env_controller.get_template('controller_prepare_add.txt')
+          tmpl_prepare_search = env_controller.get_template('controller_prepare_search.txt')
           tmpl_add = env_controller.get_template('controller_add.txt')
           tmpl_update = env_controller.get_template('controller_update.txt')
           tmpl_search = env_controller.get_template('controller_search.txt')
@@ -302,6 +303,8 @@ class NClasses(SemanticAction):
           tmp_web_menu = env_web.get_template('menu.txt')
           if not os.path.exists("WebApp/src/controller/prepareAdd"):
             os.makedirs("WebApp/src/controller/prepareAdd")
+          if not os.path.exists("WebApp/src/controller/prepareSearch"):
+            os.makedirs("WebApp/src/controller/prepareSearch")  
           if not os.path.exists("WebApp/src/controller/add"):
             os.makedirs("WebApp/src/controller/add")
           if not os.path.exists("WebApp/src/controller/update"):
@@ -331,6 +334,10 @@ class NClasses(SemanticAction):
                     filename = "WebApp/src/controller/prepareAdd/"+listClass[0]+"ControllerPrepareAdd.java"
                     target = open(filename, 'w+')
                     target.write(tmpl_prepare_add.render( name = listClass[0], attributes = listClass[3], foreignKeysParent = parentForeignKey[listClass[0]] ))
+                    target.close()
+                    filename = "WebApp/src/controller/prepareSearch/"+listClass[0]+"ControllerPrepareSearch.java"
+                    target = open(filename, 'w+')
+                    target.write(tmpl_prepare_search.render( name = listClass[0], attributes = listClass[3], foreignKeysParent = parentForeignKey[listClass[0]] ))
                     target.close()
                     filename = "WebApp/src/controller/add/"+listClass[0]+"ControllerAdd.java"
                     target = open(filename, 'w+')
@@ -489,5 +496,5 @@ if __name__ == "__main__":
     # In debug mode dot (graphviz) files for parser model
     # and parse tree will be created for visualization.
     # Checkout current folder for .dot files.
-    main(debug=True)
+    main(debug=False)
 

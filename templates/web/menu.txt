@@ -17,7 +17,7 @@
 							<li style=" font-size: 20px;"><a
 								href="./{{class}}ControllerPrepareAdd">Create {{class.lower()}}</a></li>
 							<li style=" font-size: 20px;"><a
-								href="./{{class}}Search.jsp">Search {{class.lower()}}</a></li>
+								href="./{{class}}ControllerPrepareSearch">Search {{class.lower()}}</a></li>
 					</ul>
 				</li>	
 				{% endfor %}
