@@ -1,5 +1,5 @@
 
-enumeration Gender : MALE; FEMALE;  
+enumeration Gender: MALE, FEMALE;  
 
 abstract class Person
     [

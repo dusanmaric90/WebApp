@@ -45,10 +45,10 @@ def attribute_label():       return LABEL,"=",r'"', attribute_label_value,r'"'
 def attribute_label_value(): return _(r"([a-zA-Z_\s])*")
 def class_name():            return _(r"[a-zA-Z_]([a-zA-Z_]|[0-9])*")
 def attribute_value():       return _(r"([a-zA-Z_]|[0-9])*")
-def enumeration_value():     return _(r"([a-zA-Z_]|[0-9])*")
+def enumeration_value():     return _(r"([a-zA-Z_ ]|[0-9])*")
 def attribute_key():         return [NAME, TYPE, UNIQUE, REQUIRED, MIN, MAX, MANY_TO_ONE, ENUM, ONE_TO_MANY, SHOW]
 def enumeration():           return ENUMERATION, enumeration_value, ":", OneOrMore(enumeration_element)
-def enumeration_element():   return enumeration_value, ";"
+def enumeration_element():   return enumeration_value, [",",";"]
 def database_config():       return DATABASE, database_value, ":", DRIVER, "=", database_value, USERNAME, "=", database_value, PASSWORD, "=", database_value, URL, "=", url_value, ZeroOrMore(database_table)  
 def database_value():        return _(r"([a-zA-Z_.]|[0-9])*")
 def url_value():             return _(r"(ftp|file|jdbc:[a-z]+[0-9]*)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]*")
