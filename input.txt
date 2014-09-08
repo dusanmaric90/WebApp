@@ -2,7 +2,7 @@
 enumeration Gender: MALE, FEMALE;  
 
 abstract class Person
-    [
+    	[
 		name = firstname
 		type = String
 		required = true
@@ -35,7 +35,7 @@ abstract class Person
 	]
 
 class Student : Person
-    [
+    	[
 		name = index_number
 		type = String
 		required = true
@@ -86,7 +86,7 @@ class Subject
 		one_to_many = true
 	]
 class Grade 
-    [
+    	[
 		name = points
 		type = Integer
 		required = true

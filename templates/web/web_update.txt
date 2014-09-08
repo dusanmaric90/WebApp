@@ -128,7 +128,7 @@
 			 	
 					<td><select name="{{attribute.name}}">
 							<c:forEach var="temp{{attribute.type}}" items="${list{{attribute.type}}}">
-								<option value="${temp{{attribute.type}}.id}">${temp{{attribute.type}}.toString()}</option>
+								<option value="${temp{{attribute.type}}.id}" <c:if test="{% raw %}${{% endraw %}{{name.lower()}}.{{attribute.name.lower()}}.id==temp{{attribute.type}}.id{% raw %}}{% endraw %}">selected="selected"</c:if>>${temp{{attribute.type}}.toString()}</option>
 							</c:forEach>
 						</select>
 					</td>
@@ -149,9 +149,9 @@
 					{% if attribute.type is defined and attribute.type == "Date" %}
 					<td>
 					<fmt:formatDate value="{% raw %}${{% endraw %}{{name.lower()}}.{{attribute.name.lower()}}{% raw %}}{% endraw %}"  type="date" pattern="dd-MM-yyyy" var="theformUpdatettedDate" />
-					<input type="text" name="{{attribute.name}}" value="${theformUpdatettedDate}" {% if attribute.max_length is defined  %}max_lengthlength="{{attribute.max_length}}" size="{{attribute.max_length}}"{%- endif %} /> </td>				
+					<input type="text" name="{{attribute.name}}" value="${theformUpdatettedDate}" {% if attribute.max_length is defined  %}maxlength="{{attribute.max_length}}" size="{{attribute.max_length}}"{%- endif %} /> </td>				
 					{% else%}
-					<td><input type="text" name="{{attribute.name}}" value="{% raw %}${{% endraw %}{{name.lower()}}.{{attribute.name.lower()}}{% raw %}}{% endraw %}" {% if attribute.max_length is defined  %}max_lengthlength="{{attribute.max_length}}" size="{{attribute.max_length}}"{%- endif %} /> </td>				
+					<td><input type="text" name="{{attribute.name}}" value="{% raw %}${{% endraw %}{{name.lower()}}.{{attribute.name.lower()}}{% raw %}}{% endraw %}" {% if attribute.max_length is defined  %}maxlength="{{attribute.max_length}}" size="{{attribute.max_length}}"{%- endif %} /> </td>				
 					{% endif %}
 			</tr>
 			{%- endif %}			
@@ -164,7 +164,7 @@
 			 	
 					<td><select name="{{attribute.name}}">
 							<c:forEach var="temp{{attribute.type}}" items="${list{{attribute.type}}}">
-								<option value="${temp{{attribute.type}}.id}">${temp{{attribute.type}}.toString()}</option>
+								<option value="${temp{{attribute.type}}.id}" <c:if test="{% raw %}${{% endraw %}{{name.lower()}}.{{attribute.name.lower()}}.id==temp{{attribute.type}}.id{% raw %}}{% endraw %}">selected="selected"</c:if>>${temp{{attribute.type}}.toString()}</option>
 							</c:forEach>
 						</select>
 					</td>
@@ -185,9 +185,9 @@
 					{% if attribute.type is defined and attribute.type == "Date" %}
 					<td>
 					<fmt:formatDate value="{% raw %}${{% endraw %}{{name.lower()}}.{{attribute.name.lower()}}{% raw %}}{% endraw %}"  type="date" pattern="dd-MM-yyyy" var="theformUpdatettedDate" />
-					<input type="text" name="{{attribute.name}}" value="${theformUpdatettedDate}" {% if attribute.max_length is defined  %}max_lengthlength="{{attribute.max_length}}" size="{{attribute.max_length}}"{%- endif %} /> </td>				
+					<input type="text" name="{{attribute.name}}" value="${theformUpdatettedDate}" {% if attribute.max_length is defined  %}maxlength="{{attribute.max_length}}" size="{{attribute.max_length}}"{%- endif %} /> </td>				
 					{% else%}
-					<td><input type="text" name="{{attribute.name}}" value="{% raw %}${{% endraw %}{{name.lower()}}.{{attribute.name.lower()}}{% raw %}}{% endraw %}" {% if attribute.max_length is defined  %}max_lengthlength="{{attribute.max_length}}" size="{{attribute.max_length}}"{%- endif %} /> </td>				
+					<td><input type="text" name="{{attribute.name}}" value="{% raw %}${{% endraw %}{{name.lower()}}.{{attribute.name.lower()}}{% raw %}}{% endraw %}" {% if attribute.max_length is defined  %}maxlength="{{attribute.max_length}}" size="{{attribute.max_length}}"{%- endif %} /> </td>				
 					{% endif %}
 			</tr>
 			{%- endif %}			

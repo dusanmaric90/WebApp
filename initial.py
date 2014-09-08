@@ -380,15 +380,13 @@ attribute_label.sem = Attribute_label()
 attribute_label_value.sem = Attribute_label_value()
 
 def main(debug=False):
-    # First we will make a parser - an instance of the calc parser model.
-    # Parser model is given in the form of python constructs therefore we
-    # are using ParserPython class.
+    
     parser = ParserPython(initial, debug=debug)
     file_input = open("input.txt", 'r')
    
     input_expr = file_input.read()
 
-    # We create a parse tree out of textual input_expr
+    
     parse_tree = parser.parse(input_expr)
 
     result = parser.getASG()

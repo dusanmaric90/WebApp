@@ -143,7 +143,7 @@
 			{% elif attribute.one_to_many is not defined %}
 			<tr>
 					<td>{{attribute.label}} {% if attribute.required is defined and attribute.required == "true" %}*{%- endif %}</td>
-					<td><input type="text" name="{{attribute.name}}" {% if attribute.max_length_length is defined  %}max_length_lengthlength="{{attribute.max_length_length}}" size="{{attribute.max_length_length}}"{%- endif %} /> </td>				
+					<td><input type="text" name="{{attribute.name}}" {% if attribute.max_length is defined  %}maxlength="{{attribute.max_length}}" size="{{attribute.max_length}}"{%- endif %} /> </td>				
 			</tr>
 			{%- endif %}			
 			{% endfor %}
@@ -173,7 +173,7 @@
 			{% elif attribute.one_to_many is not defined %}
 			<tr>
 					<td>{{attribute.label}} {% if attribute.required is defined and attribute.required == "true" %}*{%- endif %}</td>
-					<td><input type="text" name="{{attribute.name}}" {% if attribute.max_length_length is defined  %}max_length_lengthlength="{{attribute.max_length_length}}" size="{{attribute.max_length_length}}"{%- endif %} /> </td>				
+					<td><input type="text" name="{{attribute.name}}" {% if attribute.max_length is defined  %}maxlength="{{attribute.max_length}}" size="{{attribute.max_length}}"{%- endif %} /> </td>				
 			</tr>
 			{%- endif %}	
 			{% endfor %}
